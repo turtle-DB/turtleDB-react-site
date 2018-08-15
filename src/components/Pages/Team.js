@@ -9,7 +9,7 @@ export const Team = () => {
       <h2 className="text-center">The Team</h2>
       <div className="row">
 
-        <div className="col-4">
+        <div className="col-xs-12 col-md-4">
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">Steven Shen</h5>
@@ -24,7 +24,7 @@ export const Team = () => {
           </div>
         </div>
 
-        <div className="col-4">
+        <div className="col-xs-12 col-md-4">
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">Max Appleton</h5>
@@ -39,7 +39,7 @@ export const Team = () => {
           </div>
         </div>
 
-        <div className="col-4">
+        <div className="col-xs-12 col-md-4">
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">Andrew Houston-Floyd</h5>

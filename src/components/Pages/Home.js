@@ -18,7 +18,7 @@ export const Home = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-4">
+          <div className="col-xs-12 col-md-4">
             <div className="card">
               <div className="card-header">
                 <h5 className="card-title">Offline-First</h5>
@@ -30,7 +30,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="col-4">
+          <div className="col-xs-12 col-md-4">
             <div className="card">
               <div className="card-header">
                 <h5 className="card-title">Synchronization</h5>
@@ -42,7 +42,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="col-4">
+          <div className="col-xs-12 col-md-4">
             <div className="card">
               <div className="card-header">
                 <h5 className="card-title">Conflict Resolution</h5>
