@@ -14,7 +14,7 @@ export const Team = () => {
             <div className="card-header">
               <h5 className="card-title">Steven Shen</h5>
             </div>
-            <img className="card-img-top rounded" src="images/steven.jpg" alt="Steven Shen"/>
+            <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen"/>
             <div className="card-body">
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
@@ -29,7 +29,7 @@ export const Team = () => {
             <div className="card-header">
               <h5 className="card-title">Max Appleton</h5>
             </div>
-            <img className="card-img-top rounded" src="images/max.png" alt="Max Appleton"/>
+            <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton"/>
             <div className="card-body">
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
@@ -44,7 +44,7 @@ export const Team = () => {
             <div className="card-header">
               <h5 className="card-title">Andrew Houston-Floyd</h5>
             </div>
-            <img className="card-img-top rounded" src="images/andrew.png" alt="Andrew Houston-Floyd"/>
+            <img className="card-img-top portrait rounded" src="images/andrew.png" alt="Andrew Houston-Floyd"/>
             <div className="card-body">
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
