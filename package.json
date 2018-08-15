@@ -1,0 +1,29 @@
+{
+  "name": "turtledb",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://turtle-db.github.io/pages",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "i": "^0.3.6",
+    "npm": "^6.3.0",
+    "react": "^16.4.1",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "react-syntax-highlighter": "^7.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.2.0",
+    "react-social-icons": "^3.0.0"
+  }
+}

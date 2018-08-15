@@ -1,0 +1,75 @@
+.citation {
+	position: relative;
+	cursor: help;
+	margin: 0 .5rem;
+	font-style: normal;
+}
+
+.citation > a {
+	border-radius: 50%;
+	background-color: #1EAEDB;
+	color: #FFF;
+	width: 1.65rem;
+	height: 1.65rem;
+	line-height: 1.3;
+	display: inline-block;
+	text-align: center;
+	vertical-align: baseline;
+}
+
+.citation > div {
+	color: #000;
+	font-size: 80%;
+	display: block;
+	position: absolute;
+	top: 1rem;
+	left: -15rem;
+	background-color: #FFF;
+	border: solid 1px #999;
+	padding: 1rem;
+	border-radius: .5rem;
+	width: 30rem;
+}
+
+.citation > div p, .citation > div div.p {
+	font-weight: 600;
+	letter-spacing: .1rem;
+	text-transform: uppercase;
+	text-align: center;
+	color: #999;
+	margin: 0 0 1rem 0;
+}
+
+.citation > div a {
+	word-break: break-word;
+}
+
+.citation > div table {
+	margin: 0;
+	width: 100%;
+}
+
+.citation > div table th, .citation > div table td {
+	vertical-align: top;
+}
+
+.citation > div table th {
+	padding: .2rem 1rem .2rem .2rem;
+}
+
+.citation > div table td {
+	padding: .2rem .2rem .2rem 1rem;
+	min-width: 70%;
+}
+
+.citation > div table tr:last-child th, .citation > div table tr:last-child td {
+	border-bottom: none;
+}
+
+/* Home */
+
+.image-container {
+	display: inline-block;
+	width: 175px;
+	height: 140px;
+}
