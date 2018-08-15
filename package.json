@@ -2,7 +2,7 @@
   "name": "turtledb",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://turtle-db.github.io/pages",
+  "homepage": "https://turtle-db.github.io/",
   "dependencies": {
     "bootstrap": "^4.1.3",
     "i": "^0.3.6",
