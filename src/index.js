@@ -10,5 +10,6 @@ import './assets/styles/github.css'
 import './assets/styles/split.css'
 import './assets/styles/docs.css'
 import './../node_modules/@fortawesome/fontawesome-free/css/all.css'
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));

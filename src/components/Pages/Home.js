@@ -36,13 +36,9 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className="section about">
-        <div className="d-flex justify-content-center">
-          <blockquote className="blockquote">
-            <p>TurtleDB is a framework for developers to build offline-first, collaborative web applications. It provides a user-friendly API for developers to empower their apps with in-browser storage, effective server synchronization, document versioning, and flexible conflict resolution for any document data.</p>
-            <p>Web applications will work seamlessly online or offline and developers can leave the backend to TurtleDB - it will handle all data synchronization and conflict resolution between users.</p>
-            <p>Works with MongoDB out of the box, with a flexible adapter architecture that can support most NoSQL databases.</p>
-          </blockquote>
+      <div className="section">
+        <div className="about d-flex justify-content-center">
+          <p>Testing</p>
         </div>
       </div>
       <div className="container">
