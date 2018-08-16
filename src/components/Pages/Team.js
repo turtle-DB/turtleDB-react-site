@@ -42,7 +42,6 @@ export const Team = () => {
             </a>
             <div className="card-body">
               <p class="card-text">Software Engineer (San Francisco, USA)</p>
-              <a href="https://maxiappleton.github.io/"><p className="card-text">Personal Website</p></a>
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
                 <li className="list-inline-item"><SocialIcon url="https://github.com/maxiappleton" /></li>
