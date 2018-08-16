@@ -16,7 +16,7 @@ const AboutHome = () => {
 
 export const About = () => {
   return (
-    <div className="container">
+    <div className="container mt-5">
       <div>
         <h2 className="text-left">Table of Contents</h2>
         <BrowserRouter>

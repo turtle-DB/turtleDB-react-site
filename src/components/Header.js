@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 const Header = () => {
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark">
-      <Link className="nav-link" to='/'>
-        <img className="card-img-top logo-small" src="images/logo.png" alt="small logo"/>
+      <Link className="nav-link logo-link" to='/'>
+        <img className="card-img-top logo-small" src="images/logo.png" alt="small logo" />
       </Link>
       <div className="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
         <ul className="navbar-nav ml-auto text-center">
