@@ -36,49 +36,58 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className="section">
-        <div className="about d-flex justify-content-center">
-          <p>Testing</p>
+      <div className="section about">
+        <div className="d-flex justify-content-center">
+          <blockquote>
+            <p>TurtleDB is a framework for developers to build offline-first, collaborative web applications. It provides a user-friendly API for developers to empower their apps with in-browser storage, effective server synchronization, document versioning, and flexible conflict resolution for any document data.</p>
+            <p>Web applications will work seamlessly online or offline, and developers can leave the backend to TurtleDB - it will handle all data synchronization and conflict resolution between users.</p>
+            <p>Works with MongoDB out of the box, with a flexible adapter architecture that can support most NoSQL databases.</p>
+          </blockquote>
         </div>
       </div>
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12 col-md-4">
-            <div className="card">
-              <div className="card-header">
-                <h5 className="card-title">Offline-First</h5>
-              </div>
-              <img className="card-img-top center" src="images/1.png" alt="Offline-First" />
-              <div className="card-body">
-                <p className="card-text">Queries are made to your local in-browser storage first.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-xs-12 col-md-4">
-            <div className="card">
-              <div className="card-header">
-                <h5 className="card-title">Synchronization</h5>
-              </div>
-              <img className="card-img-top center" src="images/2.png" alt="Synchronization" />
-              <div className="card-body">
-                <p className="card-text">Syncs your data to the back-end when you have internet.</p>
+      <div className="section cards">
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12 col-md-4">
+              <div className="card">
+                <div className="card-header">
+                  <h5 className="card-title">Offline-First</h5>
+                </div>
+                <img className="card-img-top center card-image" src="images/1.png" alt="Offline-First" />
+                <div className="card-body">
+                  <p className="card-text">Queries are made to your local in-browser storage first.</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="col-xs-12 col-md-4">
-            <div className="card">
-              <div className="card-header">
-                <h5 className="card-title">Conflict Resolution</h5>
+            <div className="col-xs-12 col-md-4">
+              <div className="card">
+                <div className="card-header">
+                  <h5 className="card-title">Synchronization</h5>
+                </div>
+                <img className="card-img-top center card-image" src="images/2.png" alt="Synchronization" />
+                <div className="card-body">
+                  <p className="card-text">Syncs your data to the back-end when you have internet.</p>
+                </div>
               </div>
-              <img className="card-img-top center" src="images/3.png" alt="Conflict Resolution" />
-              <div className="card-body">
-                <p className="card-text">Multiple people can work on the same document without overwriting each other's changes.</p>
+            </div>
+
+            <div className="col-xs-12 col-md-4">
+              <div className="card">
+                <div className="card-header">
+                  <h5 className="card-title">Conflict Resolution</h5>
+                </div>
+                <img className="card-img-top center card-image" src="images/3.png" alt="Conflict Resolution" />
+                <div className="card-body">
+                  <p className="card-text">Multiple people can work on the same document without overwriting each other's changes.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="section footer d-flex justify-content-center">
+        <p>Some copyright info</p>
       </div>
     </div>
   );
