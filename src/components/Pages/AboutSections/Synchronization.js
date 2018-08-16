@@ -7,10 +7,15 @@ const Synchronization = () => {
   return (
     <div className="container">
       <h2 id='synchronization'>Synchronization</h2>
-      <p>Our proposal is to build a library that provides front-end applications an
-        API to an in-browser, NoSQL document database. This library will be able to store data locally
-        on the client, and coordinate automatic synchronization with a remote database.
-        The primary use case for this is to build offline first and distributed web applications.
+    <p>Synchronization is what makes turtleDB more than just a promise-based wrapper for IDB.
+      We wanted to be the first to provide this functionality with MongoDB. Being the first to do something
+      definitely has its appeal but more importantly, we managed to solve a core issue of distributed
+      databases: <strong>consistency</strong>.
+    </p>
+
+    <p>
+      Synchronizing nodes is a feature all collaborative applications must be able to offer.
+    </p>
         <Citation
           url='https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/'
           creator='Sam Dutton'
@@ -18,8 +23,7 @@ const Synchronization = () => {
           contributingOrganization='HTML5Rocks.com'
           title='WebRTC in the Real World: STUN, TURN and Signaling'
         />
-      </p>
-      <h3 id="example-sync-process">How A Sync Looks</h3>
+      <h3 id="sync-walkthrough">Example Sync Walkthrough</h3>
       <p>
         The best way to demonstrate how turtleDB syncs is to run through a example. Have
         a click through the slides. We broke it down so that our HTTP request-response cycles

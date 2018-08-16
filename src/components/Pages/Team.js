@@ -16,7 +16,7 @@ export const Team = () => {
             </div>
             <img className="card-img-top portrait" src="images/steven.png" alt="Steven Shen" />
             <div className="card-body">
-              <p className="card-text">Toronto, Canada</p>
+              <p class="card-text">Software Engineer (Toronto, Canada)</p>
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
                 <li className="list-inline-item"><SocialIcon url="https://github.com/rockdinosaur" /></li>
@@ -32,7 +32,7 @@ export const Team = () => {
             </div>
             <img className="card-img-top portrait" src="images/max.png" alt="Max Appleton" />
             <div className="card-body">
-              <p className="card-text">SF/Bay Area, USA</p>
+              <p class="card-text">Software Engineer (San Francisco, USA)</p>
               <a href="https://maxiappleton.github.io/"><p className="card-text">Personal Website</p></a>
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
@@ -49,7 +49,7 @@ export const Team = () => {
             </div>
             <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
             <div className="card-body">
-              <p className="card-text">NYC, USA</p>
+              <p class="card-text">Software Engineer (New York City, USA)</p>
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
                 <li className="list-inline-item"><SocialIcon url="https://github.com/houstonfloyd" /></li>
