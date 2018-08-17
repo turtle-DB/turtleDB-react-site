@@ -20,13 +20,13 @@ export const About = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-3">
+        <div className="col-xs-12 col-md-3">
           <StickyBox bottom={false} offset={25}>
             <h2 className="text-left">Table of Contents</h2>
             <Toc />
           </StickyBox>
         </div>
-        <div className="col-9">
+        <div className="col-xs-12 col-md-9">
           <Introduction></Introduction>
           <Synchronization></Synchronization>
         </div>

@@ -3,6 +3,7 @@
 	cursor: help;
 	margin: 0 .5rem;
 	font-style: normal;
+	z-index: 1000;
 }
 
 .citation > a {
