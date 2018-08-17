@@ -1,4 +1,6 @@
 import React from 'react';
+import StickyBox from "react-sticky-box";
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Toc from './Toc/Toc'
@@ -16,19 +18,18 @@ const AboutHome = () => {
 
 export const About = () => {
   return (
-    <div className="container mt-5">
-      <div>
-        <h2 className="text-left">Table of Contents</h2>
-        <BrowserRouter>
-          <div>
+    <div className="container">
+      <div className="row">
+        <div className="col-3">
+          <StickyBox bottom={false} offset={25}>
+            <h2 className="text-left">Table of Contents</h2>
             <Toc />
-            <Switch>
-              <Route exact path='/about/' component={AboutHome} />
-              <Route exact path='/about/introduction' component={Introduction} />
-              <Route exact path='/about/synchronization' component={Synchronization} />
-            </Switch>
-          </div>
-        </BrowserRouter>
+          </StickyBox>
+        </div>
+        <div className="col-9">
+          <Introduction></Introduction>
+          <Synchronization></Synchronization>
+        </div>
       </div>
     </div>
   );

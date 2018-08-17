@@ -54,7 +54,9 @@ export const Team = () => {
         <div className="col-xs-12 col-md-4">
           <div className="card text-center">
             <div className="card-header">
-              <h5 className="card-title">Andrew Houston-Floyd</h5>
+              <h5 className="card-title">
+                <a href="https://maxiappleton.github.io/">Andrew Houston-Floyd</a>
+              </h5>
             </div>
             <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
             <div className="card-body">
