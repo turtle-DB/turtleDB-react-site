@@ -234,9 +234,13 @@ table {
   margin-bottom: 0;
 }
 
-.section {
-  padding: 40px 0 20px 0;
-  border-top: 1px solid rgb(94, 94, 94);
+.section.footer {
+  padding: 20px 0;
+}
+
+.section.about {
+  padding-top: 40px;
+  padding-bottom: 0px;
 }
 
 .section blockquote {

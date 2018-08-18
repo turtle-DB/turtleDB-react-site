@@ -46,25 +46,25 @@ export const Toc = () => {
           <li><a>Optimizations</a></li>
         </ul>
       </li>
-      <li><a href="conflicts">Conflicts</a>
+      <li><a href="#conflicts">Conflicts</a>
         <ul>
           <li><a>What is a Conflict?</a></li>
           <li><a>Tree Merging</a></li>
         </ul>
       </li>
-      <li><a href="scalability">Scalability</a>
+      <li><a href="#scalability">Scalability</a>
         <ul>
           <li>...</li>
           <li>...</li>
         </ul>
       </li>
-      <li><a href="future-work">Future Work</a>
+      <li><a href="#future-work">Future Work</a>
         <ul>
           <li>Service Workers</li>
           <li>Websockets</li>
         </ul>
       </li>
-      <li><a href="references">References</a></li>
+      <li><a href="#references">References</a></li>
     </ol>
   );
 };

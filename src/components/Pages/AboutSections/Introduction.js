@@ -19,19 +19,7 @@ const Introduction = () => {
       when building turtleDB. Each has its own dedicated section where we break down the whys and hows around it.
     </p>
       <h3 id='why-idb'>Why IndexedDB?</h3>
-      <blockquote className="blockquote mb-0">
-        <hr></hr>
-        <p>“IndexedDB API is powerful, but may seem too complicated for simple cases.”
-          <Citation
-            url='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'
-            creator='Mozilla Developer Network'
-            creationDate='June 14, 2018'
-            contributingOrganization='MDN'
-            title='IndexedDB API'
-          />
-        </p>
-        <hr></hr>
-      </blockquote>
+
       <p>Our proposal is to build a library that provides front-end applications an
         API to an in-browser, NoSQL document database. This library will be able to store data locally
         on the client, and coordinate automatic synchronization with a remote database.
