@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 
 import Citation from '../../Citation'
 
 const InBrowserStorage = () => {
+  const codeSnippet1 = "var React = require('react');\nvar Markdown = require('react-markdown');\n\nReact.render(\n  <Markdown source=\"# Your markdown here\" />,\n  document.getElementById('content')\n);"
   return (
     <div className="container">
       <h2 id='in-browser-storage'>In-Browser Storage</h2>
@@ -15,14 +18,14 @@ const InBrowserStorage = () => {
       <p>
         It has a 5MB cap and its API is totally synchronous and therefore blocks the DOM.
         It is essentially a large JavaScript object that can have data attached to it. Good
-        for storing small amounts of data in small chunks at a time. 
+        for storing small amounts of data in small chunks at a time.
       </p>
       <h5>WebSQL</h5>
       <p>
         Although it has a non-blocking API and its queries are a variant of SQL, it has
         been deprecated by W3C in 2010 in favor of IndexedDB.
       </p>
-      <h5 id='idb'>IndexedDB(IDB)</h5>
+      <h5 id='idb'>IndexedDB (IDB)</h5>
     <p>
       IDB is an in-browser (client-side) key-value based storage system. Queries to IDB
       must be made in JavaScript and its entire API operates asynchronously. This all sounds
@@ -61,6 +64,9 @@ const InBrowserStorage = () => {
         Essentially, we don’t want IDB users to get bogged down thinking about async code and all the quirks
         that come with IDB. With <Link to='/API'>turtleDB's API</Link>, we’ve condensed the code you’d normally have to write (shown on the left) to a one-liner.
       </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {codeSnippet1}
+      </SyntaxHighlighter>
     </div>
   )
 }
