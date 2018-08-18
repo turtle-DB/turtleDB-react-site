@@ -6,7 +6,15 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Toc from './Toc/Toc'
 
 import Introduction from './AboutSections/Introduction'
+import InBrowserStorage from './AboutSections/InBrowserStorage'
+import DocumentVersioning from './AboutSections/DocumentVersioning'
+import HistoryTrees from './AboutSections/HistoryTrees'
+import turtleDBArchitecture from './AboutSections/turtleDBArchitecture'
 import Synchronization from './AboutSections/Synchronization'
+import Conflicts from './AboutSections/Conflicts'
+import Scalability from './AboutSections/Scalability'
+import FutureWork from './AboutSections/FutureWork'
+import References from './AboutSections/References'
 
 const AboutHome = () => {
   return (
