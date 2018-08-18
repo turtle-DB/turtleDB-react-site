@@ -2,7 +2,8 @@ import React from 'react';
 
 export const TocMobile = () => {
   return (
-    <div className="container">
+    <div>
+      <h4 className="text-center">Table of Contents</h4>
       <ol>
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#in-browser-storage">In-Browser Storage</a></li>

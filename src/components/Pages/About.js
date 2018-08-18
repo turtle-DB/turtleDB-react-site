@@ -31,7 +31,6 @@ export const About = () => {
       <div className="row">
         <div className="d-none d-md-inline-block col-md-3">
           <StickyBox bottom={false} offset={25}>
-            <h2 className="text-left">Table of Contents</h2>
             <Toc />
           </StickyBox>
         </div>

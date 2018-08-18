@@ -8,7 +8,7 @@ export const Home = () => {
           <h1 className="display-4">
             <img className="card-img-top w-75" src="images/logo_full.png" alt="turtleDB" />
           </h1>
-          <p className="lead">An open source promise-based wrapper for IndexedDB with syncing and conflict resolution.</p>
+          <p className="lead">An open source JavaScript promise wrapper for IndexedDB with syncing and conflict resolution.</p>
           <hr className="my-4"></hr>
           <div className="download-links d-flex justify-content-around">
             <div className="turtle-links">
@@ -39,9 +39,14 @@ export const Home = () => {
       <div className="section about">
           <div className="d-flex justify-content-center">
             <blockquote>
-              <p>TurtleDB is a framework for developers to build offline-first, collaborative web applications. It provides a user-friendly API for developers to empower their apps with in-browser storage, effective server synchronization, document versioning, and flexible conflict resolution for any document data.</p>
-              <p>Web applications will work seamlessly online or offline, and developers can leave the backend to TurtleDB - it will handle all data synchronization and conflict resolution between users.</p>
-              <p>Works with MongoDB out of the box, with a flexible adapter architecture that can support most NoSQL databases.</p>
+              <p>turtleDB is a framework for developers to build offline-first, collaborative web applications.
+                It provides a user-friendly API for developers, empowering them with the ability to create apps
+                with in-browser storage, effective server synchronization, document versioning, and flexible conflict
+                resolution for any document data.
+              </p>
+              <p>Web applications will work seamlessly online or offline, and developers can leave the backend to turtleDB -
+                it will handle all data synchronization and conflict resolution between users. Works with MongoDB out of the box!
+              </p>
             </blockquote>
           </div>
         </div>
@@ -91,7 +96,7 @@ export const Home = () => {
       <div className="section footer d-flex justify-content-center">
         <div className="container">
           <hr className="my-4"></hr>
-          <p>Some copyright info</p>  
+          <p>Some copyright info</p>
         </div>
 
       </div>
