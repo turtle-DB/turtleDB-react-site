@@ -13,8 +13,7 @@ export const Toc = () => {
       </li>
       <li><a href="#in-browser-storage">In-Browser Storage</a>
         <ul>
-          <li><a>In-Browser Databases</a></li>
-          <li><a>IndexedDB in Depth</a></li>
+          <li><a href="#idb">IndexedDB</a></li>
           <li><a>Promises</a></li>
         </ul>
       </li>
