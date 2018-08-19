@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './components/Header'
 import Error from './components/Error'
+import Footer from './components/Footer'
 
 import Home from './components/Pages/Home'
 import Api from './components/Pages/Api'
@@ -24,6 +25,7 @@ class App extends Component {
             <Route exact path='/github' component={Github} />
             <Route component={Error} />
           </Switch>
+          <Footer/>
         </div>
       </BrowserRouter>
     );

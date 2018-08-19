@@ -47,6 +47,7 @@ export const Home = () => {
               <p>Web applications will work seamlessly online or offline, and developers can leave the backend to turtleDB -
                 it will handle all data synchronization and conflict resolution between users. Works with MongoDB out of the box!
               </p>
+              <a className="btn btn-success btn-lg icon-link" href="#">Get Started</a>
             </blockquote>
           </div>
         </div>
@@ -92,13 +93,6 @@ export const Home = () => {
               </div>
             </div>
         </div>
-      </div>
-      <div className="section footer d-flex justify-content-center">
-        <div className="container">
-          <hr className="my-4"></hr>
-          <p>Some copyright info</p>
-        </div>
-
       </div>
     </div>
   );

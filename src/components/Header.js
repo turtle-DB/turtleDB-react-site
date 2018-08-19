@@ -21,7 +21,7 @@ const Header = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to='/about'>
-              About
+              Case Study
             </Link>
           </li>
           <li className="nav-item">

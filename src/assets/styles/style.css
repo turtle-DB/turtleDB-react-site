@@ -32,6 +32,14 @@
   border-radius: 10px;
 }
 
+/* Top Navbar */
+
+.navbar {
+  font-weight: 600;
+}
+
+/* Home and Team Cards */
+
 .card {
   border: none;
 }
@@ -46,6 +54,40 @@
 
 .carousel .thumb.selected {
   border: 3px solid red;
+}
+/* About */
+
+.about.container {
+  margin-left: 0;
+}
+
+.about ul {
+  padding: 0 0 0 1rem;
+  list-style: none;
+}
+
+.about ol > li {
+  padding: 2px 0;
+  font-size: 1.2rem;
+}
+
+.about ul li {
+  font-size: 1rem;
+  padding: 1px 0;
+}
+
+/* Footer */
+
+.page-footer {
+  margin-top: 2.5rem;
+  padding: 0 0 1rem 0;
+  background: #111111;
+  color: #fff;
+}
+
+.page-footer .logo-link {
+  display: inline-block;
+  margin-bottom: 1rem;
 }
 
 hr {
