@@ -3,8 +3,8 @@ import React from 'react';
 export const Toc = () => {
   return (
     <div className="container">
-      <h4 className="text-center">Table of Contents</h4>
-      <ol>
+      <h4>Table of Contents</h4>
+      <ol className="no-list-style">
         <li><a href="#introduction">Introduction</a>
           <ul>
             <li><a href="#what-is-offline-first">What is Offline-First?</a></li>
@@ -20,9 +20,9 @@ export const Toc = () => {
         </li>
         <li><a href="#document-versioning">Document Versionining</a>
           <ul>
-            <li><a>How turtleDB Manages Versions</a></li>
-            <li><a>Documents and Meta Documents</a></li>
-            <li><a>Promises</a></li>
+            <li><a href="#last-write-wins">Last Write Wins: Naive Solution</a></li>
+            <li><a href="#keep-conflicting-revisions">Keep Conflicting Revisions: Naive Solution</a></li>
+            <li><a href="#document-history">Document History: turtleDB's Solution</a></li>
           </ul>
         </li>
         <li><a href="#history-trees">History Trees</a>

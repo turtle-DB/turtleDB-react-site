@@ -3,7 +3,7 @@ import Citation from '../../Citation'
 
 const TurtleDBArchitecture = () => {
   return (
-    <div className="container">
+    <div>
       <h2 id='turtleDB-architecture'>turtleDB Architecture</h2>
     </div>
   )

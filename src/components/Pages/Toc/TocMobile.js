@@ -3,8 +3,8 @@ import React from 'react';
 export const TocMobile = () => {
   return (
     <div>
-      <h4 className="text-center">Table of Contents</h4>
-      <ol>
+      <h4>Table of Contents</h4>
+      <ol className="no-list-style">
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#in-browser-storage">In-Browser Storage</a></li>
         <li><a href="#document-versioning">Document Versionining</a></li>

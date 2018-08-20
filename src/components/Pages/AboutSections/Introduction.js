@@ -3,7 +3,7 @@ import Citation from '../../Citation'
 
 const Introduction = () => {
   return (
-    <div className="container">
+    <div>
       <h2 id='introduction'>Introduction</h2>
       <p>
         This is the story of how we built turtleDB - a framework for creating offline-first,
@@ -137,7 +137,7 @@ const Introduction = () => {
       <h3 id="introducing-turtledb">Introducing turtleDB</h3>
 
       <img/>
-    
+
       <p>
         turtleDB is a framework that sits between your web application and browser storage on every client.
         This means read queries that normally go directly to the server run through turtleDB first and write queries hit

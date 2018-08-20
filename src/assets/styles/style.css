@@ -32,6 +32,26 @@
   border-radius: 10px;
 }
 
+.padding {
+  padding: 1rem 2rem;
+}
+
+.max-width {
+  /* width: 75vw; */
+  max-width: 1200px;
+}
+
+.no-list-style {
+  list-style: none;
+  padding-left: 0;
+}
+
+@media (min-width: 768px) {
+  .max-width {
+    width: 75vw;
+    /* padding: 1rem 2rem; */
+  }
+}
 /* Top Navbar */
 
 .navbar {

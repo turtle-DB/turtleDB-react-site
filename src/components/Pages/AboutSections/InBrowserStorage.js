@@ -7,8 +7,9 @@ import Citation from '../../Citation'
 
 const InBrowserStorage = () => {
   const codeSnippet1 = "var React = require('react');\nvar Markdown = require('react-markdown');\n\nReact.render(\n  <Markdown source=\"# Your markdown here\" />,\n  document.getElementById('content')\n);"
+  const readQuery = "turtleDB.read('foo').then(data => console.log(data))";
   return (
-    <div className="container">
+    <div>
       <h2 id='in-browser-storage'>In-Browser Storage</h2>
       <p>
         If you want to store documents in the browser, there are 3 options:
@@ -72,8 +73,8 @@ const InBrowserStorage = () => {
       <img/>
 
       <p>
-        IDB is quirky in that events fire on objects that are only available for the duration
-        of the IndexedDB connection. These objects disappear as soon as the events have fired.
+        Furthermore, events fire on objects that are only available for the duration of the IDB connection.
+        These objects disappear as soon as the connection closes.
       </p>
       <p>
         Given this specification, IDB is not the simplest API to work with. Even according to Mozilla,
@@ -93,30 +94,54 @@ const InBrowserStorage = () => {
         <hr></hr>
       </blockquote>
       <p>
-        Given the admission by the creators of IndexedDB that it is challenging to work with,
-        the lack of popularity for offline-first applications is unsurprising. Developers
-        don’t want to have to spend hours reading documentation just to get IDB up and running.
-      </p>
-      <p>
-        We decided to help the developer community by writing a promise-based wrapper that
-        condensed native IDB queries down to one line. This was the beginning of turtleDB.
+        The lack of popularity for offline-first applications is unsurprising.
+        That is why turtleDB offers a promise-based wrapper that <Link to='/API'>condenses native IDB queries
+        down to one line.</Link>
       </p>
       <h3 id="turtledb-promise-api">turtleDB’s Promise API</h3>
       <p>
-        By nature, asynchronous Javascript takes a little more effort to work with. To add on top of that,
-        the native IDB API is event-based which makes it even more awkward to use. Before writing any
-        turtleDB code, we carefully decided between the three common ways of working with asyc Javascript:
-        good old callbacks, promises, and the recently introduced async await. Callbacks can get extremely
-        messy (we want to avoid callback hell as much as possible) and as of this writing, asyc / await is
-        a ES7 feature and we didn’t want to be forced into using a transpiler like Babel to ensure our JS
-        was working. For these reasons, we decided to go with promises.
+        Without Promises, developers have to rely on nested callback functions.
+        Callbacks can get extremely messy (i.e. ‘callback hell’), and the JavaScript
+        community has embraced Promises as a much simpler and elegant solution for dealing
+        with asynchronous code.
+      </p>
+      <p>
+        Promises allow us to control the execution flow of async calls. turtleDB abstracts
+        away all the complexities of asynchronous IDB code to instead expose a more familiar
+        <Link to='/API'> Promise-based API</Link> for the developer. The below code snippets
+        show how much code we save a developer from writing when using turtleDB. Both open a
+        connection to IDB and insert a new document.
+      </p>
+      <p>
+        In cases where sequential execution matters, database operations must be kept atomic.
+        For these cases, turtleDB uses a “Promise chain” where the operation only ends once
+        the final Promise is resolved or an error was thrown somewhere along the chain.
+      </p>
 
-        Essentially, we don’t want IDB users to get bogged down thinking about async code and all the quirks
-        that come with IDB. With <Link to='/API'>turtleDB's API</Link>, we’ve condensed the code you’d normally have to write (shown on the left) to a one-liner.
+      <img/>
+
+      <p>
+        With all of these operations within turtleDB, developers are able to just open their
+        browsers, set up a database and begin interacting with IDB. They no longer need to
+        worry about tasks such as opening and closing connections to IDB, creating a store,
+        setting up `onsuccess` and `onerror` handlers for basic operations, or controlling the
+        flow of asynchronous operations.
+      </p>
+      <p>
+        The only required knowledge for developers is that all queries to turtleDB return a Promise.
+        This means if you want to read a document of id `foo`, that code would be written as:
       </p>
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {codeSnippet1}
+        {readQuery}
       </SyntaxHighlighter>
+
+      <p>
+        turtleDB’s designed consists of two modules. The first is an IDB adapter which contains
+        all the native code for interacting with IDB. The other is a public facing and
+        developer-friendly API that communicates with the IDB adapter. In short, a
+        developer can interact with IDB without having to write a single line of IDB specific code.
+      </p>
+      <img />
     </div>
   )
 }

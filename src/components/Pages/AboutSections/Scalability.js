@@ -3,7 +3,7 @@ import Citation from '../../Citation'
 
 const Scalability = () => {
   return (
-    <div className="container">
+    <div>
       <h2 id='scalability'>Scalability</h2>
     </div>
   )

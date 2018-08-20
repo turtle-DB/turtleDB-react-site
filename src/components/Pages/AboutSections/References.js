@@ -3,7 +3,7 @@ import Citation from '../../Citation'
 
 const References = () => {
   return (
-    <div className="container">
+    <div>
       <h2 id='references'>References</h2>
     </div>
   )

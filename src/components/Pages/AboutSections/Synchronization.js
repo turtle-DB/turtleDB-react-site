@@ -5,7 +5,7 @@ import Citation from '../../Citation'
 
 const Synchronization = () => {
   return (
-    <div className="container">
+    <div>
       <h2 id='synchronization'>Synchronization</h2>
       <p>Synchronization is what makes turtleDB more than just a promise-based wrapper for IDB.
         We wanted to be the first to provide this functionality with MongoDB. Being the first to do something

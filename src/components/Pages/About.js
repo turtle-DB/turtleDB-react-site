@@ -27,17 +27,17 @@ const AboutHome = () => {
 
 export const About = () => {
   return (
-    <div className="about container">
+    <div className="about">
       <div className="row">
         <div className="toc d-none d-md-inline-block col-md-3">
           <StickyBox bottom={false} offset={25}>
             <Toc />
           </StickyBox>
         </div>
-        <div className="col-xs-12 d-md-none">
+        <div className="col-xs-12 d-md-none padding">
           <TocMobile />
         </div>
-        <div className="col-sm-12 col-md-9">
+        <div className="col-sm-12 col-md-9 padding max-width">
           <Introduction/>
           <InBrowserStorage/>
           <DocumentVersioning/>
