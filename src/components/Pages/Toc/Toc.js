@@ -7,16 +7,15 @@ export const Toc = () => {
       <ol>
         <li><a href="#introduction">Introduction</a>
           <ul>
-            <li><a>What is Offline-First?</a></li>
-            <li><a>Offline-First Architectures</a></li>
-            <li><a>Existing Solutions</a></li>
-            <li><a>Design Goals</a></li>
+            <li><a href="#what-is-offline-first">What is Offline-First?</a></li>
+            <li><a href="#offline-first-architecture">Offline-First Architecture</a></li>
+            <li><a href="#introducing-turtledb">Introducing turtleDB</a></li>
           </ul>
         </li>
         <li><a href="#in-browser-storage">In-Browser Storage</a>
           <ul>
             <li><a href="#idb">IndexedDB</a></li>
-            <li><a>Promises</a></li>
+            <li><a href="#turtledb-promise-api">turtleDB's Promise API</a></li>
           </ul>
         </li>
         <li><a href="#document-versioning">Document Versionining</a>

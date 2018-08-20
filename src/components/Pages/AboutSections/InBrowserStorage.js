@@ -11,26 +11,74 @@ const InBrowserStorage = () => {
     <div className="container">
       <h2 id='in-browser-storage'>In-Browser Storage</h2>
       <p>
-        If you want to store documents in the browser, there are 3 storage options:
-        LocalStorage, WebSQL, and IndexedDB (IDB). Let’s talk about each one briefly.
+        If you want to store documents in the browser, there are 3 options:
+        LocalStorage, WebSQL, and IndexedDB (IDB).
       </p>
       <h5>LocalStorage</h5>
       <p>
-        It has a 5MB cap and its API is totally synchronous and therefore blocks the DOM.
-        It is essentially a large JavaScript object that can have data attached to it. Good
-        for storing small amounts of data in small chunks at a time.
+        A key value object store with a maximum storage limit of
+        only 5 MB. LocalStorage operations are performed synchronously
+         via the global `window` object in the browser. <Citation
+           url='https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage'
+           creator='Mozilla Developer Network'
+           creationDate='May 9, 2018'
+           contributingOrganization='MDN'
+           title='LocalStorage'
+         />With its low limit and
+         synchronous behavior, it is only good for storing small amounts of data
+         in small chunks at a time.
       </p>
       <h5>WebSQL</h5>
       <p>
-        Although it has a non-blocking API and its queries are a variant of SQL, it has
-        been deprecated by W3C in 2010 in favor of IndexedDB.
+        WebSQL uses a SQLite variation for local data storage and its original
+        goal was to enable web developers to query the database using a syntax
+         very similar to traditional SQL.   <Citation
+              url='https://en.wikipedia.org/wiki/Web_SQL_Database'
+              creator='Wikipedia'
+              creationDate='July 31, 2018'
+              contributingOrganization='Wikipedia'
+              title='Web SQL Database'
+            /> However, in 2010 the W3C failed to come
+         to a consensus on how to continue developing it in a standardized manner
+         so all major browsers dropped support for it before it could become a W3C
+         recommendation. It has since been deprecated by all browsers and is no longer
+         being developed.
       </p>
-      <h5 id='idb'>IndexedDB (IDB)</h5>
-    <p>
-      IDB is an in-browser (client-side) key-value based storage system. Queries to IDB
-      must be made in JavaScript and its entire API operates asynchronously. This all sounds
-      great but there are some major flaws with IDB.
-    </p>
+      <p>This leaves us with one option.</p>
+      <h3 id='idb'>IndexedDB (IDB)</h3>
+      <p>
+        After dropping support for WebSQL in 2010, the major browser developers
+        focused their time and energy into building an alternative in-browser storage
+        solution that would offer more sophisticated features.
+      </p>
+      <p>
+        Rather than building another SQL-like database, IDB is a JavaScript NoSQL
+        object-oriented database. It allows developers to store structured data such
+        as arrays and objects, as well as data in blobs. It is a key-value based storage
+        system, and enables more sophisticated database features such as transactions,
+        indexing, and the creation of multiple stores.
+      </p>
+      <p>
+        Developers work with IndexedDB via an asynchronous API that can be accessed in
+        most browser contexts, even WebWorkers and ServiceWorkers.
+      </p>
+      <p>
+        However, IDB’s API has some issues which contributes to its lack of popularity.
+        Multiple async operations are needed to perform even the  simplest of tasks.
+        A typical read query requires several async calls; opening a connection, sending
+        a request to the store, and then capturing the returned values in a callback function.
+      </p>
+
+      <img/>
+
+      <p>
+        IDB is quirky in that events fire on objects that are only available for the duration
+        of the IndexedDB connection. These objects disappear as soon as the events have fired.
+      </p>
+      <p>
+        Given this specification, IDB is not the simplest API to work with. Even according to Mozilla,
+        the primary backer and developer IDB, has stated:
+      </p>
       <blockquote className="blockquote mb-0">
         <hr></hr>
         <p>“IndexedDB API is powerful, but may seem too complicated for simple cases.”
@@ -45,13 +93,15 @@ const InBrowserStorage = () => {
         <hr></hr>
       </blockquote>
       <p>
-        It’s a little ironic that even MDN themselves admit their creation is not really viable
-        for simple use cases. This is definitely a contributing factor for offline-first applications’
-        lack of popularity. Developers don’t want to spend a lot of time setting up a database just to
-        insert that first document. We took notice of this and decided to write a promise-based wrapper
-        while condensing all native IDB queries down to one line. This was the beginning of turtleDB.
+        Given the admission by the creators of IndexedDB that it is challenging to work with,
+        the lack of popularity for offline-first applications is unsurprising. Developers
+        don’t want to have to spend hours reading documentation just to get IDB up and running.
       </p>
-      <h5>turtleDB’s Promise API</h5>
+      <p>
+        We decided to help the developer community by writing a promise-based wrapper that
+        condensed native IDB queries down to one line. This was the beginning of turtleDB.
+      </p>
+      <h3 id="turtledb-promise-api">turtleDB’s Promise API</h3>
       <p>
         By nature, asynchronous Javascript takes a little more effort to work with. To add on top of that,
         the native IDB API is event-based which makes it even more awkward to use. Before writing any

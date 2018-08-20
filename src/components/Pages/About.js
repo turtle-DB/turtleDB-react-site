@@ -29,7 +29,7 @@ export const About = () => {
   return (
     <div className="about container">
       <div className="row">
-        <div className="d-none d-md-inline-block col-md-3">
+        <div className="toc d-none d-md-inline-block col-md-3">
           <StickyBox bottom={false} offset={25}>
             <Toc />
           </StickyBox>

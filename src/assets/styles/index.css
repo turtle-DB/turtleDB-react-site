@@ -16,6 +16,7 @@
 	display: inline-block;
 	text-align: center;
 	vertical-align: baseline;
+	z-index: -1;
 }
 
 .citation > div {

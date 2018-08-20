@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <footer class="page-footer font-small special-color-dark pt-4">
-      <div class="container">
-        <div class="row">
-          <div class="col text-center">
+    <footer className="page-footer font-small special-color-dark pt-4">
+      <div className="container">
+        <div className="row">
+          <div className="col text-center">
             <Link className="logo-link" to='/'>
               <img className="card-img-top logo-small" src="images/logo.png" alt="small logo" />
             </Link>
