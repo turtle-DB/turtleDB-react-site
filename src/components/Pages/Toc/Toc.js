@@ -48,8 +48,8 @@ export const Toc = () => {
         </li>
         <li><a href="#conflicts">Conflicts</a>
           <ul>
-            <li><a>What is a Conflict?</a></li>
-            <li><a>Tree Merging</a></li>
+            <li><a href="#winning-revisions">Winning Revisions</a></li>
+            <li><a href="#conflict-resolution">Conflict Resolution</a></li>
           </ul>
         </li>
         <li><a href="#scalability">Scalability</a>
@@ -59,10 +59,6 @@ export const Toc = () => {
           </ul>
         </li>
         <li><a href="#future-work">Future Work</a>
-          <ul>
-            <li>Service Workers</li>
-            <li>Websockets</li>
-          </ul>
         </li>
         <li><a href="#references">References</a></li>
       </ol>

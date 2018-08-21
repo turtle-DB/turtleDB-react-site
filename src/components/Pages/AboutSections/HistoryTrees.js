@@ -5,6 +5,8 @@ import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 
 const doublyLinkedLists = "class Revision {\n  constructor(rev) {\n    this.rev = rev;\n    this.prev = null;\n    this.next = null;\n  }\n}\nconst rev1 = new Revision('1-hash1');\nconst rev2 = new Revision('2-hash2');\nrev1.next = rev2;\nrev2.prev = rev1;\n\nconst rev3 = new Revision('3-hash3');\nrev2.next = rev3;\nrev3.prev = rev2;"
 const subArray = "const revisions = [['1-hash1'], ['2-hash2a', '2-hash2b'], ['3-hash3a', '3-hash3b']];"
+const nestedArray = "const revisions = [\'1-hash1\', [[\'2-hash1\', [[\'3-hash1\', [[\'4-hash1\', []]]]]], [\'2-hash2\', [[\'3-hash2\', []]]]]];"
+const readableNestedArray = "const revisions = [\r\n\'1-hash1\', [\r\n  [\'2-hash1\', [\r\n    [\'3-hash1\', [\r\n      [\'4-hash1\', []\r\n      ]\r\n    ]]\r\n  ]], \r\n  [\'2-hash2\', [\r\n    [\'3-hash2\', []\r\n    ]\r\n  ]]\r\n]];"
 
 const HistoryTrees = () => {
   return (
@@ -125,6 +127,55 @@ const HistoryTrees = () => {
         conflicts would have to be inserted in those same index nodes further down the tree.
       </p>
       <h4>Nested Array: turtleDB's Tree Data Structure</h4>
+      <p>
+        In the end, we settled on a nested array structure where every node was placed within its own sub-array,
+        nested within its parent’s sub-array:
+      </p>
+
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {nestedArray}
+      </SyntaxHighlighter>
+
+      <p>
+        From the outside, this data structure looks confusing  but it is actually easy to work with.
+        A full traversal is accomplished in O(N) space and time with a simple recursive function.
+      </p>
+      <p>
+        The other advantage of this structure is accessing and splicing sub-sections (branches) of the
+        trees can be done very easily. A node-subarray contains all of its own descendants in a subarray.
+        This property is invaluable for <a href="#">merging</a>.
+      </p>
+      <p>
+        The below shows our nested array structure in a more readable format next to a conceptual diagram of its equivalent tree:
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {readableNestedArray}
+      </SyntaxHighlighter>
+
+      <img />
+
+      <h4>Meta Documents</h4>
+
+      <p>
+        The nested array structure we just described became the data structure for turtleDB’s revision trees.
+        It could be stored as a value in IndexedDB’s key-value store, with the document ID as the key.
+      </p>
+      <p>
+        We call this record representing one document a ‘meta document’. With the revision tree,
+        it keeps track of all the changes a document has undergone. Along with the revision, the
+        meta document contains a few more properties which exist primarily to help efficiently manage conflicts.
+      </p>
+      <p>
+        The first is a reference to the ‘winning revision’ of a document, and the second is an array of ‘leaf revisions’
+        that exist at the end of branches in the revision tree.
+      </p>
+
+      <img />
+
+      <p>
+        This is what an example meta document looks like. So how do we traverse the document history tree?
+      </p>
+
     </div>
   )
 }
