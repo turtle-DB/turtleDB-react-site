@@ -49,7 +49,7 @@ export const Toc = () => {
         <li><a href="#conflicts">Conflicts</a>
           <ul>
             <li><a href="#winning-revisions">Winning Revisions</a></li>
-            <li><a>Tree Merging</a></li>
+            <li><a href="#conflict-resolution">Conflict Resolution</a></li>
           </ul>
         </li>
         <li><a href="#scalability">Scalability</a>

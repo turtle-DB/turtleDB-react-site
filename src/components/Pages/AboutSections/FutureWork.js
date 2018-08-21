@@ -36,11 +36,6 @@ const FutureWork = () => {
       </p>
       <h5>P2P</h5>
       <p>
-        Authentication is critical when dealing with shared data. For the scope of turtleDB
-        1.0.0, we did not implement it. However, it is on our roadmap for future versions as
-        we continue to build out tortoiseDB.
-      </p>
-      <p>
         An interesting direction this project could be taken in is to consider connecting two
         turtleDB clients with WebSockets and synchronizing them with one another directly.
         This eliminates the middleman (server) entirely, creating a distributed network of

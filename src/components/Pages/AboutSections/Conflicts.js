@@ -5,6 +5,9 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 
 const _getWinningRev = "function _getWinningRev(node) {\r\n  const leafRevs = this.collectActiveLeafRevs(node);\r\n\r\n  return leafRevs.sort((a, b) => {\r\n    let [revNumA, revHashA] = a.split(\'-\');\r\n    let [revNumB, revHashB] = b.split(\'-\');\r\n    revNumA = parseInt(revNumA, 10);\r\n    revNumB = parseInt(revNumB, 10);\r\n\r\n    if (revNumA > revNumB) {\r\n      return -1;\r\n    } else if (revNumA < revNumB) {\r\n      return 1;\r\n    } else {\r\n      if (revHashA > revHashB) {\r\n        return -1;\r\n      } else {\r\n        return 1;\r\n      }\r\n    }\r\n  })[0];\r\n}"
+const _conflicts = "if (metaDoc._leafRevs.length > 1) {\r\n  doc._conflicts = true;\r\n}";
+const _storeDocument = "{\r\n  type: \"River Turtle\",\r\n  _conflictVersions: [\r\n    {type: \"Sea Turtle\", _id: \"turtle1\", _rev: \"2-007\"},\r\n    {type: \"Lake Turtle\", _id: \"turtle1\", _rev: \"3-202\"},\r\n    {type: \"Pond Turtle\", _id: \"turtle1\", _rev: \"3-7c9\"},\r\n  ],\r\n  _conflicts: true,\r\n  _id: \"turtle1\",\r\n  _winningRev: \"3-895\",\r\n}"
+const _setConflictWinner = "function setConflictWinner(doc) {\r\n  const { _id, _rev } = doc;\r\n\r\n  return this._readMetaDoc(_id)\r\n    .then(metaDoc => this._deleteAllOtherLeafRevs(metaDoc, _rev))\r\n    .then(() => this.update(_id, doc, _rev))\r\n    .catch(err => console.log(\"setConflictWinner error:\", err));\r\n}"
 
 const Conflicts = () => {
   return (
@@ -110,6 +113,65 @@ const Conflicts = () => {
         to using “proof of work”, i.e. going with the revision that received the most updates.
       </p>
       <h4>Indicating Conflicts</h4>
+      <p>
+        turtleDB surfaces conflicts for developers automcatically. When a document is read that has more than one leaf revision, turtleDB adds a `_conflicts` property.
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {_conflicts}
+      </SyntaxHighlighter>
+      <p>
+        This makes it easy for turtleDB users to check for conflicts. turtleDB goes further by automatically returning all conflicting revisions as well.
+        These are placed within a property, `_conflictVersions` on the returned document.
+      </p>
+
+      <img />
+
+      <p>
+        In practice, a returned document looks like:
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {_storeDocument}
+      </SyntaxHighlighter>
+
+      <h3 id="conflict-resolution">Conflict Resolution</h3>
+      <p>
+        Developers may want to choose their own winning revision for a document rather than accept the revision selected
+        automatically by turtleDB’s deterministic algorithm.
+      </p>
+      <p>
+        turtleDB could allow the developer to update the `_winningRev` property, but this would
+        cause problems during sync. Given two different winning revisions, the server would have
+        to pick just one. This would require the use of the deterministic algorithm all over again
+        on all leaf nodes.
+      </p>
+      <p>
+        Instead, all competing revisions other than the selected winner need to be marked as deleted.
+        This deletion is propagated across the network after syncing:
+      </p>
+
+      <img/>
+
+      <p>
+        However, this approach has a risk. If two clients each pick different winners all branches
+        would be marked as deleted and the document could not be worked on any further.
+      </p>
+
+      <img />
+
+      <p>
+        turtleDB adds one more step to the developer API to select a winner. An empty update
+        is added to the winning revision, forcing it to persist:
+      </p>
+
+      <img />
+
+      <p>
+        This approach of deleting all of leaf revisions and adding an update to the winning revision is handled in our API
+        called `setConflictWinner`:
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {_setConflictWinner}
+      </SyntaxHighlighter>
     </div>
   )
 }
