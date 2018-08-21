@@ -6,13 +6,39 @@ import { SocialIcon } from 'react-social-icons';
 const Introduction = () => {
   return (
     <div>
-      <h2 id='introduction'>Introduction</h2>
       <p>
         This is the story of how we built turtleDB - a framework for creating offline-first,
         collaborative web applications. We wanted to empower developers with the ability to
         create collaborative apps that are fully functional even when offline.
       </p>
-      <h2 id="meet-the-team">The Team Behind turtleDB</h2>
+
+      <p>
+        You can see turtleDB in action with <a>this</a> demo app. You can also find instructions
+        on how to quickly start using turtleDB <a>here</a>.
+      </p>
+
+      <h3 id="what-is-turtledb">What is turtleDB?</h3>
+      <p>
+        turtleDB is a package that can be used to add offline-first capabilities
+        to web applications that rely on document-style data. It becomes the back-end
+        component for a developer, working with in-browser storage and replacing all
+        server calls. With document versioning, turtleDB provides effective conflict
+        resolution for app developers.
+      </p>
+
+      <p>
+        A second package, tortoiseDB, enables server-side storage in MongoDB
+        and collaboration for multiple clients.
+      </p>
+
+      <h2 id="meet-the-team">About Us</h2>
+      <p>
+        turtleDB was made by a team of three developers who wanted to expand
+        and popularize the world of offline-first applications. We also happen
+        to be looking for new work opportunities - please don’t hesitate to
+        reach out if we seem like a good fit for your team!
+      </p>
+
       <div className='container mt-5'>
         <div className="row">
 
@@ -79,12 +105,40 @@ const Introduction = () => {
         </div>
       </div>
 
+      <h3 id="goals">Goals</h3>
+      <p>
+        In sharing our story of building turtleDB, we hope to share the following:
+      </p>
+      <ul>
+        <li>
+          What offline-first web applications are
+        </li>
+        <li>
+          An in-depth exploration of in-browser storage options and document versioning
+        </li>
+        <li>
+          Client-server synchronization, and conflict management
+        </li>
+        <li>
+          Designing and optimizing a framework to handle these features for developers
+        </li>
+        <li>
+          Limitations and considerations for our framework
+        </li>
+      </ul>
+
+      <p>
+        On to the case study.
+      </p>
+
+      <h2 id='introduction'>Introduction</h2>
+
       <h3 id="what-is-offline-first">What is "offline-first"?</h3>
       <p>
         “Offline-first” is a design choice that allows web applications to
         remain functional even in cases where there is no internet connection.
-        Ideally, users of an offline-first application wouldn’t notice any difference
-        in their experience in an online to offline scenario.
+        Ideally, users of an offline-first application don’t notice any difference
+        in their experience in an online vs an offline scenario.
       </p>
       <p>
         Most apps fall under the traditional client-server model.
@@ -98,31 +152,23 @@ const Introduction = () => {
       </p>
       <p>
         Although this is what we are typically used to, there are some pretty significant
-        drawbacks to this approach. The most significant one being this scenario:
+        drawbacks to this approach. Most obviously, a client could lose their
+        connection, and the following would happen:
       </p>
 
-      <img />
+      <img className="w-100" src="../images/intro/dinosaur-game.png"/>
 
       <p>
-        The dinosaur game is fun, we’re willing to bet you’d rather have your page load.
+        While the dinosaur game is fun, we’re willing to bet you’d rather have your page load.
       </p>
       <p>
         Of course, this is not the only downside of the traditional model. Clients rely on the server for
         every interaction, making all of the following scenarios hindrances for a web application:
       </p>
 
-      <img></img>
-
-      <p>
-        The dinosaur game is fun, we’re willing to bet you’d rather have your page load.
-      </p>
-      <p>
-        Of course, this is not the only downside of the traditional model. Clients fully rely on the server
-        for every interaction, making all of the following scenarios a nightmare for a web application:
-      </p>
       <ul>
         <li>
-          “Lie-fi” - users believe they’re online but the connection is unusable
+          “Lie-fi” - users believe they are online but the connection is unusable
         </li>
         <li>
           Server bottleneck - an overloaded server forces clients to wait for responses
@@ -141,7 +187,7 @@ const Introduction = () => {
         They take on a larger share of the application logic and data storage.
       </p>
 
-      <img></img>
+      <img className="w-100" src="../images/intro/offline-first.png"  />
 
       <p>
         In this model, clients store static assets and application data locally, allowing the application
@@ -149,37 +195,39 @@ const Introduction = () => {
       </p>
       <ul>
         <li>
-          Apps can still be used while offline
+          Apps can still be used while offline.
         </li>
         <li>
-          Data can be queried for much faster because local reads are faster than an HTTP
-          request-response cycle
+          Data can be queried much faster because local reads are faster than an HTTP
+          request-response cycle.
         </li>
         <li>
-          Only a subset (delta) of the full dataset can be transmitted instead in an online-offline scenario,
+          Only a subset (delta) of the full dataset needs to be transmitted,
           reducing payload size
         </li>
       </ul>
 
       <h4 id="challenges-of-offline-first-applications">Challenges of Offline-First Applications</h4>
       <p>
-        An offline-first approach to building web applications is very doable but certain challenges arise depending on
-        the nature of the app.
+        An offline-first approach to building web applications is very doable,
+        but certain challenges arise depending on the nature of the app.
       </p>
 
-      <img/>
+      <img className="w-100" src="../images/intro/offline-spectrum.png" />
 
       <p>
-        This table outlines the difficulty in converting various types of web applications to offline-first. Ultimately,
-        every offline-first app must address the following questions:
+        This table outlines the difficulty in converting various types of web applications to be offline-first.
+        Ultimately, every offline-first app must address the following questions:
       </p>
       <ul>
         <li>
-          Does the app rely on persisting data? Some sort of client-side storage is going to be needed to guard against an
+          Does the app rely on persisting data? Some sort of client-side storage
+          is going to be needed to guard against an
           offline scenario.
         </li>
         <li>
-          How data intensive is the app?  Whatever the case may be, the storage on the client-side must be able to handle it.
+          How data intensive is the app?  Whatever the case may be, the storage
+          on the client-side must be able to handle it.
         </li>
         <li>
           Is this a collaborative app? Will multiple users access and edit the same data?
@@ -188,38 +236,45 @@ const Introduction = () => {
 
       <h4 id="design-goals">Design Goals</h4>
       <p>
-         Taking into consideration client-side storage, synchronization and conflict resolution, we wanted to design a solution that would fulfill
-         the following goals:
+         Taking into consideration client-side storage, synchronization and conflict resolution,
+         we wanted to design a solution that would fulfill the following goals:
       </p>
       <ul>
         <li>
-          Simplicity - Developers would be able to take their existing projects and easily convert them to be offline-first
+          Simplicity - Developers would be able to take their existing projects
+          and easily convert them to be offline-first
         </li>
         <li>
-          Flexibility - We would support applications where clients might be offline for extended periods of time
+          Flexibility - We would support applications where clients might be
+          offline for extended periods of time
         </li>
         <li>
-          Performance - We would maximize the potential of client-side storage to support more data intensive applications
+          Performance - We would maximize the potential of client-side storage
+          to support more data intensive applications
         </li>
       </ul>
 
-      <h3 id="introducing-turtledb">Introducing turtleDB</h3>
+      <h4 id="introducing-turtledb">Introducing turtleDB</h4>
 
-      <img/>
+      <img className="w-100" src="../images/intro/turtleDB-architecture.png" />
 
       <p>
         turtleDB is a framework that sits between your web application and browser storage on every client.
-        This means read queries that normally go directly to the server run through turtleDB first and write queries hit
-        the client’s local hard drive before being sent off to the server. For some applications, turtleDB alone is sufficient to provide
-        local, persistent storage without requiring any interaction with a back-end server.
+        This means read queries that normally go directly to the server run through turtleDB first, and write queries hit
+        the client’s local hard drive before being sent off to the server.
+        For some applications, turtleDB alone is sufficient to provide local,
+        persistent storage without requiring any interaction with a back-end server.
       </p>
       <p>
-        On the back-end, we introduce tortoiseDB, a server and adapter whose job is to receive queries sent by turtleDB and interface with a MongoDB
-        database. Multiple clients running turtleDB can communicate to the same tortoiseDB, enabling collaboration. Bi-directional
-        synchronization between all clients and tortoiseDB means changes from each client is shared with others.
+        On the back-end, we introduce tortoiseDB, a server and adapter that
+        receives queries sent by turtleDB and interfaces with a MongoDB
+        database. Multiple clients running turtleDB can communicate to the same
+        tortoiseDB, enabling collaboration. Bi-directional synchronization between
+        all clients and tortoiseDB means changes from each client is shared with all others.
       </p>
       <p>
-        With an understanding of what turtleDB is intended for, we can begin talking about the first layer of persistence.
+        With an understanding of what turtleDB is intended for, we can begin talking about
+        client-side persistence.
       </p>
     </div>
   )
