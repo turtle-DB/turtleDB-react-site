@@ -33,9 +33,7 @@ export const Toc = () => {
         </li>
         <li><a href="#turtleDB-architecture">turtleDB Architecture</a>
           <ul>
-            <li><a>Design</a></li>
-            <li><a>API</a></li>
-            <li><a>Stores: Components involved in Synchronization</a></li>
+            <li><a href="#turtledb-stores">turtleDB Stores</a></li>
           </ul>
         </li>
         <li><a href="#synchronization">Synchronization: A Two-Part Process</a>
