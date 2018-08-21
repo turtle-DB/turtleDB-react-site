@@ -11,5 +11,6 @@ import './assets/styles/docs.css'
 import './../node_modules/@fortawesome/fontawesome-free/css/all.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './assets/styles/style.css'
+import './assets/styles/api.css'
 
 ReactDOM.render(<App />, document.getElementById('root'));

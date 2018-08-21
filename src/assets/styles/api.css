@@ -1,0 +1,10 @@
+.flex-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.left-nav {
+  position: sticky;
+  top: 0;
+  margin-right: 10px;
+}
