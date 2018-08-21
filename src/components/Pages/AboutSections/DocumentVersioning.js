@@ -1,6 +1,8 @@
 import React from 'react';
 import Citation from '../../Citation'
 
+import { Carousel } from 'react-responsive-carousel';
+
 const DocumentVersioning = () => {
   return (
     <div>
@@ -43,8 +45,26 @@ const DocumentVersioning = () => {
         The “winner” in a conflict is always the last client to write to the database which means work is often lost.
       </p>
 
-      <img/>
-
+      <Carousel showArrows={true}>
+        <div>
+          <img src="../images/doc_versioning/lww_1.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/lww_2.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/lww_3.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/lww_4.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/lww_5.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/lww_6.png" />
+        </div>
+      </Carousel>
       <p>
         Here, client 1 comes online first and shares their changes with the server.
       </p>
@@ -68,7 +88,26 @@ const DocumentVersioning = () => {
         In other words, historical revisions are still discarded, while the conflicts are kept.
       </p>
 
-      <img />
+      <Carousel showArrows={true}>
+        <div>
+          <img src="../images/doc_versioning/kcv_1.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kcv_2.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kcv_3.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kcv_4.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kcv_5.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kcv_6.png" />
+        </div>
+      </Carousel>
 
       <p>
         Two competing revisions from each client are eventually consistent across all nodes.
@@ -80,7 +119,7 @@ const DocumentVersioning = () => {
       </p>
       <p>
         Still, this solution has drawbacks. How did this conflict arise? It is not entirely clear
-         how the original “Sea Turtle”document has been lost.
+        how the original “Sea Turtle” document has been lost.
       </p>
       <h5>Conflicts Without Context</h5>
       <p>
@@ -97,25 +136,43 @@ const DocumentVersioning = () => {
           it is dropped, resolving conflicts over time
         </li>
       </ul>
-      <li>
+      <p>
         The last option is elegant, but it introduces a slew of time-related complications. All clients and server must receive updated timestamps
         resulting from changes elsewhere and their clocks must be kept in sync.
-      </li>
-      <li>
+      </p>
+      <p>
         Even if we introduce time tracking, users still lack context because they can’t see the last common revision.
-      </li>
+      </p>
       <h3 id="document-history">Document History: turtleDB's Solution</h3>
       <p>
         Many of the problems discussed in the previous section go away once the system starts preserving historical revisions of a document.
       </p>
 
-      <img/>
       <p>
         Continuing with our simplified example, all clients and the server now share all document revisions and track the order of those revisions.
         In this example only the previous revision is shown, but in actuality, all revisions are stored by turtleDB.
       </p>
 
-      <img/>
+      <Carousel showArrows={true}>
+        <div>
+          <img src="../images/doc_versioning/kav_1.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kav_2.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kav_3.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kav_4.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kav_5.png" />
+        </div>
+        <div>
+          <img src="../images/doc_versioning/kav_6.png" />
+        </div>
+      </Carousel>
 
       <p>
         In the case of a conflict, clients can now see how it arose. Even better, the clients don’t just see the
@@ -130,7 +187,7 @@ const DocumentVersioning = () => {
         in explicit detail shortly.
       </p>
       <p>
-        When a client comes online and syncs, they receive back the combined history of that document which has all the changes made by every client.
+        When a client comes online and syncs, they receive the combined history of that document which has all the changes made by every client.
       </p>
 
       <img />

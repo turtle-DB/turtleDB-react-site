@@ -25,10 +25,10 @@ export const Toc = () => {
             <li><a href="#document-history">Document History: turtleDB's Solution</a></li>
           </ul>
         </li>
-        <li><a href="#history-trees">History Trees</a>
+        <li><a href="#history-trees">Document History Trees</a>
           <ul>
-            <li><a>Tree Data Structures</a></li>
-            <li><a>Algorithmic Analysis</a></li>
+            <li><a href="#revision-ids">Revision IDs</a></li>
+            <li><a href="#tree-data-structures">Tree Data Structures</a></li>
           </ul>
         </li>
         <li><a href="#turtleDB-architecture">turtleDB Architecture</a>

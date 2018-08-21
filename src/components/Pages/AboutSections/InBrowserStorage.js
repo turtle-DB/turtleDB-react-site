@@ -5,9 +5,9 @@ import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 
 import Citation from '../../Citation'
 
+const readQuery = "turtleDB.read('foo').then(data => console.log(data))";
+
 const InBrowserStorage = () => {
-  const codeSnippet1 = "var React = require('react');\nvar Markdown = require('react-markdown');\n\nReact.render(\n  <Markdown source=\"# Your markdown here\" />,\n  document.getElementById('content')\n);"
-  const readQuery = "turtleDB.read('foo').then(data => console.log(data))";
   return (
     <div>
       <h2 id='in-browser-storage'>In-Browser Storage</h2>
@@ -136,7 +136,7 @@ const InBrowserStorage = () => {
       </SyntaxHighlighter>
 
       <p>
-        turtleDB’s designed consists of two modules. The first is an IDB adapter which contains
+        turtleDB’s design consists of two modules. The first is an IDB adapter which contains
         all the native code for interacting with IDB. The other is a public facing and
         developer-friendly API that communicates with the IDB adapter. In short, a
         developer can interact with IDB without having to write a single line of IDB specific code.
