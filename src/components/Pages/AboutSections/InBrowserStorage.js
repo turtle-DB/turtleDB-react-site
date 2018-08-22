@@ -106,7 +106,7 @@ const InBrowserStorage = () => {
         condenses native IDB queries down to one line.</Link>
       </p>
 
-      <h3 id="wrapping-idb-with-promises">Wrapping IDB with Promises</h3>
+      <h3 id="turtledb-promise-api">turtleDB's Promise API</h3>
       <p>
         Without Promises, developers have to rely on nested callback functions.
         Callbacks can get extremely messy (i.e. ‘callback hell’), and the

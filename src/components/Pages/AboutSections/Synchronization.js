@@ -1,4 +1,5 @@
 import { Carousel } from 'react-responsive-carousel';
+import { Link } from 'react-router-dom'
 
 import React from 'react';
 import Citation from '../../Citation'
@@ -113,6 +114,7 @@ const Synchronization = () => {
       <p>turtleDB provides developers the ability to set batch sizes for the meta document and revision document collections as they are transported over the network to the server.</p>
 
       <p>Developers may not have the ability to alter maximum payload limits on their database servers so this is a way to cap the size of payloads travelling between the two points.</p>
+<<<<<<< HEAD
 
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{batchLimit}</SyntaxHighlighter>
 
@@ -125,6 +127,23 @@ const Synchronization = () => {
       <p>After this has completed, a full sync has occurred and the two databases will possess an up-to-date view of the state of the data.</p>
      
       {/* <h3 id="sync-walkthrough">Example Sync Walkthrough</h3>
+=======
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {batchLimit}
+      </SyntaxHighlighter>
+      <p>Users can easily set appropriate batch sizes depending on the documents they are working with using <Link to='/API'>turtleDB's API.</Link></p>
+      <h3 id="sync-from">syncFrom()</h3>
+      <p>
+        After the client has synced with the server and sent changes, the second half of the sync process initiates where the server sends changes to the client, called `syncFrom`.
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {syncFrom}
+      </SyntaxHighlighter>
+      <p>
+        After this has completed, a full sync has occurred and the two databases will possess an up-to-date view of the state of the data.
+      </p>
+      <h3 id="sync-walkthrough">Example Sync Walkthrough</h3>
+>>>>>>> 21c6f90fba70ad5638d94160c1ec38b8bd2e352a
       <p>
         The best way to demonstrate how turtleDB syncs is to run through a example. Have
         a click through the slides. We broke it down so that our HTTP request-response cycles

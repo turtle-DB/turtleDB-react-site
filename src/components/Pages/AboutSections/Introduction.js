@@ -105,9 +105,9 @@ const Introduction = () => {
         </div>
       </div>
 
-      <h3 id="goals">Goals</h3>
+      <h3 id="goals">Our Goals for turtleDB</h3>
       <p>
-        In sharing our story of building turtleDB, we hope to share the following:
+        In sharing our story of building turtleDB, we will discuss the following:
       </p>
       <ul>
         <li>
