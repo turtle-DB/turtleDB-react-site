@@ -211,6 +211,11 @@ const InBrowserStorage = () => {
       </p>
 
       <img className="w-100" src="../images/browser_storage/developer-API.png"/>
+
+      <p>
+        With a working understanding of browser storage, we can examine turtleDB’s
+        approach to storing documents for offline-first applications, and enabling collaboration.
+      </p> 
     </div>
   )
 }
