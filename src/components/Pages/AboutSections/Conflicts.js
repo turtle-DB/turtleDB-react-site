@@ -12,10 +12,6 @@ const _setConflictWinner = "function setConflictWinner(doc) {\r\n  const { _id, 
 
 const _conflictVersions = "if (metaDoc._leafRevs.length > 1) {\r\n  doc._conflicts = true;\r\n  doc._conflictVersions = [];\r\n\r\n  let conflictRevs = metaDoc._leafRevs.filter(rev => rev !== doc._rev);\r\n  let promises = conflictRevs.map(rev => {\r\n    return this._readRevFromIndex(metaDoc._id, rev)\r\n      .then(version => {\r\n        [version._id, version._rev] = version._id_rev.split(\'::\');\r\n        delete version._id_rev;\r\n        doc._conflictVersions.push(version);\r\n      });\r\n    });\r\n\r\n\/\/...";
 
-const revtree1 = "[\r\n  \"1-1e5\"\r\n  {},\r\n  [\r\n    [\r\n      \"2-705\",\r\n      {},\r\n      []\r\n    ]\r\n  ]\r\n]";
-const revtree2 = "[\r\n  \"1-1e5\"\r\n  {},\r\n  [\r\n    [\r\n      \"2-007\",\r\n      {},\r\n      []\r\n    ],\r\n    [\r\n      \"2-705\",\r\n      {},\r\n      []\r\n    ]\r\n  ]\r\n]";
-const metadoc = "{\r\n  _id: \"turtle1\",\r\n  _leafRevs: [\"2-007\", \"2-705\"],\r\n  _revisions: [\"1-1e5\", {}, [...]],\r\n  _winningRev: \"2-705\"\r\n}";
-
 const Conflicts = () => {
   return (
     <div>
@@ -28,7 +24,7 @@ const Conflicts = () => {
       <p>After one client syncs to the server, the server will have revisions that are different than what the second client has.</p>
       <p>More specifically, the revision trees for the document on the client and server would contain different data:</p>
 
-      <img className="" src="../images/conflicts/1-server-client-trees.png" />
+      <img className="w-100" src="../images/conflicts/1-server-client-trees.png" />
 
       <h3 id="surfacing-conflicts">Surfacing Conflicts</h3>
 
@@ -37,11 +33,11 @@ const Conflicts = () => {
       <p>The server merges the trees by concurrently traversing down common revisions (nodes) held in each tree. For each node pair common node, it compares the two sets of child revisions by revision ID, and either saves off pairs of common revisions for the next recursive traversals, or merges any new revisions into the server tree.</p>
       <p>When any new revisions are found, the server simply incorporates the client’s revision sub-array as a sibling node, like this:</p>
 
-      <img className="" src="../images/conflicts/2-merged-tree.png" />
+      <img className="w-100" src="../images/conflicts/2-merged-tree.png" />
 
       <p>We can visualize this operation as creating a branch in the revision tree:</p>
 
-      <img className="" src="../images/conflicts/3-tree-diagram.png" />
+      <img className="w-100" src="../images/conflicts/3-tree-diagram.png" />
 
       <p>The client that last synced gets back the merged tree, which now has multiple valid leaf revisions it could return to the user. This is what we mean when we say a document contains a conflict, and is also where the concept of a winning revision comes in.</p>
 
@@ -49,13 +45,13 @@ const Conflicts = () => {
 
       <p>The client tracks the competing leaf revisions in the meta document property <span className="inline-code">_leafRevs</span>:</p>
 
-      <img className="" src="../images/conflicts/4-leaf-revs.png" />
+      <img className="w-100" src="../images/conflicts/4-leaf-revs.png" />
 
       <p>In order to provide a consistent API, turtleDB’s <span className="inline-code">read()</span> method only ever returns one revision to the developer even when there are competing revisions. It does this by setting one revision as the ‘winning’ revision either by default or by developer input.</p>
 
       <p>The winning revision is held in the <span className="inline-code">_winningRev</span> property of the meta document, as seen here:</p>
 
-      <img className="" src="../images/conflicts/5-winning-rev.png" />
+      <img className="w-100" src="../images/conflicts/5-winning-rev.png" />
 
       <p>This ensures that read requests can be handled in almost O(1) time using the index on the revision store.</p>
 
@@ -72,7 +68,7 @@ const Conflicts = () => {
 
       <p>The longest branch approach is the best default strategy turtleDB can use to support a wide range of applications without knowing their internal logic. It equates to using “proof of work”, i.e. going with the revision that received the most updates.</p>
 
-      <h3 id="indicating-conflicts">Developer API: Indicating Conflicts</h3>
+      <h3 id="indicating-conflicts">Indicating Conflicts</h3>
 
       <p>turtleDB surfaces conflicts for developers by modifying values returned by developer API methods. When a document is read that has more than one leaf revision, turtleDB adds a <span className="inline-code">_conflicts</span> property.</p>
 
@@ -84,7 +80,7 @@ const Conflicts = () => {
 
       <p>This is the relevant section of the <span className="inline-code">read()</span> method:</p>
 
-      <img className="" src="../images/conflicts/6-conflict-versions.png" />
+      <img className="w-100" src="../images/conflicts/6-conflict-versions.png" />
 
       <p>The returned document would look like this in practice:</p>
 
