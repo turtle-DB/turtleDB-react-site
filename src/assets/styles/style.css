@@ -329,8 +329,6 @@ table {
   padding: 4px 5px;
   border-radius: 5px;
 }
-<<<<<<< HEAD
-=======
 
  /* TOC STYLE */
 
@@ -345,7 +343,7 @@ table {
   position: sticky;
   top: 0;
   overflow-y: auto;
-  max-height: 100vh;
+  height: 100vh;
   padding-right: 0px;
  }
 
@@ -363,4 +361,3 @@ table {
    margin: 0;
    padding: 20px 0 0 0;
  }
->>>>>>> fb50d9a8fa44638a6758cc32630cb5b179432c0e

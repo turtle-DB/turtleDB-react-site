@@ -1,4 +1,5 @@
 import { Carousel } from 'react-responsive-carousel';
+import { Link } from 'react-router-dom'
 
 import React from 'react';
 import Citation from '../../Citation'
@@ -14,7 +15,7 @@ const getUniqueIDs = "function getUniqueIDs(docs) {\r\n  let ids = {};\r\n  for 
 const getStoreDocsForTortoise = "function getStoreDocsForTortoise() {\r\n  const promises = this.revIdsFromTortoise.map(_id_rev => \r\n    this.idb.command(\r\n      this.idb._store, \"INDEX_READ\", \r\n      { data: { indexName: \'_id_rev\', key: _id_rev }}\r\n\t));\r\n  \r\n  return Promise.all(promises)\r\n    .then(docs => this.storeDocsForTortoise = docs)\r\n}"
 const updateSyncDoc = "function createNewSyncToTortoiseDoc() {\r\n  let newHistory = { lastKey: this.highestTurtleKey, sessionID: this.sessionID };\r\n  this.newSyncToTortoiseDoc = Object.assign(\r\n    this.syncToTortoiseDoc, { history: [newHistory].concat(this.syncToTortoiseDoc.history) }\r\n  );\r\n}\r\n\r\nfunction updateSyncToTortoiseDoc() {\r\n  return this.idb.command(this.idb._syncToStore, \"UPDATE\", { data: this.newSyncToTortoiseDoc });\r\n}"
 const sendStoreDocs = "function batchSendTurtleDocsToTortoise(path) {\r\n  let currentBatch = this.storeDocsForTortoise.splice(0, BATCH_LIMIT);\r\n\r\n  if (this.storeDocsForTortoise.length === 0) {\r\n    return this.sendBatchOfDocs(path, currentBatch, true)\r\n  } else {\r\n    return this.sendBatchOfDocs(path, currentBatch)\r\n      .then(() => {\r\n        return this.batchSendTurtleDocsToTortoise(path);\r\n      });\r\n  }\r\n}\r\n\r\nfunction sendBatchOfDocs(path, batch, lastBatch = false) {\r\n  let payload = { docs: batch };\r\n\r\n  if (lastBatch) {\r\n    payload.newSyncToTortoiseDoc = this.newSyncToTortoiseDoc;\r\n    payload.lastBatch = lastBatch;\r\n  }\r\n\r\n  return axios.post(this.targetUrl + path, payload);\r\n}"
-const batchLimit = "const BATCH_LIMIT = 1000;"
+const batchLimit = "setBatchLimit(number) {\r\n  this.batchLimit = number;\r\n}"
 const syncFrom = "function syncFrom() {\r\n  return this.checkServerConnection(\'\/connect\')\r\n    .then(() => this.getTurtleID())\r\n    .then(() => this.getLastTurtleKey())\r\n    .then(() => this.sendRequestForTortoiseMetaDocs(\'\/_changed_meta_docs\'))\r\n    .then(() => this.findMissingRevIds())\r\n    .then(() => this.sendRequestForTortoiseDocs(\'\/_changed_docs\'))\r\n    .then(() => this.insertUpdatedMetaDocs())\r\n    .then(() => this.insertNewDocsIntoStore())\r\n    .then(() => this.updateSyncFromTortoiseDoc())\r\n    .then(() => this.sendSuccessConfirmation(\'\/_confirm_sync\'))\r\n    .catch((err) => console.log(\'Sync From Error:\', err));\r\n}";
 
 const Synchronization = () => {
@@ -168,7 +169,7 @@ const Synchronization = () => {
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
         {batchLimit}
       </SyntaxHighlighter>
-      <p>This line can be found in turtleDB's syncTo.js file and can be altered accordingly.</p>
+      <p>Users can easily set appropriate batch sizes depending on the documents they are working with using <Link to='/API'>turtleDB's API.</Link></p>
       <h3 id="sync-from">syncFrom()</h3>
       <p>
         After the client has synced with the server and sent changes, the second half of the sync process initiates where the server sends changes to the client, called `syncFrom`.
