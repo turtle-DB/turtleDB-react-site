@@ -59,13 +59,14 @@ const HistoryTrees = () => {
 
       <img/>
 
-      <h5>Leaf Nodes</h5>
+      <h4>Leaf Nodes</h4>
       <p>
         Throughout the rest of this paper, the last node of every branch will be referred to as a leaf node.
         This is simply a semantic distinction. Trees with no conflicts only have one leaf node;
         trees with conflicts have multiple leaf nodes that represent competing versions of a document.
       </p>
-      <h4 id="revision-ids">Revision IDs</h4>
+
+      <h3 id="revision-ids">Revision IDs</h3>
 
       <p>
         A unique revision ID is needed to represent each revision in the tree. Our diagrams so far have
@@ -82,12 +83,14 @@ const HistoryTrees = () => {
       </p>
       <p>
         We use the MD5 hashing algorithm but really, any hashing algorithm can work.
-        Hashing plays a role in how turtleDB detects conflicts. Two clients might independently edit the
-        same document. If they happen to make the exact same update to that document, their hashes will
+        Hashing plays a role in how turtleDB detects conflicts. As explained later in this paper, the hashes
+        are also used to detect conflicts. Hashing therefore provides a positive side-effect.
+        Two clients might independently edit the same document. If they happen to make the exact
+        same update to that document, their hashes will
         be the same and therefore no conflict is generated.
       </p>
 
-      <h3 id="tree-data-structures">Tree Data Structures</h3>
+      <h3 id="tree-data-structures">Tree Data Structure - Nested Arrays</h3>
       <p>
         So far, we have discussed revision trees as an abstract data structure. When designing turtleDB,
         we concluded whatever data structure we chose must satisfy these requirements:
@@ -97,12 +100,12 @@ const HistoryTrees = () => {
         <li>Store document versions incrementally, from oldest to newest</li>
         <li>Represent conflicts (forks) as intuitively as possible</li>
         <li>Imply parent-child node (version) relationships without requiring extra properties to describe those relationships</li>
-        <li>Facilitate easy merging with other trees. During a sync, the client and server would
-          somehow need to merge their revision trees for a document, so that document histories could be
+        <li>Facilitate easy merging with other trees. During a sync, the client and server
+          somehow need to merge their revision trees for a document, so that document histories can be
           shared in the network, and conflicts surfaced</li>
       </ol>
 
-      <h4>Doubly Linked Lists: Naive Solution</h4>
+      <h4>Doubly Linked Lists</h4>
       <p>
         Doubly linked-lists are an option for representing trees.
       </p>
@@ -111,10 +114,11 @@ const HistoryTrees = () => {
         {doublyLinkedLists}
       </SyntaxHighlighter>
       <p>
-        For turtleDB, this was not a viable option as DLL relied on memory pointers between nodes. These would be lost when
-        the tree was stored in the database or stringified when sent over the network.
+        For turtleDB, they were not a viable option as they relied on memory pointers
+        between nodes that would be lost when the tree was stored in the database or
+        stringified and sent over the network.
       </p>
-      <h4>Subarrays: Naive Solution</h4>
+      <h4>Subarrays</h4>
       <p>
         The data structure should be stored in one record so it can be sent over HTTP.
         IndexedDB suffers from slower write speeds, and we did not want to add to the write load for every document update.
@@ -124,14 +128,15 @@ const HistoryTrees = () => {
         {subArray}
       </SyntaxHighlighter>
       <p>
-        The con here is traversing down through the tree and determining ancestry would be confusing. For example,
-        ‘null’ would have to be inserted in sub-arrays after a node that had no children, and new branches for new
-        conflicts would have to be inserted in those same index nodes further down the tree.
+        The con here is traversing down through the tree and determining ancestry would be confusing.
+        For example, ‘null’ would have to be inserted in sub-arrays after a node that had no children,
+        and new branches for new conflicts would have to be inserted in those same index nodes further
+        down the tree.
       </p>
-      <h4>Nested Array: turtleDB's Tree Data Structure</h4>
+      <h4>Nested Array: turtleDB’s Tree Data Structure</h4>
       <p>
-        In the end, we settled on a nested array structure where every node was placed within its own sub-array,
-        nested within its parent’s sub-array:
+        In the end, we settled on a nested array structure where every node was placed within its
+        own sub-array, nested within its parent’s sub-array:
       </p>
 
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
@@ -139,16 +144,17 @@ const HistoryTrees = () => {
       </SyntaxHighlighter>
 
       <p>
-        From the outside, this data structure looks confusing  but it is actually easy to work with.
+        From the outside, this data structure looks confusing but it is actually easy to work with.
         A full traversal is accomplished in O(N) space and time with a simple recursive function.
       </p>
       <p>
-        The other advantage of this structure is accessing and splicing sub-sections (branches) of the
+        The other advantage of this structure is that accessing and splicing sub-sections (branches) of the
         trees can be done very easily. A node-subarray contains all of its own descendants in a subarray.
         This property is invaluable for <a href="#">merging</a>.
       </p>
       <p>
-        The below shows our nested array structure in a more readable format next to a conceptual diagram of its equivalent tree:
+        The below shows our nested array structure in a more readable format next to a c
+        onceptual diagram of its equivalent tree:
       </p>
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
         {readableNestedArray}
@@ -165,11 +171,12 @@ const HistoryTrees = () => {
       <p>
         We call this record representing one document a ‘meta document’. With the revision tree,
         it keeps track of all the changes a document has undergone. Along with the revision, the
-        meta document contains a few more properties which exist primarily to help efficiently manage conflicts.
+        meta document contains a few more properties which exist primarily to help
+        efficiently manage conflicts.
       </p>
       <p>
-        The first is a reference to the ‘winning revision’ of a document, and the second is an array of ‘leaf revisions’
-        that exist at the end of branches in the revision tree.
+        The first is a reference to the ‘winning revision’ of a document, and the second is an array of
+        ‘leaf revisions’ that exist at the end of branches in the revision tree.
       </p>
 
       <img />
@@ -177,6 +184,7 @@ const HistoryTrees = () => {
       <p>
         This is what an example meta document looks like. So how do we traverse the document history tree?
       </p>
+
       <h3 id="tree-algorithms">Tree Algorithms</h3>
       <p>
         turtleDB needs to handle:
@@ -186,12 +194,13 @@ const HistoryTrees = () => {
         <li>Merging trees when a client and server sync</li>
         <li>Using the tree to identify the latest revision of a document and all competing revisions </li>
       </ul>
+
       <h4>Updates & Deletes</h4>
       <p>
         Deleting or updating a document is simple to conceptualize. A new node is added as a child of an existing leaf node.
       </p>
       <p>
-        Because our trees are stored in a database and lacked memory pointers to their leaf nodes, we have  to do a full traversal of the tree down to the latest version (leaf node).
+        Because our trees are stored in a database and lack memory pointers to their leaf nodes, we have to do a full traversal of the tree down to the latest version (leaf node).
         This is the recursive function we developed:
       </p>
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
@@ -200,6 +209,7 @@ const HistoryTrees = () => {
 
       <img />
       <p>This process is O(N) time and space.</p>
+
       <h4>Merging Trees</h4>
       <p>
         Meta documents are shared between a client and server during a sync. When syncing has completed,
@@ -207,7 +217,8 @@ const HistoryTrees = () => {
         document updates and creates.
       </p>
       <p>
-        Tree merging always happens on the server after the client has sent over its document trees. Changes in the client tree are spliced into the server tree,
+        Tree merging always happens on the server after the client has sent over its document trees.
+        Changes in the client tree are spliced into the server tree,
         and the result is sent back to the client.
       </p>
 
@@ -228,19 +239,21 @@ const HistoryTrees = () => {
         Overall, the Big O complexity of merging is determined by the intersection of the two trees;
         the number of common nodes between trees that are recursively traversed.
       </p>
-      <h5>Comparing Children - O(N * M)</h5>
+
       <p>
-        When multiple children exist on a node pair, the common children must be paired off for further recursion,
+        <strong>Comparing Children - O(N * M)</strong>When multiple children exist on a node pair,
+        the common children must be paired off for further recursion,
         while the discrepancies need to be added to the server tree.
       </p>
+
       <p>
         This is an O(N * M) operation, as we cannot guarantee child nodes will always be sorted.
         Conflicts should be rare in document histories as clients typically converge on one revision,
         so while this step looks slow on paper, it should not be a common occurrence.
       </p>
-      <h5>Handling Discrepancies - O(1)</h5>
+
       <p>
-         Child nodes in the client tree that do not exist in the server tree represent changes that need to
+         <strong>Handling Discrepancies - O(1)</strong>Child nodes in the client tree that do not exist in the server tree represent changes that need to
          be spliced in. The new child node could be the start of a long branch of updates from the client.
          Our function takes advantage of the nested array structure to access that entire
          branch held within the child node sub-array, and splice it into the server tree in one step.
@@ -255,12 +268,12 @@ const HistoryTrees = () => {
       </p>
       <p>
         <em>It is important to note when we say that branch slicing is a O(1) step, we are talking about just the
-        branch slicing step itself and not the tree traversal up to the point where server and client differs.
+        branch slicing step itself and not the tree traversal up to the point where the server and client differ.
       </em>
       </p>
       <img />
 
-      <h3>Identifying Leaf Revs</h3>
+      <h4>Identifying Leaf Revisions</h4>
       <img />
 
       <p>
@@ -273,12 +286,13 @@ const HistoryTrees = () => {
         Developers can therefore look up and access those leaf nodes in constant time, or O(1).
         While reads are O(1), the “_leafRevs” array needs to be constantly kept up to date.
         We added code within our update, delete, and merge functions to update the array
-        while tree was being traversed. This means keeping the tree updated takes O(N) but
+        <strong>while</strong> the tree was being traversed. This means keeping the
+         tree updated takes O(N) but
         it piggybacks on other operations and is outweighed by the many O(1) reads.
       </p>
 
       <img />
-    
+
     </div>
   )
 }
