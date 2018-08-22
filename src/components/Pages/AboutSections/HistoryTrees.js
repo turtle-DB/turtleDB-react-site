@@ -241,7 +241,7 @@ const HistoryTrees = () => {
       </p>
 
       <p>
-        <strong>Comparing Children - O(N * M)</strong>When multiple children exist on a node pair,
+        <strong>Comparing Children - O(N * M)</strong> When multiple children exist on a node pair,
         the common children must be paired off for further recursion,
         while the discrepancies need to be added to the server tree.
       </p>
