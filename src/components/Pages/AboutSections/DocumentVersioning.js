@@ -19,30 +19,29 @@ const DocumentVersioning = () => {
       </p>
       <p>
         The reason behind this decision was driven by our goal for turtleDB to provide
-        flexible and transparent conflict resolution while minimizing lost work.  To illustrate
-        the value of this design here is a common scenario that offline-first apps encounter:
+        flexible and transparent conflict resolution while minimizing lost work.
       </p>
-
-      <img/>
-
+      <p>
+        A common scenario in offline-first apps can illustrate the value of this design:
+      </p>
       <p>
         Two clients and a server share the same document in an offline-first application.
-        The two clients go offline and independently make changes. When they come back online,
-        they share their changes with the server.
+        The two clients go offline and independently make different changes. When they
+        come back online, they share their changes with the server.
       </p>
       <p>
-        This simple scenario exhibits how working asynchronously and collaboratively introduces
-        <strong>conflicts</strong>. Conflicts arise when two or more people working on the same document make
-        independent, different changes to that same document.
+        When these two competing changes are introduced, a conflict is generated.
+        Conflicts often arise in collaborative applications where work is done asynchronously.
       </p>
       <p>
-        How should these conflicting changes across clients be resolved? Our answer to this question
-        largely determined many design choices we made for turtleDB.
+        How should these conflicting changes across clients be resolved? Our answer to this
+        question largely determined many design choices we made for turtleDB.
       </p>
+
       <h3 id="last-write-wins">Last Write Wins: Naive Solution</h3>
       <p>
         One solution might be Last Write Wins (LWW). LWW simply stores the most recent revision of a document.
-        The “winner” in a conflict is always the last client to write to the database which means work is often lost.
+        The “winner” in a conflict is always the last client to write to the database, which means work is often lost.
       </p>
 
       <Carousel showArrows={true}>
