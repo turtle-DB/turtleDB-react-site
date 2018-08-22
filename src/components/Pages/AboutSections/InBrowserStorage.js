@@ -6,6 +6,10 @@ import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 import Citation from '../../Citation'
 
 const readQuery = "turtleDB.read('foo').then(data => console.log(data))";
+const idbQuery = "let db;\r\nlet request = window.indexedDB.open(\"myDB\");\r\nrequest.onerror = function(event) {\r\n  alert(\"Connection failed to open\");\r\n};\r\nrequest.onsuccess = function(event) {\r\n  db = event.target.result;\r\n};\r\n\r\nlet transaction = db.transaction([\"customers\"]);\r\nlet objectStore = transaction.objectStore(\"customers\");\r\n\r\nlet request = objectStore.get(\"John Smith\");\r\nrequest.onerror = function(event) {\r\n  \/\/ Handle errors\r\n};\r\nrequest.onsuccess = function(event) {\r\n  \/\/ Capture returned values\r\n  alert(\"Returned document is \" + request.result);\r\n};"
+const promiseQuery = "function read(id) {\r\n  let db;\r\n  this.ready = new Promise((resolve, reject) => {\r\n    const request = window.indexedDB.open(name);\r\n\r\n    request.onsuccess = e => {\r\n      this.db = e.target.result;\r\n      resolve();\r\n    };\r\n    request.onerror = e => {\r\n      this.db = e.target.result;\r\n      reject(e);\r\n    };\r\n  });\r\n\r\n  return this.ready.then(() => {\r\n    return new Promise((resolve, reject) => {\r\n      let request = this.getStore(\'customers\', \'readonly\').get(_id);\r\n\r\n      request.onsuccess = e => {\r\n        resolve(e.target.result);\r\n      }\r\n      request.onerror = e => {\r\n        console.log(`${action} error:`, e.target.error);\r\n        reject(e.target.error);\r\n      }\r\n    })\r\n  });\r\n}"
+const promiseAllQuery = "  ...\r\n  \r\n  const promises = ids.map(id => {\r\n    return this.command(this._store, \"INDEX_READ\", { data: { indexName: \'id\', key: id } });\r\n  });\r\n\r\n  return Promise.all(promises);\r\n\r\n  ..."
+const promiseThenQuery = "...\r\n\r\nlet result = Promise.resolve();\r\n\r\nids.forEach(id => {\r\n  result = result.then(() => this.delete(id));\r\n});\r\n\r\nreturn result;\r\n\r\n..."
 
 const InBrowserStorage = () => {
   return (
@@ -117,43 +121,67 @@ const InBrowserStorage = () => {
       </p>
 
       <p>
-        The below code snippets show how much code is handled for the developer
-        in turtleDB. Both open a connection to IDB and insert a new document.
+        This code is a simple example of how a developer would read a document from IndexedDB
+        using the browser API:
+      </p>
+
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {idbQuery}
+      </SyntaxHighlighter>
+
+      <p>
+        The above code is adapted from MDN documentation, but would not actually
+        work. Sending the query to the store needs to wait on an open database
+        connection. Within the turtleDB IDB adapter, promises are often used to
+        change the above code to this:
+      </p>
+
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {promiseQuery}
+      </SyntaxHighlighter>
+
+      <h4 id="promise-all-promise-then">Promise.all, Promise.then</h4>
+
+      <p>
+        However, read queries that ask for single documents at a time limits performance.
+        When iterating through a list of queries, each iteration operans and closes and IndexedDB connection.
+        This does not take advantage of the fact that IndexedDB can receive multiple connections
+        and independent queries can be executed concurrently.
       </p>
 
       <p>
-        SNIPPET HERE
+        Running queries in parallel is therefore possible, but it is important to
+        ensure they are all complete and all values are returned before returning
+        from the parent function. TurtleDB therefore uses the `Promise.all` syntax,
+        to wait on an array of promises:
       </p>
 
-      <p>
-        Working with promises enables controlling execution flow between
-        dependent operations, but still limits IDB operations to single queries.
-        This impedes performance when iterating through a list of queries (imagine
-        a for loop where each iteration opens and closes an IndexedDB connection).
-        IndexedDB can receive multiple connections and independent queries can be
-        executed concurrently.
-      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {promiseAllQuery}
+      </SyntaxHighlighter>
+
+      <img className="w-100" src="../images/browser_storage/promise-all.png"/>
 
       <p>
-        SNIPPET HERE
+        However, some database operations should be kept atomic. If multiple queries
+        edit the same document using the Promise.all approach, work will be lost:
       </p>
 
-      <p>
-        This offers better performance, but it is important to ensure all queries
-        are complete, and values are returned, before returning from the parent function.
-        TurtleDB therefore uses the `Promise.all` syntax, to wait on an array of promises:
-      </p>
+      <img className="w-100" src="../images/browser_storage/promise-all-error.png"/>
 
       <p>
-        SNIPPET HERE
+        In these cases where sequential execution matters, turtleDB uses a “promise chain” where
+        each operation waits for the previous operation to complete, and the entire
+        set of queries only returns once the final promise is resolved, or an error
+        is thrown somewhere along the chain. (An interesting part of this is beginning
+        the chain with a Promise.resolve()):
       </p>
 
-      <p>
-        In cases where sequential execution matters, database operations must
-        be kept atomic. For these cases, turtleDB uses a “promise chain” where
-        the operation only ends once the final promise is resolved or an error
-        was thrown somewhere along the chain.
-      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {promiseThenQuery}
+      </SyntaxHighlighter>
+
+      <img className="w-100" src="../images/browser_storage/promise-then.png"/>
 
 
       <h3 id="turtledb-developer-api">turtleDB Developer API</h3>
@@ -182,9 +210,7 @@ const InBrowserStorage = () => {
         developer can interact with IDB without having to write a single line of IDB specific code.
       </p>
 
-      <p>
-        NEW DIAGRAM HERE
-      </p>
+      <img className="w-100" src="../images/browser_storage/developer-API.png"/>
     </div>
   )
 }
