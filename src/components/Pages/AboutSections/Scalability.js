@@ -23,7 +23,7 @@ const Scalability = () => {
         impact on storage. Given the same number of unique documents, write-heavy applications will consume
         much more space over time.
       </p>
-      <h3 id="IndexedDB Limits">IndexedDB Limits</h3>
+      <h3 id="idb-limits">IndexedDB Limits</h3>
       <p>
         Every browser implements in-browser storage limitations differently. Generally, the space used by IDB falls under the
         ‘temporary storage’ category, meaning its storage space may be vulnerable  to being evicted.
