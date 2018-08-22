@@ -108,7 +108,6 @@ const DocumentVersioning = () => {
           <img src="../images/doc_versioning/kcv_6.png" />
         </div>
       </Carousel>
-
       <p>
         Two competing revisions from each client are eventually consistent across all nodes.
         The crossed-out text demonstrates the original revision that was overwritten by the clients.

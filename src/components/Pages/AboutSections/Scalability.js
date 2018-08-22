@@ -61,7 +61,7 @@ const Scalability = () => {
       </p>
       <p>
         The accompanying meta document with its revision tree would consume an additional 410 bytes.
-        In total, the 180 byte JSON doc would need 870 bytes.
+        In total, the 180 byte JSON doc would need 460 + 410 = 870 bytes.
       </p>
       <p>
         If we were just creating documents this size, with no further updates,
@@ -70,8 +70,25 @@ const Scalability = () => {
       <p>
         Realistically, updates will be made to data. With turtleDB’s document versioning,
         that means new versions are created, and more space is required. How much additional
-        data does one update add? If the underlying data remains at 180 bytes, each update
-        adds an additional 280 bytes.
+        data does one update add?
+      </p>
+      <p>
+        turtleDB does not create a new meta document for updates. It only needs to add another
+        sub-array to the reversion tree. This means each update adds approximately 60 bytes to
+        the meta document. So we can say that an update would create an additional 520 bytes of space.
+      </p>
+      <p>
+        Creating a new document takes 870 bytes, while updating an existing document only takes 520 bytes.
+        However, one document might have many updates.
+      </p>
+      <p>
+        This means that documents with many updates will take up more space. Storing 300,000 documents with
+        turtleDB takes up ~250MB. However, if on average every document receives 5 updates, the space
+        requirement goes up to 1GB.
+      </p>
+      <p>
+        The point here is that developers should be aware that document histories take storage. 
+        Applications where documents receive hundreds of updates will run out of space more quickly.
       </p>
     </div>
   )
