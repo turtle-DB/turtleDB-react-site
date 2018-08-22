@@ -19,21 +19,17 @@ const DocumentVersioning = () => {
       </p>
       <p>
         The reason behind this decision was driven by our goal for turtleDB to provide
-        flexible and transparent conflict resolution while minimizing lost work.  To illustrate
-        the value of this design here is a common scenario that offline-first apps encounter:
+        flexible and transparent conflict resolution while minimizing lost work.
       </p>
-
-      <img/>
-
       <p>
-        Two clients and a server share the same document in an offline-first application.
-        The two clients go offline and independently make changes. When they come back online,
+        A common scenario offline-first apps encounter can better illustrate the value of
+        this design: two clients and a server share the same document in an offline-first application.
+        The clients both go offline and independently make different changes. When they come back online,
         they share their changes with the server.
       </p>
       <p>
-        This simple scenario exhibits how working asynchronously and collaboratively introduces
-        <strong>conflicts</strong>. Conflicts arise when two or more people working on the same document make
-        independent, different changes to that same document.
+        When these two competing changes are introduced, a conflict is generated.
+        Conflicts often arise in collaborative applications where work is done asynchronously.
       </p>
       <p>
         How should these conflicting changes across clients be resolved? Our answer to this question
@@ -42,7 +38,7 @@ const DocumentVersioning = () => {
       <h3 id="last-write-wins">Last Write Wins: Naive Solution</h3>
       <p>
         One solution might be Last Write Wins (LWW). LWW simply stores the most recent revision of a document.
-        The “winner” in a conflict is always the last client to write to the database which means work is often lost.
+        The “winner” in a conflict is always the last client to write to the database, which means work is often lost.
       </p>
 
       <Carousel showArrows={true}>
@@ -73,10 +69,10 @@ const DocumentVersioning = () => {
       </p>
       <p>
         LWW might be appropriate for applications such as real-time collaborative text editors where a deletion of
-        a letter or word does not  have a significant impact.
+        a letter or word does not have a significant impact.
       </p>
       <p>
-        However, it comes at the cost of always losing work. And that cost only increases proportionally as the
+        However, it comes at the cost of always losing work, and that cost only increases proportionally as the
         number of clients collaborating increases; only one client ever has its work saved. This is
         unacceptable when we want to work with a reliable data store. Furthermore, LWW does not provide
         any context as to how that data was lost.
@@ -108,20 +104,19 @@ const DocumentVersioning = () => {
           <img src="../images/doc_versioning/kcv_6.png" />
         </div>
       </Carousel>
-
       <p>
         Two competing revisions from each client are eventually consistent across all nodes.
         The crossed-out text demonstrates the original revision that was overwritten by the clients.
       </p>
       <p>
-        Clearly, more work is being saved by this solution. Even better, it provides transparency to clients;
+        Clearly, more work is being saved by this solution. Even better, it provides transparency to clients -
         they are informed of conflicts and can see all competing revisions.
       </p>
       <p>
         Still, this solution has drawbacks. How did this conflict arise? It is not entirely clear
         how the original “Sea Turtle” document has been lost.
       </p>
-      <h5>Conflicts Without Context</h5>
+      <h4>Conflicts Without Context</h4>
       <p>
         Another subtle issue is how conflicts are resolved in this solution. Eventually, clients
         need to pick a winning revision. However, they can only access the conflicting revisions.
@@ -133,7 +128,7 @@ const DocumentVersioning = () => {
           before the losing revisions can be safely removed</li>
         <li>
           Allow app users to see the conflict and edit any of the revisions. After a revision has not been edited for a certain amount of time,
-          it is dropped, resolving conflicts over time
+          it is dropped, resolving conflicts over time.
         </li>
       </ul>
       <p>
@@ -143,7 +138,7 @@ const DocumentVersioning = () => {
       <p>
         Even if we introduce time tracking, users still lack context because they can’t see the last common revision.
       </p>
-      <h3 id="document-history">Document History: turtleDB's Solution</h3>
+      <h3 id="document-history">Document History: turtleDB’s Solution</h3>
       <p>
         Many of the problems discussed in the previous section go away once the system starts preserving historical revisions of a document.
       </p>
@@ -177,10 +172,14 @@ const DocumentVersioning = () => {
       <p>
         In the case of a conflict, clients can now see how it arose. Even better, the clients don’t just see the
         competing revisions, they actually have access to every single revision that was added between the last
-        common revision and the latest competing revisions. The above picture is a snapshot taken of turtleDB’s
+        common revision and the latest competing revisions. The picture below is a snapshot taken of turtleDB’s
         document store. Notice that even though the original document was updated, we kept both the original and
         updated versions.
       </p>
+
+      <img className="w-100" src="../images/doc_versioning/store-docs.png"/>
+
+
       <p>
         Imagine two clients have common document. They then go offline, and each makes many changes to that document. All of these revisions are
         subsequently stored and tracked in what we call a <strong>meta document</strong>. We will describe meta documents
@@ -190,7 +189,7 @@ const DocumentVersioning = () => {
         When a client comes online and syncs, they receive the combined history of that document which has all the changes made by every client.
       </p>
 
-      <img />
+      <img className="w-100" src="../images/doc_versioning/combine-histories.png"/>
 
       <p>
         With this branch, the developer has more options. For example, the developer could write code that:
@@ -199,7 +198,7 @@ const DocumentVersioning = () => {
         <li>Determines a winner deterministically; longest branch wins </li>
         <li>Compares the two branches, and finds an intermediate point where both versions shared the same changes</li>
         <li>Determine the incremental changes between each revision along each branch, (i.e. find the “diffs”), and see
-        how much of the two branch can be safely merged without losing any work</li>
+        how much of the two branches can be safely merged without losing any work</li>
       </ul>
       <p>
         By having turtleDB keep all revisions, the developer never has to worry about when a conflict occurred, or eventually deleting all the

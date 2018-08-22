@@ -1,5 +1,4 @@
 /* Custom */
-
 .blockquote-footer {
   background: none;
   padding: 0;
@@ -319,6 +318,7 @@ table {
 .card-image {
   max-width: 120px;
 }
+
 
 .inline-code {
   font-family: Source Code Pro, Menlo, Consolas, Liberation Mono, monospace;
