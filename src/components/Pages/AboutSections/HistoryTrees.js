@@ -7,6 +7,8 @@ const doublyLinkedLists = "class Revision {\n  constructor(rev) {\n    this.rev 
 const subArray = "const revisions = [['1-hash1'], ['2-hash2a', '2-hash2b'], ['3-hash3a', '3-hash3b']];"
 const nestedArray = "const revisions = [\'1-hash1\', [[\'2-hash1\', [[\'3-hash1\', [[\'4-hash1\', []]]]]], [\'2-hash2\', [[\'3-hash2\', []]]]]];"
 const readableNestedArray = "const revisions = [\r\n\'1-hash1\', [\r\n  [\'2-hash1\', [\r\n    [\'3-hash1\', [\r\n      [\'4-hash1\', []\r\n      ]\r\n    ]]\r\n  ]], \r\n  [\'2-hash2\', [\r\n    [\'3-hash2\', []\r\n    ]\r\n  ]]\r\n]];"
+const collectAllLeafRevs = "function collectAllLeafRevs(node, leafRevs = []) {\r\n  if (node[2].length === 0) leafRevs.push(node[0]);\r\n\r\n  for (let i = 0; i < node[2].length; i++) {\r\n    this.collectAllLeafRevs(node[2][i], leafRevs);\r\n  }\r\n\r\n  return leafRevs;\r\n}"
+const mergeRevTrees = "function mergeRevTrees(node1, node2) {\r\n  const node1Children = node1[2];\r\n  const node2Children = node2[2];\r\n\r\n  const commonNodes = this.findCommonNodes(node1Children, node2Children);\r\n\r\n  const node2ChildrenDiffs = this.getNode2ChildrenDiffs(node1Children, node2Children);\r\n  node1[2] = [...node1Children, ...node2ChildrenDiffs];\r\n\r\n  for (let i = 0; i < commonNodes.length; i++) {\r\n    let commonNodesPair = commonNodes[i];\r\n    this.mergeRevTrees(commonNodesPair[0], commonNodesPair[1]);\r\n  }\r\n\r\n  return node1;\r\n}\r\n\r\nfunction findCommonNodes(node1Children, node2Children) {\r\n  let commonNodes = [];\r\n  for (let i = 0; i < node1Children.length; i++) {\r\n    let node1Child = node1Children[i];\r\n    for (let j = 0; j < node2Children.length; j++) {\r\n      let node2Child = node2Children[j];\r\n      if (node2Child[0] === node1Child[0]) {\r\n        commonNodes.push([node1Child, node2Child]);\r\n      }\r\n    }\r\n  }\r\n\r\n  return commonNodes;\r\n}"
 
 const HistoryTrees = () => {
   return (
@@ -175,7 +177,108 @@ const HistoryTrees = () => {
       <p>
         This is what an example meta document looks like. So how do we traverse the document history tree?
       </p>
+      <h3 id="tree-algorithms">Tree Algorithms</h3>
+      <p>
+        turtleDB needs to handle:
+      </p>
+      <ul>
+        <li>Updating the tree when a document is updated or deleted</li>
+        <li>Merging trees when a client and server sync</li>
+        <li>Using the tree to identify the latest revision of a document and all competing revisions </li>
+      </ul>
+      <h4>Updates & Deletes</h4>
+      <p>
+        Deleting or updating a document is simple to conceptualize. A new node is added as a child of an existing leaf node.
+      </p>
+      <p>
+        Because our trees are stored in a database and lacked memory pointers to their leaf nodes, we have  to do a full traversal of the tree down to the latest version (leaf node).
+        This is the recursive function we developed:
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {collectAllLeafRevs}
+      </SyntaxHighlighter>
 
+      <img />
+      <p>This process is O(N) time and space.</p>
+      <h4>Merging Trees</h4>
+      <p>
+        Meta documents are shared between a client and server during a sync. When syncing has completed,
+        both parties should have an updated meta document with the same merged tree, containing all
+        document updates and creates.
+      </p>
+      <p>
+        Tree merging always happens on the server after the client has sent over its document trees. Changes in the client tree are spliced into the server tree,
+        and the result is sent back to the client.
+      </p>
+
+      <img />
+
+      <p>
+        For example, the server tree (left) combines the changes from the client tree (middle) and we get the resulting tree (right).
+      </p>
+      <p>
+        The merging algorithm starts at the head node of each tree, and recursively traverses down through
+        common pairs of nodes. At each node pair, the algorithm compares the children nodes to find
+        discrepancies; indicating what needs to be merged into the server tree.
+      </p>
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {mergeRevTrees}
+      </SyntaxHighlighter>
+      <p>
+        Overall, the Big O complexity of merging is determined by the intersection of the two trees;
+        the number of common nodes between trees that are recursively traversed.
+      </p>
+      <h5>Comparing Children - O(N * M)</h5>
+      <p>
+        When multiple children exist on a node pair, the common children must be paired off for further recursion,
+        while the discrepancies need to be added to the server tree.
+      </p>
+      <p>
+        This is an O(N * M) operation, as we cannot guarantee child nodes will always be sorted.
+        Conflicts should be rare in document histories as clients typically converge on one revision,
+        so while this step looks slow on paper, it should not be a common occurrence.
+      </p>
+      <h5>Handling Discrepancies - O(1)</h5>
+      <p>
+         Child nodes in the client tree that do not exist in the server tree represent changes that need to
+         be spliced in. The new child node could be the start of a long branch of updates from the client.
+         Our function takes advantage of the nested array structure to access that entire
+         branch held within the child node sub-array, and splice it into the server tree in one step.
+      </p>
+      <p>
+        This is a powerful addition for an offline-first framework, as clients might make many updates before syncing.
+        In that time, they may have generated hundreds of updates on individual documents.
+        Merging that history in one step speeds up the sync process.
+      </p>
+      <p>
+        This slideshow illustrates the parallel traversal of two trees, comparing children and merging in new branches:
+      </p>
+      <p>
+        <em>It is important to note when we say that branch slicing is a O(1) step, we are talking about just the
+        branch slicing step itself and not the tree traversal up to the point where server and client differs.
+      </em>
+      </p>
+      <img />
+
+      <h3>Identifying Leaf Revs</h3>
+      <img />
+
+      <p>
+        The purpose of having revision trees is to easily determine conflicting versions of a document.
+        A potential downside to the tree structure is that a full traversal is needed to reach these
+        conflicting versions. We solved this problem by introducing a separate property on the meta document
+        called “_leafRevs” which contains all the most up-to-date versions of a document.
+      </p>
+      <p>
+        Developers can therefore look up and access those leaf nodes in constant time, or O(1).
+        While reads are O(1), the “_leafRevs” array needs to be constantly kept up to date.
+        We added code within our update, delete, and merge functions to update the array
+        while tree was being traversed. This means keeping the tree updated takes O(N) but
+        it piggybacks on other operations and is outweighed by the many O(1) reads.
+      </p>
+
+      <img />
+    
     </div>
   )
 }
