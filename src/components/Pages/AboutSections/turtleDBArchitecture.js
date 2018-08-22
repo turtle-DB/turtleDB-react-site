@@ -92,8 +92,8 @@ const TurtleDBArchitecture = () => {
       <img />
 
       <p>
-        Entires in the <strong>syncToStore</strong> only have two properties: the `_id` of turtleDB that initialized the sync process, and a `history` array. Elements in the `history` array have a `lastKey`
-        property which is the last primary key in the store that was given to tortoiseDB on the previous sync (this is defaulted to 0 if a turtleDB has not performed a sync yet). 
+        Entries in the <strong>syncToStore</strong> only have two properties: the `_id` of turtleDB that initialized the sync process, and a `history` array. Elements in the `history` array have a `lastKey`
+        property which is the last primary key in the store that was given to tortoiseDB on the previous sync (this is defaulted to 0 if a turtleDB has not performed a sync yet).
       </p>
       <p>
         The above snapshot shows the case that a turtleDB has synced to a tortoiseDB twice. An optimization we made involves keeping track of the primary key of the <strong>store</strong> that was
