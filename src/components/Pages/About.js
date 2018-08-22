@@ -28,11 +28,11 @@ const AboutHome = () => {
 export const About = () => {
   return (
     <div className="about">
-      <div className="row">
+      <div className="row main-container">
         <div className="toc d-none d-md-inline-block col-md-3">
-          <StickyBox bottom={false} offset={0}>
+          {/* <StickyBox bottom={false} offset={0}> */}
             <Toc />
-          </StickyBox>
+          {/* </StickyBox> */}
         </div>
         <div className="col-xs-12 d-md-none padding">
           <TocMobile />

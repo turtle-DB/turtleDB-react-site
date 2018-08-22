@@ -3,7 +3,7 @@ import React from 'react';
 export const Toc = () => {
   return (
     <div className="container">
-      <h4>Table of Contents</h4>
+      <h4 className="toc-header">Table of Contents</h4>
       <ol className="no-list-style">
         <li><a href="#introduction">Introduction</a>
           <ul>
@@ -46,8 +46,11 @@ export const Toc = () => {
         </li>
         <li><a href="#conflicts">Conflicts</a>
           <ul>
+            <li><a href="#generating-conflicts">Generating Conflicts</a></li>
+            <li><a href="#surfacing-conflicts">Surfacing Conflicts</a></li>
             <li><a href="#winning-revisions">Winning Revisions</a></li>
-            <li><a href="#conflict-resolution">Conflict Resolution</a></li>
+            <li><a href="#indicating-conflicts">Indicating Conflicts</a></li>
+            <li><a href="#conflict-resolution">Conflict Resolution</a></li>      
           </ul>
         </li>
         <li><a href="#scalability">Scalability</a>
