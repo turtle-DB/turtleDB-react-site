@@ -20,9 +20,9 @@ export const Toc = () => {
         </li>
         <li><a href="#document-versioning">Document Versionining</a>
           <ul>
-            <li><a href="#last-write-wins">Last Write Wins: Naive Solution</a></li>
-            <li><a href="#keep-conflicting-revisions">Keep Conflicting Revisions: Naive Solution</a></li>
-            <li><a href="#document-history">Document History: turtleDB's Solution</a></li>
+            <li><a href="#last-write-wins">Last Write Wins</a></li>
+            <li><a href="#keep-conflicting-revisions">Keep Conflicting Revisions</a></li>
+            <li><a href="#document-history">Document History</a></li>
           </ul>
         </li>
         <li><a href="#history-trees">Document History Trees</a>
@@ -50,7 +50,7 @@ export const Toc = () => {
             <li><a href="#surfacing-conflicts">Surfacing Conflicts</a></li>
             <li><a href="#winning-revisions">Winning Revisions</a></li>
             <li><a href="#indicating-conflicts">Indicating Conflicts</a></li>
-            <li><a href="#conflict-resolution">Conflict Resolution</a></li>      
+            <li><a href="#conflict-resolution">Conflict Resolution</a></li>
           </ul>
         </li>
         <li><a href="#scalability">Scalability</a>
