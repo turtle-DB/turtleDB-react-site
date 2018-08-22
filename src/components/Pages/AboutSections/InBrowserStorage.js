@@ -143,17 +143,16 @@ const InBrowserStorage = () => {
       <h4 id="promise-all-promise-then">Promise.all, Promise.then</h4>
 
       <p>
-        However, read queries that ask for single documents at a time limits performance.
-        When iterating through a list of queries, each iteration operans and closes and IndexedDB connection.
-        This does not take advantage of the fact that IndexedDB can receive multiple connections
-        and independent queries can be executed concurrently.
+        However, single read queries limit performance.
+        When iterating through a list of queries, each iteration opens and closes an IndexedDB connection.
+        This does not take advantage of the fact that IndexedDB can receive multiple connections, meaning
+        independent queries can be executed concurrently.
       </p>
 
       <p>
         Running queries in parallel is therefore possible, but it is important to
-        ensure they are all complete and all values are returned before returning
-        from the parent function. TurtleDB therefore uses the `Promise.all` syntax,
-        to wait on an array of promises:
+        ensure they are all completed sequentially. turtleDB accomplishes this using
+         <span className="inline-code">Promise.all</span>:
       </p>
 
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
@@ -164,17 +163,19 @@ const InBrowserStorage = () => {
 
       <p>
         However, some database operations should be kept atomic. If multiple queries
-        edit the same document using the Promise.all approach, work will be lost:
+        edit the same document using the
+         <span className="inline-code">Promise.all</span> approach, work will be lost:
       </p>
 
       <img className="w-100" src="../images/browser_storage/promise-all-error.png"/>
 
       <p>
-        In these cases where sequential execution matters, turtleDB uses a “promise chain” where
-        each operation waits for the previous operation to complete, and the entire
-        set of queries only returns once the final promise is resolved, or an error
-        is thrown somewhere along the chain. (An interesting part of this is beginning
-        the chain with a Promise.resolve()):
+        In these cases where sequential execution matters, turtleDB uses a “Promise chain” where
+        each operation waits for the previous one to complete, and the entire
+        set of queries only returns once the final Promise is resolved or an error
+        is thrown somewhere along the chain. Because Promise chains must begin with a
+        Promise, we start our Promise-chain with an automatically-resolved
+        <span className="inline-code">Promise.resolve()</span>.:
       </p>
 
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
@@ -214,8 +215,8 @@ const InBrowserStorage = () => {
 
       <p>
         With a working understanding of browser storage, we can examine turtleDB’s
-        approach to storing documents for offline-first applications, and enabling collaboration.
-      </p> 
+        approach to storing documents for offline-first applications while enabling collaboration.
+      </p>
     </div>
   )
 }
