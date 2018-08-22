@@ -30,7 +30,7 @@ export const About = () => {
     <div className="about">
       <div className="row">
         <div className="toc d-none d-md-inline-block col-md-3">
-          <StickyBox bottom={false} offset={25}>
+          <StickyBox bottom={false} offset={0}>
             <Toc />
           </StickyBox>
         </div>
@@ -38,16 +38,16 @@ export const About = () => {
           <TocMobile />
         </div>
         <div className="col-sm-12 col-md-9 padding max-width">
-          <Introduction/>
-          <InBrowserStorage/>
-          <DocumentVersioning/>
-          <HistoryTrees/>
-          <TurtleDBArchitecture/>
-          <Synchronization/>
-          <Conflicts/>
-          <Scalability/>
-          <FutureWork/>
-          <References/>
+          <Introduction />
+          <InBrowserStorage />
+          <DocumentVersioning />
+          <HistoryTrees />
+          <TurtleDBArchitecture />
+          <Synchronization />
+          <Conflicts />
+          <Scalability />
+          <FutureWork />
+          <References />
         </div>
       </div>
     </div>
