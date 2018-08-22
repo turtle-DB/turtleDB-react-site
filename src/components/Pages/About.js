@@ -37,7 +37,7 @@ export const About = () => {
         <div className="col-xs-12 d-md-none padding">
           <TocMobile />
         </div>
-        <div className="col-sm-12 col-md-9 padding max-width">
+        <div className="col-sm-12 col-md-9 padding max-width turtle-padding">
           <Introduction />
           <InBrowserStorage />
           <DocumentVersioning />

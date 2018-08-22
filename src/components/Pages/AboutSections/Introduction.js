@@ -254,7 +254,7 @@ const Introduction = () => {
         </li>
       </ul>
 
-      <h4 id="introducing-turtledb">Introducing turtleDB</h4>
+      <h3 id="introducing-turtledb">Introducing turtleDB</h3>
 
       <img className="w-100" src="../images/intro/turtleDB-architecture.png" />
 
