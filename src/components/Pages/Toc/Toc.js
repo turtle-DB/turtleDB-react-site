@@ -21,9 +21,9 @@ export const Toc = () => {
         </li>
         <li><a href="#document-versioning">Document Versionining</a>
           <ul>
-            <li><a href="#last-write-wins">Last Write Wins: Naive Solution</a></li>
-            <li><a href="#keep-conflicting-revisions">Keep Conflicting Revisions: Naive Solution</a></li>
-            <li><a href="#document-history">Document History: turtleDB's Solution</a></li>
+            <li><a href="#last-write-wins">Last Write Wins</a></li>
+            <li><a href="#keep-conflicting-revisions">Keep Conflicting Revisions</a></li>
+            <li><a href="#document-history">Document History</a></li>
           </ul>
         </li>
         <li><a href="#history-trees">Document History Trees</a>
