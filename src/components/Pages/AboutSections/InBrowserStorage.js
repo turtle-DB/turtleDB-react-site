@@ -118,30 +118,59 @@ const InBrowserStorage = () => {
 
       <p>
         The below code snippets show how much code is handled for the developer
-        in turtleDB. Both open a connection to IDB and insert a new document. 
+        in turtleDB. Both open a connection to IDB and insert a new document.
       </p>
-
-      <h3 id="turtledb-promise-api">turtleDB’s Promise API</h3>
 
       <p>
-        In cases where sequential execution matters, database operations must be kept atomic.
-        For these cases, turtleDB uses a “Promise chain” where the operation only ends once
-        the final Promise is resolved or an error was thrown somewhere along the chain.
+        SNIPPET HERE
       </p>
-
-      <img/>
 
       <p>
-        With all of these operations within turtleDB, developers are able to just open their
-        browsers, set up a database and begin interacting with IDB. They no longer need to
-        worry about tasks such as opening and closing connections to IDB, creating a store,
-        setting up `onsuccess` and `onerror` handlers for basic operations, or controlling the
-        flow of asynchronous operations.
+        Working with promises enables controlling execution flow between
+        dependent operations, but still limits IDB operations to single queries.
+        This impedes performance when iterating through a list of queries (imagine
+        a for loop where each iteration opens and closes an IndexedDB connection).
+        IndexedDB can receive multiple connections and independent queries can be
+        executed concurrently.
       </p>
+
+      <p>
+        SNIPPET HERE
+      </p>
+
+      <p>
+        This offers better performance, but it is important to ensure all queries
+        are complete, and values are returned, before returning from the parent function.
+        TurtleDB therefore uses the `Promise.all` syntax, to wait on an array of promises:
+      </p>
+
+      <p>
+        SNIPPET HERE
+      </p>
+
+      <p>
+        In cases where sequential execution matters, database operations must
+        be kept atomic. For these cases, turtleDB uses a “promise chain” where
+        the operation only ends once the final promise is resolved or an error
+        was thrown somewhere along the chain.
+      </p>
+
+
+      <h3 id="turtledb-developer-api">turtleDB Developer API</h3>
+
+      <p>
+        With all of these operations within turtleDB, developers are able to just
+        open their browsers, set up a database and begin interacting with IDB. They
+        no longer need to worry about tasks such as opening and closing connections to
+        IDB, creating a store, setting up `onsuccess` and `onerror` handlers for basic
+        operations, or controlling the flow of asynchronous operations.
+      </p>
+
       <p>
         The only required knowledge for developers is that all queries to turtleDB return a Promise.
         This means if you want to read a document of id `foo`, that code would be written as:
       </p>
+
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
         {readQuery}
       </SyntaxHighlighter>
@@ -152,7 +181,10 @@ const InBrowserStorage = () => {
         developer-friendly API that communicates with the IDB adapter. In short, a
         developer can interact with IDB without having to write a single line of IDB specific code.
       </p>
-      <img />
+
+      <p>
+        NEW DIAGRAM HERE
+      </p>
     </div>
   )
 }
