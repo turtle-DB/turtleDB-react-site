@@ -40,7 +40,8 @@ const HistoryTrees = () => {
         nodes in one long line:
       </p>
 
-      <img />
+      <img className="w-100" src="../images/trees/single-branch-2.png"/>
+
       <p>
         However, some documents might have conflicts. For example, a document could have different updates
         made to it independently by two different clients. This is represented in the tree as a ‘fork’, where
