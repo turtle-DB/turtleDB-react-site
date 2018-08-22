@@ -168,7 +168,7 @@ const Synchronization = () => {
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
         {batchLimit}
       </SyntaxHighlighter>
-      This line can be found in turtleDB's syncTo.js file and can be altered accordingly.
+      <p>This line can be found in turtleDB's syncTo.js file and can be altered accordingly.</p>
       <h3 id="sync-from">syncFrom()</h3>
       <p>
         After the client has synced with the server and sent changes, the second half of the sync process initiates where the server sends changes to the client, called `syncFrom`.
