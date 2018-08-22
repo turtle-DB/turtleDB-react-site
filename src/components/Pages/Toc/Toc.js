@@ -16,7 +16,7 @@ export const Toc = () => {
           <ul>
             <li><a href="#storage-options">Storage Options</a></li>
             <li><a href="#idb">IndexedDB</a></li>
-            <li><a href="#turtledb-promise-api">turtleDB's Promise API</a></li>
+          <li><a href="#turtledb-promise-api">s</a></li>
           </ul>
         </li>
         <li><a href="#document-versioning">Document Versionining</a>
