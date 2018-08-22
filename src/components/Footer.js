@@ -10,7 +10,7 @@ const Footer = () => {
             <Link className="logo-link" to='/'>
               <img className="card-img-top logo-small" src="images/logo.png" alt="small logo" />
             </Link>
-            <p>Free and Open-Source (MIT)</p>
+            <p>turtleDB is free and open-source (MIT)</p>
             <p>Current turtleDB Version: 1.0.0</p>
           </div>
         </div>
