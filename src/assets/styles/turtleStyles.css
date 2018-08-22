@@ -48,8 +48,15 @@
     margin-top: 1rem;
   }
 
-  .w-100 + p {
-    margin-top: 2rem;
+  h4 {
+    font-size: 21px;
+    font-style: italic;
+    margin-top: 2.5rem;
+    color: #4e4b49;
+  }
+
+  .w-100 {
+    margin: 4rem 0;
   }
 
   :first-of-type pre {
