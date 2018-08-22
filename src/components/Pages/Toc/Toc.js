@@ -14,8 +14,9 @@ export const Toc = () => {
         </li>
         <li><a href="#in-browser-storage">In-Browser Storage</a>
           <ul>
+            <li><a href="#storage-options">Storage Options</a></li>
             <li><a href="#idb">IndexedDB</a></li>
-            <li><a href="#turtledb-promise-api">turtleDB's Promise API</a></li>
+          <li><a href="#turtledb-promise-api">s</a></li>
           </ul>
         </li>
         <li><a href="#document-versioning">Document Versionining</a>
@@ -55,8 +56,10 @@ export const Toc = () => {
         </li>
         <li><a href="#scalability">Scalability</a>
           <ul>
-            <li>...</li>
-            <li>...</li>
+            <li><a href="#idb-limits">IndexedDB Limits</a></li>
+            <li><a href="#compaction">Compaction</a></li>
+            <li><a href="#idb-performance">IndexedDB Performance</a></li>
+            <li><a href="#sync-efficiency">Sync Efficiency</a></li>
           </ul>
         </li>
         <li><a href="#future-work">Future Work</a>
