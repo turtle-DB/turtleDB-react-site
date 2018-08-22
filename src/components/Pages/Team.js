@@ -70,6 +70,18 @@ export const Team = () => {
         </div>
 
       </div>
+      <div className="row">
+        <div className="col">
+          <h2>Questions?</h2>
+          <p>
+            Feel free to reach out to us if you have any questions about the project.
+          </p>
+          <p>
+            All three members of the the turtleDB team are currently open to new opportunities so if
+            you think we’d be a good fit for your team, we’d love to hear from you!
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -33,17 +33,15 @@ export const Toc = () => {
         </li>
         <li><a href="#turtleDB-architecture">turtleDB Architecture</a>
           <ul>
-            <li><a>Design</a></li>
-            <li><a>API</a></li>
-            <li><a>Stores: Components involved in Synchronization</a></li>
+            <li><a href="#turtledb-stores">turtleDB Stores</a></li>
           </ul>
         </li>
-        <li><a href="#synchronization">Synchronization: A Two-Part Process</a>
+        <li><a href="#synchronization">Synchronization</a>
           <ul>
-            <li><a>Overview</a></li>
-            <li><a>syncTo()</a></li>
-            <li><a>syncFrom()</a></li>
-            <li><a>Optimizations</a></li>
+            <li><a href="#sync-to">syncTo()</a></li>
+            <li><a href="#sync-from">syncFrom()</a></li>
+            <li><a href="#batching">Batching</a></li>
+            <li><a href="#sync-walkthrough">Sync Walkthrough</a></li>
           </ul>
         </li>
         <li><a href="#conflicts">Conflicts</a>
