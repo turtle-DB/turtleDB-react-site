@@ -323,4 +323,13 @@ table {
   max-width: 120px;
 }
 
-/* API CSS */
+
+.inline-code {
+  font-family: Source Code Pro, Menlo, Consolas, Liberation Mono, monospace;
+  color: #6e6b5e;
+  /* font-weight: bold; */
+  background: rgb(254, 251, 236);
+  font-size: 14px;
+  padding: 4px 5px;
+  border-radius: 5px;
+}
