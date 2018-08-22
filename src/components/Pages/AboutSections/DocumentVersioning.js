@@ -206,8 +206,8 @@ const DocumentVersioning = () => {
         competing revisions that do not become the winning revision.
       </p>
       <p>
-        To ensure developers could still delete older document versions if they wanted to, we implement a feature called <strong>compaction</strong>.
-        We describe it more fully here.
+        To ensure developers could still delete older document versions if they wanted to, we implement a feature called
+        <a href="#"><strong> compaction</strong></a>.
       </p>
       <p>
         In turtleDB, all competing work is transparent, provided with context, and without resorting to any time-based solutions
