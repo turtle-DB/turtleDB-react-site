@@ -4,21 +4,40 @@ import Citation from '../../Citation'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 
-const _getWinningRev = "function _getWinningRev(node) {\r\n  const leafRevs = this.collectActiveLeafRevs(node);\r\n\r\n  return leafRevs.sort((a, b) => {\r\n    let [revNumA, revHashA] = a.split(\'-\');\r\n    let [revNumB, revHashB] = b.split(\'-\');\r\n    revNumA = parseInt(revNumA, 10);\r\n    revNumB = parseInt(revNumB, 10);\r\n\r\n    if (revNumA > revNumB) {\r\n      return -1;\r\n    } else if (revNumA < revNumB) {\r\n      return 1;\r\n    } else {\r\n      if (revHashA > revHashB) {\r\n        return -1;\r\n      } else {\r\n        return 1;\r\n      }\r\n    }\r\n  })[0];\r\n}"
+const _getWinningRev = "function _getWinningRev(leafRevs) {\r\n    return leafRevs.sort((a, b) => {\r\n      let [revNumA, revHashA] = a.split(\'-\');\r\n      let [revNumB, revHashB] = b.split(\'-\');\r\n      revNumA = parseInt(revNumA, 10);\r\n      revNumB = parseInt(revNumB, 10);\r\n\r\n      if (revNumA > revNumB) {\r\n        return -1;\r\n      } else if (revNumA < revNumB) {\r\n        return 1;\r\n      } else {\r\n        if (revHashA > revHashB) {\r\n          return -1;\r\n        } else {\r\n          return 1;\r\n        }\r\n      }\r\n    })[0];\r\n  }";
 const _conflicts = "if (metaDoc._leafRevs.length > 1) {\r\n  doc._conflicts = true;\r\n}";
 const _storeDocument = "{\r\n  type: \"River Turtle\",\r\n  _conflictVersions: [\r\n    {type: \"Sea Turtle\", _id: \"turtle1\", _rev: \"2-007\"},\r\n    {type: \"Lake Turtle\", _id: \"turtle1\", _rev: \"3-202\"},\r\n    {type: \"Pond Turtle\", _id: \"turtle1\", _rev: \"3-7c9\"},\r\n  ],\r\n  _conflicts: true,\r\n  _id: \"turtle1\",\r\n  _winningRev: \"3-895\",\r\n}"
 const _setConflictWinner = "function setConflictWinner(doc) {\r\n  const { _id, _rev } = doc;\r\n\r\n  return this._readMetaDoc(_id)\r\n    .then(metaDoc => this._deleteAllOtherLeafRevs(metaDoc, _rev))\r\n    .then(() => this.update(_id, doc, _rev))\r\n    .catch(err => console.log(\"setConflictWinner error:\", err));\r\n}"
 
+const revtree1 = "[\r\n  \"1-1e5\"\r\n  {},\r\n  [\r\n    [\r\n      \"2-705\",\r\n      {},\r\n      []\r\n    ]\r\n  ]\r\n]";
+const revtree2 = "[\r\n  \"1-1e5\"\r\n  {},\r\n  [\r\n    [\r\n      \"2-007\",\r\n      {},\r\n      []\r\n    ],\r\n    [\r\n      \"2-705\",\r\n      {},\r\n      []\r\n    ]\r\n  ]\r\n]";
+const metadoc = "{\r\n  _id: \"turtle1\",\r\n  _leafRevs: [\"2-007\", \"2-705\"],\r\n  _revisions: [\"1-1e5\", {}, [...]],\r\n  _winningRev: \"2-705\"\r\n}";
+
 const Conflicts = () => {
   return (
     <div>
+      {/* <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{}</SyntaxHighlighter> */}
       <h2 id='conflicts'>Conflicts</h2>
-      <p>
-        We have already touched on how important our revision tree is in enabling us to
-        manage multiple revisions of a document and store potentially conflicting versions.
-        Now we can take a closer look at how conflicts are both generated and resolved in our
-        framework.
-      </p>
+      <p>We have already touched on how important our revision tree is in enabling us to manage multiple revisions of a document and store potentially conflicting versions. Now we can take a closer look at how conflicts are both generated and resolved in our framework.</p>
+
+      <h3 id="winning-revisions">Generating Conflicts</h3>
+
+      <p>Conflicts created by two clients making different changes to the same document are surfaced in the sync process. At one point, each client had the same common revision, and then made different updates, resulting in revision IDs with different hashes.</p>
+
+      <p>After one client syncs to the server, the server will have revisions that are different than what the second client has.</p>
+
+      <p>More specifically, Tthe revision trees for the document on the client and servereach client would contain different data:</p>
+
+      <img className="" src="../images/conflicts/1-server-client-trees.png" />
+
+
+
+
+
+
+
+
+
       <p>
         Conflicts are created when two or more clients make different changes to the same
         document all sync to the server. At one point, each client had the same common revision,
@@ -149,7 +168,7 @@ const Conflicts = () => {
         This deletion is propagated across the network after syncing:
       </p>
 
-      <img/>
+      <img />
 
       <p>
         However, this approach has a risk. If two clients each pick different winners all branches
