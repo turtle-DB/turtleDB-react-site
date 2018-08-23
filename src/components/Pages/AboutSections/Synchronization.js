@@ -29,8 +29,6 @@ const Synchronization = () => {
 
       <p>Periodically, clients send changes in their local database to the server. After the client has sent its changes, the server sends back all changes it has received from other clients. Ultimately, this is how turtleDB maintains consistency with a distributed database architecture.</p>
 
-      <p>This diagram illustrates the centralized approach to synchronizing clients and server:</p>
-
       <div className="img-container">
         <img className="img-style" src="../images/sync/1-centralized.png" />
       </div>
@@ -77,7 +75,7 @@ const Synchronization = () => {
         <img className="img-style" src="../images/sync/2-last-key.png" />
       </div>
 
-      <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the document store are auto-incrementing).</p>
+      <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the revision store are auto-incrementing).</p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getChangedMetaDocsForTortoise}</SyntaxHighlighter>

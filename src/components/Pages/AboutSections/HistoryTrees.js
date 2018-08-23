@@ -274,9 +274,7 @@ const HistoryTrees = () => {
         common pairs of nodes. At each node pair, the algorithm compares the children nodes to find
         discrepancies; indicating what needs to be merged into the server tree.
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {mergeRevTrees}
-      </SyntaxHighlighter>
+
       <p>
         Overall, the Big O complexity of merging is determined by the intersection of the two trees;
         the number of common nodes between trees that are recursively traversed.
@@ -338,6 +336,10 @@ const HistoryTrees = () => {
           <img src="../images/trees/merge-trees-7.png" />
         </div>
       </Carousel>
+
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {mergeRevTrees}
+      </SyntaxHighlighter>
 
       <p>
         <em>It is important to note when we say that branch slicing is a O(1) step, we are talking about just the
