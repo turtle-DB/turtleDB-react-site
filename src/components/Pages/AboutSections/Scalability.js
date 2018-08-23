@@ -64,9 +64,13 @@ const Scalability = () => {
       <p>
         Since IDB is geared towards working with JSON documents, we benchmarked turtleDB using example data like:
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {sampleDoc}
-      </SyntaxHighlighter>
+
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {sampleDoc}
+        </SyntaxHighlighter>
+      </div>
+      
       <p>
         For a small doc of 180 bytes, the total space actually used by turtleDB to store it is 460 bytes.
         This is due to the extra properties added to the doc; including document id, revision hash id,

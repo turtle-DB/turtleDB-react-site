@@ -8,7 +8,7 @@ import Citation from '../../Citation'
 const readQuery = "turtleDB.read('foo').then(data => console.log(data))";
 const idbQuery = "let db;\r\nlet request = window.indexedDB.open(\"myDB\");\r\nrequest.onerror = function(event) {\r\n  alert(\"Connection failed to open\");\r\n};\r\nrequest.onsuccess = function(event) {\r\n  db = event.target.result;\r\n};\r\n\r\nlet transaction = db.transaction([\"customers\"]);\r\nlet objectStore = transaction.objectStore(\"customers\");\r\n\r\nlet request = objectStore.get(\"John Smith\");\r\nrequest.onerror = function(event) {\r\n  \/\/ Handle errors\r\n};\r\nrequest.onsuccess = function(event) {\r\n  \/\/ Capture returned values\r\n  alert(\"Returned document is \" + request.result);\r\n};"
 const promiseQuery = "function read(id) {\r\n  let db;\r\n  this.ready = new Promise((resolve, reject) => {\r\n    const request = window.indexedDB.open(name);\r\n\r\n    request.onsuccess = e => {\r\n      this.db = e.target.result;\r\n      resolve();\r\n    };\r\n    request.onerror = e => {\r\n      this.db = e.target.result;\r\n      reject(e);\r\n    };\r\n  });\r\n\r\n  return this.ready.then(() => {\r\n    return new Promise((resolve, reject) => {\r\n      let request = this.getStore(\'customers\', \'readonly\').get(_id);\r\n\r\n      request.onsuccess = e => {\r\n        resolve(e.target.result);\r\n      }\r\n      request.onerror = e => {\r\n        console.log(`${action} error:`, e.target.error);\r\n        reject(e.target.error);\r\n      }\r\n    })\r\n  });\r\n}"
-const promiseAllQuery = "  ...\r\n  \r\n  const promises = ids.map(id => {\r\n    return this.command(this._store, \"INDEX_READ\", { data: { indexName: \'id\', key: id } });\r\n  });\r\n\r\n  return Promise.all(promises);\r\n\r\n  ..."
+const promiseAllQuery = "  ...\r\n\r\n  const promises = ids.map(id => {\r\n    return this.command(this._store, \"INDEX_READ\", \r\n      { data: { indexName: \'id\', key: id } });\r\n  });\r\n\r\n  return Promise.all(promises);\r\n\r\n  ..."
 const promiseThenQuery = "...\r\n\r\nlet result = Promise.resolve();\r\n\r\nids.forEach(id => {\r\n  result = result.then(() => this.delete(id));\r\n});\r\n\r\nreturn result;\r\n\r\n..."
 
 const InBrowserStorage = () => {
@@ -127,9 +127,11 @@ const InBrowserStorage = () => {
         using the browser API:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {idbQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {idbQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <p>
         The above code is adapted from MDN documentation, but would not actually
@@ -138,9 +140,11 @@ const InBrowserStorage = () => {
         change the above code to this:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {promiseQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {promiseQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <h4 id="promise-all-promise-then">Promise.all, Promise.then</h4>
 
@@ -155,9 +159,11 @@ const InBrowserStorage = () => {
         Running queries in parallel is therefore possible, but it is important to ensure they are all completed sequentially. turtleDB accomplishes this using <span className="inline-code">Promise.all</span>:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {promiseAllQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {promiseAllQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <div className="img-container">
         <img className="img-style" src="../images/browser_storage/promise-all.png" />
@@ -182,9 +188,11 @@ const InBrowserStorage = () => {
         <span className="inline-code">Promise.resolve()</span>.:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {promiseThenQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {promiseThenQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <div className="img-container">
         <img className="img-style" src="../images/browser_storage/promise-then.png" />
@@ -205,9 +213,11 @@ const InBrowserStorage = () => {
         This means if you want to read a document of id `foo`, that code would be written as:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {readQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {readQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <p>
         turtleDB’s design consists of two modules. The first is an IDB adapter which contains

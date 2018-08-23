@@ -2,6 +2,7 @@ import React from 'react';
 import Citation from '../../Citation'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
+import { Carousel } from 'react-responsive-carousel';
 
 const doublyLinkedLists = "class Revision {\n  constructor(rev) {\n    this.rev = rev;\n    this.prev = null;\n    this.next = null;\n  }\n}\nconst rev1 = new Revision('1-hash1');\nconst rev2 = new Revision('2-hash2');\nrev1.next = rev2;\nrev2.prev = rev1;\n\nconst rev3 = new Revision('3-hash3');\nrev2.next = rev3;\nrev3.prev = rev2;"
 const subArray = "const revisions = [['1-hash1'], ['2-hash2a', '2-hash2b'], ['3-hash3a', '3-hash3b']];"
@@ -9,6 +10,7 @@ const nestedArray = "const revisions = [\'1-hash1\', [[\'2-hash1\', [[\'3-hash1\
 const readableNestedArray = "const revisions = [\r\n\'1-hash1\', [\r\n  [\'2-hash1\', [\r\n    [\'3-hash1\', [\r\n      [\'4-hash1\', []\r\n      ]\r\n    ]]\r\n  ]], \r\n  [\'2-hash2\', [\r\n    [\'3-hash2\', []\r\n    ]\r\n  ]]\r\n]];"
 const collectAllLeafRevs = "function collectAllLeafRevs(node, leafRevs = []) {\r\n  if (node[2].length === 0) leafRevs.push(node[0]);\r\n\r\n  for (let i = 0; i < node[2].length; i++) {\r\n    this.collectAllLeafRevs(node[2][i], leafRevs);\r\n  }\r\n\r\n  return leafRevs;\r\n}"
 const mergeRevTrees = "function mergeRevTrees(node1, node2) {\r\n  const node1Children = node1[2];\r\n  const node2Children = node2[2];\r\n\r\n  const commonNodes = this.findCommonNodes(node1Children, node2Children);\r\n\r\n  const node2ChildrenDiffs = this.getNode2ChildrenDiffs(node1Children, node2Children);\r\n  node1[2] = [...node1Children, ...node2ChildrenDiffs];\r\n\r\n  for (let i = 0; i < commonNodes.length; i++) {\r\n    let commonNodesPair = commonNodes[i];\r\n    this.mergeRevTrees(commonNodesPair[0], commonNodesPair[1]);\r\n  }\r\n\r\n  return node1;\r\n}\r\n\r\nfunction findCommonNodes(node1Children, node2Children) {\r\n  let commonNodes = [];\r\n  for (let i = 0; i < node1Children.length; i++) {\r\n    let node1Child = node1Children[i];\r\n    for (let j = 0; j < node2Children.length; j++) {\r\n      let node2Child = node2Children[j];\r\n      if (node2Child[0] === node1Child[0]) {\r\n        commonNodes.push([node1Child, node2Child]);\r\n      }\r\n    }\r\n  }\r\n\r\n  return commonNodes;\r\n}"
+const metaDoc = "{\r\n  _winningRev: \'4-hash1\',\r\n  _leafRevs: [\'4-hash1\', \'3-hash2\'],\r\n  revisions = [\'1-hash1\', [\r\n                [\'2-hash1\', [\r\n                  [\'3-hash1\', [\r\n                    [\'4-hash1\', []\r\n                    ]\r\n                  ]]\r\n                ]], \r\n                [\'2-hash2\', [\r\n                  [\'3-hash2\', []\r\n                  ]\r\n                ]]\r\n              ]]\r\n}"
 
 const HistoryTrees = () => {
   return (
@@ -41,7 +43,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="img-style" src="../images/trees/single-branch-2.png" />
+        <img className="img-style" src="../images/trees/single-branch-3.png" />
       </div>
 
       <p>
@@ -70,7 +72,9 @@ const HistoryTrees = () => {
         to represent a deleted ‘revision’ of a document.
       </p>
 
-      <img />
+      <div className="img-container">
+        <img className="img-style" src="../images/trees/deleted-doc.png"/>
+      </div>
 
       <h4>Leaf Nodes</h4>
       <p>
@@ -78,6 +82,10 @@ const HistoryTrees = () => {
         This is simply a semantic distinction. Trees with no conflicts only have one leaf node;
         trees with conflicts have multiple leaf nodes that represent competing versions of a document.
       </p>
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/leaf-nodes.png"/>
+      </div>
+
 
       <h3 id="revision-ids">Revision IDs</h3>
 
@@ -86,7 +94,9 @@ const HistoryTrees = () => {
         this as ‘revision 1’, ‘revision 2’ but in turtleDB, we actually have a process in generating these.
       </p>
 
-      <img />
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/revision-ids.png"/>
+      </div>
 
       <p>
         The first half of the revision ID is a number that is incremented for every revision. On creation,
@@ -123,9 +133,12 @@ const HistoryTrees = () => {
         Doubly linked-lists are an option for representing trees.
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {doublyLinkedLists}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {doublyLinkedLists}
+        </SyntaxHighlighter>
+      </div>
+
       <p>
         For turtleDB, they were not a viable option as they relied on memory pointers
         between nodes that would be lost when the tree was stored in the database or
@@ -152,9 +165,9 @@ const HistoryTrees = () => {
         own sub-array, nested within its parent’s sub-array:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {nestedArray}
-      </SyntaxHighlighter>
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/nested-arrays.png"/>
+      </div>
 
       <p>
         From the outside, this data structure looks confusing but it is actually easy to work with.
@@ -169,11 +182,10 @@ const HistoryTrees = () => {
         The below shows our nested array structure in a more readable format next to a c
         onceptual diagram of its equivalent tree:
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {readableNestedArray}
-      </SyntaxHighlighter>
 
-      <img />
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/tree-diagram-1.png"/>
+      </div>
 
       <h4>Meta Documents</h4>
 
@@ -187,12 +199,21 @@ const HistoryTrees = () => {
         meta document contains a few more properties which exist primarily to help
         efficiently manage conflicts.
       </p>
+
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/meta-document.png"/>
+      </div>
+
       <p>
         The first is a reference to the ‘winning revision’ of a document, and the second is an array of
         ‘leaf revisions’ that exist at the end of branches in the revision tree.
       </p>
 
-      <img />
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {metaDoc}
+        </SyntaxHighlighter>
+      </div>
 
       <p>
         This is what an example meta document looks like. So how do we traverse the document history tree?
@@ -216,11 +237,17 @@ const HistoryTrees = () => {
         Because our trees are stored in a database and lack memory pointers to their leaf nodes, we have to do a full traversal of the tree down to the latest version (leaf node).
         This is the recursive function we developed:
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {collectAllLeafRevs}
-      </SyntaxHighlighter>
 
-      <img />
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {collectAllLeafRevs}
+        </SyntaxHighlighter>
+      </div>
+
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/updates-deletes.png"/>
+      </div>
+
       <p>This process is O(N) time and space.</p>
 
       <h4>Merging Trees</h4>
@@ -235,7 +262,9 @@ const HistoryTrees = () => {
         and the result is sent back to the client.
       </p>
 
-      <img />
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/merging-two-trees.png"/>
+      </div>
 
       <p>
         For example, the server tree (left) combines the changes from the client tree (middle) and we get the resulting tree (right).
@@ -282,15 +311,44 @@ const HistoryTrees = () => {
       <p>
         This slideshow illustrates the parallel traversal of two trees, comparing children and merging in new branches:
       </p>
+
+      <Carousel showArrows={true}>
+        <div>
+          <img src="../images/trees/merge-trees-0.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-1.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-2.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-3.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-4.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-5.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-6.png" />
+        </div>
+        <div>
+          <img src="../images/trees/merge-trees-7.png" />
+        </div>
+      </Carousel>
+
       <p>
         <em>It is important to note when we say that branch slicing is a O(1) step, we are talking about just the
         branch slicing step itself and not the tree traversal up to the point where the server and client differ.
-      </em>
+        </em>
       </p>
-      <img />
 
       <h4>Identifying Leaf Revisions</h4>
-      <img />
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/find-leaf-versions.png"/>
+      </div>
 
       <p>
         The purpose of having revision trees is to easily determine conflicting versions of a document.
@@ -300,14 +358,21 @@ const HistoryTrees = () => {
       </p>
       <p>
         Developers can therefore look up and access those leaf nodes in constant time, or O(1).
-        While reads are O(1), the “_leafRevs” array needs to be constantly kept up to date.
-        We added code within our update, delete, and merge functions to update the array
-        <strong>while</strong> the tree was being traversed. This means keeping the
-         tree updated takes O(N) but
-        it piggybacks on other operations and is outweighed by the many O(1) reads.
       </p>
 
-      <img />
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {metaDoc}
+        </SyntaxHighlighter>
+      </div>
+
+    <p>
+      While reads are O(1), the “_leafRevs” array needs to be constantly kept up to date.
+      We added code within our update, delete, and merge functions to update the array
+      <strong>while</strong> the tree was being traversed. This means keeping the
+       tree updated takes O(N) but
+      it piggybacks on other operations and is outweighed by the many O(1) reads.
+    </p>
 
     </div>
   )

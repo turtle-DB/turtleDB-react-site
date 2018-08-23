@@ -9,12 +9,12 @@ import { atelierDuneLight } from 'react-syntax-highlighter/styles/hljs'
 
 const syncTo = "function syncTo() {\r\n  return this.checkServerConnection(\'\/connect\')\r\n    .then(() => this.getSyncToTortoiseDoc())\r\n    .then(() => this.getHighestTurtleKey())\r\n    .then(() => this.sendRequestForLastTortoiseKey(\'\/_last_tortoise_key\'))\r\n    .then(() => this.getChangedMetaDocsForTortoise())\r\n    .then(() => this.batchSendChangedMetaDocsToTortoise(\'\/_missing_rev_ids\'))\r\n    .then(() => this.getStoreDocsForTortoise())\r\n    .then(() => this.createNewSyncToTortoiseDoc())\r\n    .then(() => this.batchSendTurtleDocsToTortoise(\'\/_insert_docs\'))\r\n    .then(() => this.updateSyncToTortoiseDoc())\r\n    .catch(err => console.log(\'Sync To Error:\', err));\r\n}"
 const lastKeyApproach = "function getSyncToTortoiseDoc() {\r\n  return this.idb.command(this.idb._syncToStore, \"READ_ALL\", {})\r\n    .then(syncRecords => this.syncToTortoiseDoc = syncRecords[0])\r\n}\r\n\r\nfunction getHighestTurtleKey() {\r\n  return this.idb.command(this.idb._store, \"GET_ALL_KEYS\", {})\r\n    .then(keys => {\r\n      const lastKey = keys[keys.length - 1];\r\n      this.highestTurtleKey = lastKey ? lastKey : 0;\r\n    });\r\n}\r\n\r\nfunction sendRequestForLastTortoiseKey(path) {\r\n  return axios.post(this.targetUrl + path, this.syncToTortoiseDoc)\r\n    .then(res => this.lastTortoiseKey = res.data)\r\n}"
-const getChangedMetaDocsForTortoise = "function getChangedMetaDocsForTortoise() {\r\n  if (this.lastTortoiseKey === this.highestTurtleKey) {\r\n    return Promise.reject(\"No sync needed - last key and highest key are equal\");\r\n  } else {\r\n    return this.getMetaDocsBetweenStoreKeys(this.lastTortoiseKey, this.highestTurtleKey)\r\n      .then(metaDocs => this.changedTurtleMetaDocs = metaDocs)\r\n    })\r\n  }\r\n}"
-const sendMetaDocs = "function batchSendChangedMetaDocsToTortoise(path) {\r\n  if (this.changedTurtleMetaDocs.length === 0) return;\r\n  \r\n  let currentBatch = this.changedTurtleMetaDocs.splice(0, this.batchLimit);\r\n\r\n  return this.sendBatchOfMetaDocs(path, currentBatch)\r\n    .then(() => this.batchSendChangedMetaDocsToTortoise(path));\r\n}\r\n\r\nfunction sendBatchOfMetaDocs(path, batch) {\r\n  return axios.post(this.targetUrl + path, { metaDocs: batch })\r\n    .then(revIdsFromTortoise => this.revIdsFromTortoise.push(...revIdsFromTortoise.data));\r\n}"
-const getMetaDocsBetweenStoreKeys = "function getMetaDocsBetweenStoreKeys(lastTortoiseKey, highestTurtleKey) {\r\n  return this.idb.command(this.idb._store, \"READ_BETWEEN\", { x: lastTortoiseKey, y: highestTurtleKey })\r\n    .then(docs => this.getUniqueIDs(docs))\r\n    .then(ids => this.getMetaDocsByIDs(ids))\r\n}\r\n\r\nfunction getUniqueIDs(docs) {\r\n  let ids = {};\r\n  for (let i = 0; i < docs.length; i++) {\r\n    const id = docs[i]._id_rev.split(\"::\")[0];\r\n    if (ids[id]) continue;\r\n    ids[id] = true;\r\n  }\r\n  const uniqueIDs = Object.keys(ids);\r\n  return uniqueIDs;\r\n}";
+const getChangedMetaDocsForTortoise = "function getChangedMetaDocsForTortoise() {\r\n  if (this.lastTortoiseKey === this.highestTurtleKey) {\r\n    return Promise.reject(\r\n      \"No sync needed - last key and highest key are equal\"\r\n    );\r\n  } else {\r\n    return this.getMetaDocsBetweenStoreKeys(\r\n      this.lastTortoiseKey, this.highestTurtleKey\r\n      )\r\n      .then(metaDocs => this.changedTurtleMetaDocs = metaDocs)\r\n    });\r\n  }\r\n}"
+const sendMetaDocs = "function batchSendChangedMetaDocsToTortoise(path) {\r\n  if (this.changedTurtleMetaDocs.length === 0) return;\r\n  \r\n  let currentBatch = this.changedTurtleMetaDocs.splice(0, this.batchLimit);\r\n\r\n  return this.sendBatchOfMetaDocs(path, currentBatch)\r\n    .then(() => this.batchSendChangedMetaDocsToTortoise(path));\r\n}\r\n\r\nfunction sendBatchOfMetaDocs(path, batch) {\r\n  return axios.post(this.targetUrl + path, { metaDocs: batch })\r\n    .then(revIdsFromTortoise => \r\n      this.revIdsFromTortoise.push(...revIdsFromTortoise.data)\r\n    );\r\n}"
+const getMetaDocsBetweenStoreKeys = "function getMetaDocsBetweenStoreKeys(lastTortoiseKey, highestTurtleKey) {\r\n  return this.idb.command(\r\n    this.idb._store, \"READ_BETWEEN\", { x: lastTortoiseKey, y: highestTurtleKey }\r\n    )\r\n    .then(docs => this.getUniqueIDs(docs))\r\n    .then(ids => this.getMetaDocsByIDs(ids))\r\n}"
 const getUniqueIDs = "function getUniqueIDs(docs) {\r\n  let ids = {};\r\n  for (let i = 0; i < docs.length; i++) {\r\n    const id = docs[i]._id_rev.split(\"::\")[0];\r\n    if (ids[id]) continue;\r\n    ids[id] = true;\r\n  }\r\n  const uniqueIDs = Object.keys(ids);\r\n  return uniqueIDs;\r\n}"
-const getStoreDocsForTortoise = "function getStoreDocsForTortoise() {\r\n  const promises = this.revIdsFromTortoise.map(_id_rev => {\r\n    return this.idb.command(this.idb._store, \"INDEX_READ\", { data: { indexName: \'_id_rev\', key: _id_rev } });\r\n  });\r\n  return Promise.all(promises)\r\n    .then(docs => this.storeDocsForTortoise = docs)\r\n}"
-const updateSyncDoc = "function createNewSyncToTortoiseDoc() {\r\n  let newHistory = { lastKey: this.highestTurtleKey, sessionID: this.sessionID };\r\n  this.newSyncToTortoiseDoc = Object.assign(\r\n    this.syncToTortoiseDoc, { history: [newHistory].concat(this.syncToTortoiseDoc.history) }\r\n  );\r\n}\r\n\r\nfunction updateSyncToTortoiseDoc() {\r\n  return this.idb.command(this.idb._syncToStore, \"UPDATE\", { data: this.newSyncToTortoiseDoc });\r\n}"
+const getStoreDocsForTortoise = "function getStoreDocsForTortoise() {\r\n  const promises = this.revIdsFromTortoise.map(_id_rev => \r\n    this.idb.command(\r\n      this.idb._store, \"INDEX_READ\", \r\n      { data: { indexName: \'_id_rev\', key: _id_rev }}\r\n\t));\r\n  \r\n  return Promise.all(promises)\r\n    .then(docs => this.storeDocsForTortoise = docs)\r\n}"
+const updateSyncDoc = "function createNewSyncToTortoiseDoc() {\r\n  let newHistory = { \r\n    lastKey: this.highestTurtleKey, sessionID: this.sessionID \r\n  };\r\n  \r\n  this.newSyncToTortoiseDoc = Object.assign(\r\n    this.syncToTortoiseDoc, { \r\n      history: [newHistory].concat(this.syncToTortoiseDoc.history) \r\n    }\r\n  );\r\n}"
 const sendStoreDocs = "function batchSendTurtleDocsToTortoise(path) {\r\n  let currentBatch = this.storeDocsForTortoise.splice(0, this.batchLimit);\r\n\r\n  if (this.storeDocsForTortoise.length === 0) {\r\n    return this.sendBatchOfDocs(path, currentBatch, true)\r\n  } else {\r\n    return this.sendBatchOfDocs(path, currentBatch)\r\n      .then(() => {\r\n        return this.batchSendTurtleDocsToTortoise(path);\r\n      });\r\n  }\r\n}\r\n\r\nfunction sendBatchOfDocs(path, batch, lastBatch = false) {\r\n  let payload = { docs: batch };\r\n\r\n  if (lastBatch) {\r\n    payload.newSyncToTortoiseDoc = this.newSyncToTortoiseDoc;\r\n    payload.lastBatch = lastBatch;\r\n  }\r\n\r\n  return axios.post(this.targetUrl + path, payload);\r\n}"
 const batchLimit = "function setBatchLimit(batchLimit) {\r\n  this.batchLimit = batchLimit;\r\n}";
 const syncFrom = "function syncFrom() {\r\n  return this.checkServerConnection(\'\/connect\')\r\n    .then(() => this.getTurtleID())\r\n    .then(() => this.getLastTurtleKey())\r\n    .then(() => this.sendRequestForTortoiseMetaDocs(\'\/_changed_meta_docs\'))\r\n    .then(() => this.findMissingRevIds())\r\n    .then(() => this.sendRequestForTortoiseDocs(\'\/_changed_docs\'))\r\n    .then(() => this.insertUpdatedMetaDocs())\r\n    .then(() => this.insertNewDocsIntoStore())\r\n    .then(() => this.updateSyncFromTortoiseDoc())\r\n    .then(() => this.sendSuccessConfirmation(\'\/_confirm_sync\'))\r\n    .catch((err) => console.log(\'Sync From Error:\', err));\r\n}";
@@ -59,7 +59,9 @@ const Synchronization = () => {
 
       <p>Let's being with the first half of the sync process: <span className="inline-code">syncTo()</span>. As each stage of this process is asynchronous, we control the flow of events with an extended promise chain that looks like this:</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
+      </div>
 
       <h4>Check Server Connection</h4>
 
@@ -77,7 +79,9 @@ const Synchronization = () => {
 
       <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the document store are auto-incrementing).</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getChangedMetaDocsForTortoise}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getChangedMetaDocsForTortoise}</SyntaxHighlighter>
+      </div>
 
       <p>This addresses a potential problem with syncing - that it can be extremely inefficient if not done properly. Imagine if a client had 1000 documents, synced to a server, and created 50 new documents (so now there are 1050). It would be hugely inefficient to send those previous 1000 documents over again on the next sync cycle.</p>
 
@@ -89,11 +93,15 @@ const Synchronization = () => {
 
       <p>Instead, the client first sends over the meta documents tracking those new revisions to the server. The client does this by taking the full list of revisions between the specified keys, and generating an array of unique document ids.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getMetaDocsBetweenStoreKeys}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getMetaDocsBetweenStoreKeys}</SyntaxHighlighter>
+      </div>
 
       <p>It then uses those ids to fetch the relevant meta documents from the store and deliver them to the server via an HTTP POST request.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendMetaDocs}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendMetaDocs}</SyntaxHighlighter>
+      </div>
 
       <p>The server merges the client document trees with its own and responds with a list of revision ids it does not have in its local store.</p>
 
@@ -103,15 +111,21 @@ const Synchronization = () => {
 
       <p>Once the client receives a response from the server, it retrieves the exact revisions the server asks for from its store using the <span className="inline-code">_id_rev</span> index.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getStoreDocsForTortoise}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getStoreDocsForTortoise}</SyntaxHighlighter>
+      </div>
 
       <p>It also generates a new sync history object with the highest key value this sync session encapsulated.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{updateSyncDoc}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{updateSyncDoc}</SyntaxHighlighter>
+      </div>
 
       <p>The collection of requested revision documents and the new sync history object are delivered to the server via an HTTP POST request.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendStoreDocs}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendStoreDocs}</SyntaxHighlighter>
+      </div>
 
       <p>The server inserts all the meta documents, revision documents, and the new sync history into its database. The client also inserts the sync history and at this point, the client->server sync is completed.</p>
 
@@ -121,13 +135,17 @@ const Synchronization = () => {
 
       <p>Developers may not have the ability to alter maximum payload limits on their database servers so this is a way to cap the size of payloads travelling between the two points.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{batchLimit}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{batchLimit}</SyntaxHighlighter>
+      </div>
 
       <h4>Sync From</h4>
 
       <p>After the client has synced with the server and sent changes, the second half of the sync process initiates where the server sends changes to the client, called <span className="inline-code">syncFrom</span>.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncFrom}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncFrom}</SyntaxHighlighter>
+      </div>
 
       <p>After this has completed, a full sync has occurred and the two databases will possess an up-to-date view of the state of the data.</p>
 
