@@ -125,9 +125,11 @@ const InBrowserStorage = () => {
         using the browser API:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {idbQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {idbQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <p>
         The above code is adapted from MDN documentation, but would not actually
@@ -136,9 +138,11 @@ const InBrowserStorage = () => {
         change the above code to this:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {promiseQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {promiseQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <h4 id="promise-all-promise-then">Promise.all, Promise.then</h4>
 
@@ -155,9 +159,11 @@ const InBrowserStorage = () => {
          <span className="inline-code">Promise.all</span>:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {promiseAllQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {promiseAllQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <img className="w-100" src="../images/browser_storage/promise-all.png"/>
 
@@ -178,9 +184,11 @@ const InBrowserStorage = () => {
         <span className="inline-code">Promise.resolve()</span>.:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {promiseThenQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {promiseThenQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <img className="w-100" src="../images/browser_storage/promise-then.png"/>
 
@@ -200,9 +208,11 @@ const InBrowserStorage = () => {
         This means if you want to read a document of id `foo`, that code would be written as:
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {readQuery}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {readQuery}
+        </SyntaxHighlighter>
+      </div>
 
       <p>
         turtleDB’s design consists of two modules. The first is an IDB adapter which contains
