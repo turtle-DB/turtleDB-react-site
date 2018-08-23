@@ -25,10 +25,6 @@
     font-size: 23px; */
   }
 
-  .about ul li {
-    padding-right: 7%;
-  }
-
   h2 + p {
     margin-top: 2rem;
   }
