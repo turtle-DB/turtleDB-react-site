@@ -64,7 +64,10 @@ const Conflicts = () => {
       </ol>
 
       <p>In code form:</p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_getWinningRev}</SyntaxHighlighter>
+
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_getWinningRev}</SyntaxHighlighter>
+      </div>
 
       <p>The longest branch approach is the best default strategy turtleDB can use to support a wide range of applications without knowing their internal logic. It equates to using “proof of work”, i.e. going with the revision that received the most updates.</p>
 
@@ -72,7 +75,9 @@ const Conflicts = () => {
 
       <p>turtleDB surfaces conflicts for developers by modifying values returned by developer API methods. When a document is read that has more than one leaf revision, turtleDB adds a <span className="inline-code">_conflicts</span> property.</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_conflicts}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_conflicts}</SyntaxHighlighter>
+      </div>
 
       <p>This way, it is easy for the developer to write front-end code that checks for conflicts in returned documents.</p>
 
@@ -84,7 +89,9 @@ const Conflicts = () => {
 
       <p>The returned document would look like this in practice:</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_storeDocument}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_storeDocument}</SyntaxHighlighter>
+      </div>
 
       <h3 id="conflict-resolution">Conflict Resolution</h3>
 
@@ -142,7 +149,9 @@ const Conflicts = () => {
 
       <p>This approach of deleting all of leaf revisions and adding an update to the winning revision, is handled in our API method called <span className="inline-code">setConflictWinner</span>:</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_setConflictWinner}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_setConflictWinner}</SyntaxHighlighter>
+      </div>
     </div>
   )
 }
