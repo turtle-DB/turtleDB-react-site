@@ -74,6 +74,10 @@
 .carousel .thumb.selected {
   border: 3px solid red;
 }
+
+.carousel .slide {
+  background: none;
+}
 /* About */
 
 .about .container {

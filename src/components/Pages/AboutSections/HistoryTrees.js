@@ -246,8 +246,10 @@ const HistoryTrees = () => {
         the number of common nodes between trees that are recursively traversed.
       </p>
 
+
+      <h5>Comparing Children - O(N * M)</h5>
       <p>
-        <strong>Comparing Children - O(N * M)</strong> When multiple children exist on a node pair,
+        When multiple children exist on a node pair,
         the common children must be paired off for further recursion,
         while the discrepancies need to be added to the server tree.
       </p>
@@ -258,8 +260,9 @@ const HistoryTrees = () => {
         so while this step looks slow on paper, it should not be a common occurrence.
       </p>
 
-      <p>
-         <strong>Handling Discrepancies - O(1)</strong>Child nodes in the client tree that do not exist in the server tree represent changes that need to
+
+      <h5>Handling Discrepancies - O(1)</h5>
+      <p>Child nodes in the client tree that do not exist in the server tree represent changes that need to
          be spliced in. The new child node could be the start of a long branch of updates from the client.
          Our function takes advantage of the nested array structure to access that entire
          branch held within the child node sub-array, and splice it into the server tree in one step.

@@ -52,7 +52,7 @@ const Scalability = () => {
         free hard drive space, an origin can at most take up 1GB.
       </p>
 
-      <img />
+      <img className="w-100" src="../images/scalability/1-idb-limits.png" />
 
       <p>
         However, it is important to note that this is an approximate calculation - Chrome’s approach
@@ -85,7 +85,7 @@ const Scalability = () => {
       </p>
       <p>
         turtleDB does not create a new meta document for updates. It only needs to add another
-        sub-array to the reversion tree. This means each update adds approximately 60 bytes to
+        sub-array to the revision tree. This means each update adds approximately 60 bytes to
         the meta document. So we can say that an update would create an additional 520 bytes of space.
       </p>
       <p>
@@ -102,7 +102,7 @@ const Scalability = () => {
         Applications where documents receive hundreds of updates will run out of space more quickly.
       </p>
 
-      <img />
+      <img className="w-100" src="../images/scalability/2-create-update-chart.png" />
 
       <p>
         But what happens when IndexedDB reaches its  storage limit? Referring Chrome documentation again:
@@ -143,7 +143,7 @@ const Scalability = () => {
         in the store and permanently removes them from the IDB database.
       </p>
 
-      <img />
+      <img className="w-100" src="../images/scalability/3-compaction.png" />
 
       <p>
         While we remove store versions, the meta document and its document history tree remain untouched, so sync and merge functionality will be unaffected.
@@ -161,7 +161,7 @@ const Scalability = () => {
         to the total query time. This table shows that working with a lot of data can become a problem in for turtleDB:
       </p>
 
-      <img />
+      <img className="w-100" src="../images/scalability/4-idb-performance.png" />
 
       <p>
         <em>The times shown in the above table are hardware dependent. As such, IDB’s performance metrics are all approximations. </em>
@@ -192,7 +192,7 @@ const Scalability = () => {
         of the environments that tortoiseDB could be running in.
       </p>
 
-      <img />
+      <img className="w-100" src="../images/scalability/5-DO-droplet.png" />
 
       <p>
         We located our droplet on the west coast and sent requests from a turtleDB on the east coast.
@@ -203,12 +203,12 @@ const Scalability = () => {
         times and averaged out, we can see how long each part of the entire sync process takes:
       </p>
 
-      <img />
+      <img className="w-100" src="../images/scalability/6-sync-timeline.png" />
+      <img className="w-100" src="../images/scalability/7-sync-time-table.png" />
 
       <p>
         What immediately stood out was the HTTP request-response times accounted for approximately
-        70% of total sync time. There are 4 HTTP requests made during <span className="inline-code">syncTo</span> and 4 during
-        <span className="inline-code">syncFrom</span> ;approximately 150ms in travel time per request-response cycle.
+        70% of total sync time. There are 4 HTTP requests made during <span className="inline-code">syncTo</span> and 4 during <span className="inline-code">syncFrom</span> - approximately 150ms in travel time per request-response cycle.
       </p>
       <p>
         Given our optimizations for tree merging and MongoDB bulk queries, server-side operations were
@@ -221,7 +221,7 @@ const Scalability = () => {
       </p>
       <p>
         With up to 1000 documents being sent from client to server, the total server processing time only
-        increased slightly; from 70ms for 100 documents to around 180ms for 1000 documents.
+        increased slightly - from 70ms for 100 documents to around 180ms for 1000 documents.
         This was largely due to optimizations we made to our tree merging code and the speed of
         MongoDB, ensuring it would never be a significant bottleneck in those high document volume situations.
       </p>
@@ -229,11 +229,11 @@ const Scalability = () => {
         We realized while we experimented with bigger and bigger payload sizes that some developers may
         not have full control over their remote server. This means they cannot control HTTP payload
         limits set by the server. To make it easier for developers to work around this issue,
-        we implemented feature called <strong>batching</strong> in both the turtleDB and tortoiseDB libraries.
+        we implemented the previously covered <a href="#">batching</a> in both the turtleDB and tortoiseDB libraries.
       </p>
       <p>
         Batching enables developers to arbitrarily set limits on the number of documents to send when synchronizing
-        (1000 by default); thereby controlling the size of HTTP payloads. If one whole set of documents
+        (1000 by default), thereby controlling the size of HTTP payloads. If one whole set of documents
         cannot fit into one payload, it can be split up into multiple requests.
       </p>
       <p>
@@ -244,7 +244,7 @@ const Scalability = () => {
       </p>
       <p>
         As it stands with our current model, users need to be aware that a full sync can take around 2
-        seconds; potentially longer with multiple clients all accessing the same remote database. We
+        seconds, potentially longer with multiple clients all accessing the same remote database. We
         hope to continue chipping away at that performance benchmark in future versions of turtleDB.
       </p>
     </div>
