@@ -53,9 +53,9 @@ const Synchronization = () => {
 
       <p>For simplicity, we will only outline the steps taken for client to server sync. From the perspective of the client, we call this the ‘sync to’ as it is syncing <em>to</em> the server. The process for server to client is very similar.</p>
 
-      <h4>Sync To</h4>
+      <h3 id="sync-to">Sync To</h3>
 
-      <p>Let's being with the first half of the sync process: <span className="inline-code">syncTo()</span>. As each stage of this process is asynchronous, we control the flow of events with an extended promise chain that looks like this:</p>
+      <p>Let's begin with the first half of the sync process: <span className="inline-code">syncTo()</span>. As each stage of this process is asynchronous, we control the flow of events with an extended promise chain that looks like this:</p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
@@ -65,9 +65,7 @@ const Synchronization = () => {
 
       <p>The first step is to check whether a connection to the server can be established. If the HTTP GET request does not return a <span className="inline-code">200 OK</span> status code, an error is thrown and the sync process is aborted.</p>
 
-      <h4>Get Range of Updated Documents</h4>
-
-      <h5>‘Last Key’ Approach</h5>
+      <h4>Get Range of Updated Documents - Last Key Approach</h4>
 
       <p>The client and server then compare their sync histories. These histories contain a ‘last key’ value that references the highest primary key of the client revision store that was covered in the last sync - we can think of this as a checkpoint.</p>
 
@@ -125,9 +123,9 @@ const Synchronization = () => {
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendStoreDocs}</SyntaxHighlighter>
       </div>
 
-      <p>The server inserts all the meta documents, revision documents, and the new sync history into its database. The client also inserts the sync history and at this point, the client->server sync is completed.</p>
+      <p>The server inserts all the meta documents, revision documents, and the new sync history into its database. The client also inserts the sync history and at this point, the client to server sync is completed.</p>
 
-      <h4>Batching</h4>
+      <h3 id="batching">Batching</h3>
 
       <p>turtleDB provides developers the ability to set batch sizes for the meta document and revision document collections as they are transported over the network to the server.</p>
 
@@ -137,7 +135,7 @@ const Synchronization = () => {
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{batchLimit}</SyntaxHighlighter>
       </div>
 
-      <h4>Sync From</h4>
+      <h3 id="sync-from">Sync From</h3>
 
       <p>After the client has synced with the server and sent changes, the second half of the sync process initiates where the server sends changes to the client, called <span className="inline-code">syncFrom</span>.</p>
 

@@ -18,7 +18,7 @@ const Conflicts = () => {
       <h2 id='conflicts'>Conflicts</h2>
       <p>We have already touched on how important our revision tree is in enabling us to manage multiple revisions of a document and store potentially conflicting versions. Now we can take a closer look at how conflicts are both generated and resolved in our framework.</p>
 
-      <h3 id="generating-conflicts">Generating Conflicts</h3>
+      <h3 id="surfacing-conflicts">Surfacing Conflicts</h3>
 
       <p>Conflicts created by two clients making different changes to the same document are surfaced in the sync process. At one point, each client had the same common revision, and then made different updates, resulting in revision IDs with different hashes.</p>
       <p>After one client syncs to the server, the server will have revisions that are different than what the second client has.</p>
@@ -27,8 +27,6 @@ const Conflicts = () => {
       <div className="img-container">
         <img className="img-style" src="../images/conflicts/1-server-client-trees.png" />
       </div>
-
-      <h3 id="surfacing-conflicts">Surfacing Conflicts</h3>
 
       <p>Conflicts are revealed by the tree merging operation we outlined in the earlier section of turtleDB’s <a href="#history-trees">revision tree structure</a></p>
       <p>The server has a tree containing the change from one client who synced first, and receives a sync request with an updated tree from the second client.</p>
@@ -81,7 +79,7 @@ const Conflicts = () => {
 
       <p>The longest branch approach is the best default strategy turtleDB can use to support a wide range of applications without knowing their internal logic. It equates to using “proof of work”, i.e. going with the revision that received the most updates.</p>
 
-      <h3 id="indicating-conflicts">Indicating Conflicts</h3>
+      <h3 id="conflicts-api">Conflicts API</h3>
 
       <p>turtleDB surfaces conflicts for developers by modifying values returned by developer API methods. When a document is read that has more than one leaf revision, turtleDB adds a <span className="inline-code">_conflicts</span> property.</p>
 
@@ -105,7 +103,7 @@ const Conflicts = () => {
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_storeDocument}</SyntaxHighlighter>
       </div>
 
-      <h3 id="conflict-resolution">Conflict Resolution</h3>
+      <h3 id="resolving-conflicts">Resolving Conflicts</h3>
 
       <p>Developers may want to choose their own winning revision for a document, rather than accept the revision selected by turtleDB’s deterministic algorithm.</p>
 

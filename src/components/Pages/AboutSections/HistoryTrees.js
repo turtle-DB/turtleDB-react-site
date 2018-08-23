@@ -16,6 +16,7 @@ const HistoryTrees = () => {
   return (
     <div>
       <h2 id='history-trees'>Document History Trees</h2>
+      <h3 id='documents-and-revisions'>Documents and Revisions</h3>
       <p>
         We decided we needed a separate abstraction to summarize each document’s history in order to
         track all its revisions. This led us to use a tree data structure and a complementary set of algorithms.
@@ -87,7 +88,7 @@ const HistoryTrees = () => {
       </div>
 
 
-      <h3 id="revision-ids">Revision IDs</h3>
+      <h4 id="revision-ids">Revision IDs</h4>
 
       <p>
         A unique revision ID is needed to represent each revision in the tree. Our diagrams so far have
@@ -113,7 +114,7 @@ const HistoryTrees = () => {
         be the same and therefore no conflict is generated.
       </p>
 
-      <h3 id="tree-data-structures">Tree Data Structure - Nested Arrays</h3>
+      <h3 id="tree-data-structures">Tree Data Structures</h3>
       <p>
         So far, we have discussed revision trees as an abstract data structure. When designing turtleDB,
         we concluded whatever data structure we chose must satisfy these requirements:
@@ -159,7 +160,7 @@ const HistoryTrees = () => {
         and new branches for new conflicts would have to be inserted in those same index nodes further
         down the tree.
       </p>
-      <h4>Nested Array: turtleDB’s Tree Data Structure</h4>
+      <h4 id="nested-arrays">Nested Arrays</h4>
       <p>
         In the end, we settled on a nested array structure where every node was placed within its
         own sub-array, nested within its parent’s sub-array:
@@ -281,7 +282,7 @@ const HistoryTrees = () => {
       </p>
 
 
-      <h5>Comparing Children - O(N * M)</h5>
+      <h4>Comparing Children - O(N * M)</h4>
       <p>
         When multiple children exist on a node pair,
         the common children must be paired off for further recursion,
@@ -295,7 +296,7 @@ const HistoryTrees = () => {
       </p>
 
 
-      <h5>Handling Discrepancies - O(1)</h5>
+      <h4>Handling Discrepancies - O(1)</h4>
       <p>Child nodes in the client tree that do not exist in the server tree represent changes that need to
          be spliced in. The new child node could be the start of a long branch of updates from the client.
          Our function takes advantage of the nested array structure to access that entire

@@ -22,20 +22,20 @@ const TurtleDBArchitecture = () => {
         <img className="img-style" src="../images/architecture/1-stores.png" />
       </div>
 
-      <h5>store</h5>
+      <h4>Store</h4>
       <p>The store is where all the actual document revisions are kept. Each record is a JSON-like document; key-value pairs representing the data and an added unique identifier called <span className="inline-code">_id_rev</span>. This is a concatenation of the document ID and the revision ID, separated by a <span className="inline-code">::</span>. This ensures a unique ID for every revision. The store also maintains an index on <span className="inline-code">id_rev</span>, making read queries for specific revisions O(1).</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/architecture/2-store.png" />
       </div>
 
-      <p><strong>Updating</strong> - When a document is updated, a new revision is created and added to the store. All the data is included and its <span className="inline-code">_id_rev</span> is updated as well. A new revision ID is generated along with an incremented version number (the <span className="inline-code">2-..</span> seen here):</p>
+      <p><span className="font-weight-bold">Updating</span> - When a document is updated, a new revision is created and added to the store. All the data is included and its <span className="inline-code">_id_rev</span> is updated as well. A new revision ID is generated along with an incremented version number (the <span className="inline-code">2-..</span> seen here):</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/architecture/3-updating.png" />
       </div>
 
-      <p><strong>Deleting</strong> - When a document is deleted, no records are actually removed from the store. In fact, turtleDB treats deletes as a special kind of update. The original document will have all its properties stripped and a <span className="inline-code">_deleted: true</span> added to it.</p>
+      <p><span className="font-weight-bold">Deleting</span> - When a document is deleted, no records are actually removed from the store. In fact, turtleDB treats deletes as a special kind of update. The original document will have all its properties stripped and a <span className="inline-code">_deleted: true</span> added to it.</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/architecture/4-deleting.png" />
@@ -43,7 +43,7 @@ const TurtleDBArchitecture = () => {
 
       <p>Any document with a <span className="inline-code">_deleted: true</span> property cannot be updated anymore. Note that as revisions are added to the store, they always increment the primary key of the store (seen in the Key column).</p>
 
-      <h5>metaStore</h5>
+      <h4>metaStore</h4>
 
       <p>In the last section, we discussed how the actual documents are stored in the store. The metaStore holds all the information associated with each of these documents. Each entry represents a unique document where the Key path for this store is the document ID.</p>
 
@@ -55,7 +55,7 @@ const TurtleDBArchitecture = () => {
 
       <p>This screenshot shows what an expanded document actually looks like. The history tree is contained in a property called <span className="inline-code">_revisions</span>. This means a meta document can reference multiple records in the store. The meta document also has the <span className="inline-code">_winningRev</span> and <span className="inline-code">_leafRevs</span> properties to ensure fast read queries.</p>
 
-      <h5>syncToStore</h5>
+      <h4>syncToStore</h4>
 
       <p>The syncToStore contains a history of all the times a turtleDB has pushed its data to a the server.</p>
 
@@ -69,7 +69,7 @@ const TurtleDBArchitecture = () => {
 
       <p>It is important to note that the syncToStore will ever only hold one document per server it has synced with. For simplicity’s sake, we’re just showing the case of only having one server to sync with.</p>
 
-      <h5>syncFromStore</h5>
+      <h4>syncFromStore</h4>
 
       <p>Similarly, the syncFromStore’s entire purpose is to store the history of all the times turtleDB has received data from a server (tortoiseDB). When additional collaborators are involved, it is often the case that one client has not received everyone else’s updates. syncFromStore’s job is to remember which of those docs the client is missing. The same optimization we made in syncToStore is applied here as well. The <span className="inline-code">lastKey</span> that was sent by tortoiseDB during the previous sync is stored. It knows to only send documents that are newer than the <span className="inline-code">lastKey</span>.</p>
 
@@ -79,7 +79,7 @@ const TurtleDBArchitecture = () => {
 
       <p>Note that the format of the <span className="inline-code">lastKey</span> sent back from tortoiseDB is in a different format than that of the syncToStore. This is because on the turtleDB side, we’re working with IDB, which generates an auto-incrementing primary key by default in the store. However, in these examples, we are retrieving data directly from MongoDB which uses an entirely different method for generating primary keys.</p>
 
-      <h5>turtleDBMeta</h5>
+      <h4>turtleDBMeta</h4>
 
       <div className="img-container">
         <img className="img-style" src="../images/architecture/8-turtlemeta.png" />

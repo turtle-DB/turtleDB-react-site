@@ -70,7 +70,7 @@ const Scalability = () => {
           {sampleDoc}
         </SyntaxHighlighter>
       </div>
-      
+
       <p>
         For a small doc of 180 bytes, the total space actually used by turtleDB to store it is 460 bytes.
         This is due to the extra properties added to the doc; including document id, revision hash id,
@@ -192,7 +192,7 @@ const Scalability = () => {
         and users can continue to interact with the page.
       </p>
 
-      <h3 id="sync-efficiency">Synchronization Efficiency</h3>
+      <h3 id="sync-efficiency">Sync Efficiency</h3>
       <p>
         After reorganizing our database structure, refactoring version tree operations, and implementing
         MongoDB bulk queries, we realized that the largest bottleneck in our synchronization process is

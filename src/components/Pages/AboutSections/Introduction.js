@@ -125,7 +125,7 @@ const Introduction = () => {
 
       <h2 id='introduction'>Introduction</h2>
 
-      <h3 id="what-is-offline-first">What is "offline-first"?</h3>
+      <h3 id="what-is-offline-first">What is Offline-First?</h3>
       <p>
         “Offline-first” is a design choice that allows web applications to
         remain functional even in cases where there is no internet connection.
@@ -255,7 +255,7 @@ const Introduction = () => {
         </li>
       </ul>
 
-      <h4 id="introducing-turtledb">Introducing turtleDB</h4>
+      <h3 id="introducing-turtledb">Introducing turtleDB</h3>
 
       <div className="img-container">
         <img className="img-style" src="../images/intro/turtleDB-architecture.png" />

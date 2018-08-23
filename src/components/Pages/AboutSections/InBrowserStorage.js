@@ -49,7 +49,7 @@ const InBrowserStorage = () => {
         />
       </p>
       <p>This leaves us with one option.</p>
-      <h3 id='idb'>IndexedDB (IDB)</h3>
+      <h4 id='idb'>IndexedDB (IDB)</h4>
       <p>
         After dropping support for WebSQL in 2010, the major browser developers
         focused their time and energy into building an alternative in-browser storage
@@ -108,7 +108,7 @@ const InBrowserStorage = () => {
           condenses native IDB queries down to one line.</Link>
       </p>
 
-      <h3 id="turtledb-promise-api">turtleDB's Promise API</h3>
+      <h3 id="idb-and-promises">IDB and Promises</h3>
       <p>
         Without Promises, developers have to rely on nested callback functions.
         Callbacks can get extremely messy (i.e. ‘callback hell’), and the

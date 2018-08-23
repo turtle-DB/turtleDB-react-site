@@ -16,7 +16,8 @@ export const Toc = () => {
           <ul>
             <li><a href="#storage-options">Storage Options</a></li>
             <li><a href="#idb">IndexedDB</a></li>
-            <li><a href="#turtledb-promise-api">turtleDB's Promise API</a></li>
+            <li><a href="#idb-and-promises">IDB and Promises</a></li>
+            <li><a href="#turtledb-developer-api">turtleDB Developer API</a></li>
           </ul>
         </li>
         <li><a href="#document-versioning">Document Versionining</a>
@@ -28,8 +29,10 @@ export const Toc = () => {
         </li>
         <li><a href="#history-trees">Document History Trees</a>
           <ul>
-            <li><a href="#revision-ids">Revision IDs</a></li>
+            <li><a href="#documents-and-revisions">Documents and Revisions</a></li>
             <li><a href="#tree-data-structures">Tree Data Structures</a></li>
+            <li><a href="#nested-arrays">Nested Arrays</a></li>
+            <li><a href="#tree-algorithms">Tree Algorithms</a></li>
           </ul>
         </li>
         <li><a href="#turtleDB-architecture">turtleDB Architecture</a>
@@ -46,11 +49,10 @@ export const Toc = () => {
         </li>
         <li><a href="#conflicts">Conflicts</a>
           <ul>
-            <li><a href="#generating-conflicts">Generating Conflicts</a></li>
             <li><a href="#surfacing-conflicts">Surfacing Conflicts</a></li>
             <li><a href="#winning-revisions">Winning Revisions</a></li>
-            <li><a href="#indicating-conflicts">Indicating Conflicts</a></li>
-            <li><a href="#conflict-resolution">Conflict Resolution</a></li>
+            <li><a href="#conflicts-api">Conflicts API</a></li>
+            <li><a href="#resolving-conflicts">Resolving Conflicts</a></li>
           </ul>
         </li>
         <li><a href="#scalability">Scalability</a>
