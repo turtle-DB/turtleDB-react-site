@@ -2,8 +2,6 @@ import React from 'react';
 import Citation from '../../Citation'
 import { SocialIcon } from 'react-social-icons';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 
 const Introduction = () => {
