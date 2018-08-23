@@ -124,8 +124,8 @@ const Synchronization = () => {
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncFrom}</SyntaxHighlighter>
 
       <p>After this has completed, a full sync has occurred and the two databases will possess an up-to-date view of the state of the data.</p>
-     
-      {/* <h3 id="sync-walkthrough">Example Sync Walkthrough</h3>
+
+      <h3 id="sync-walkthrough">Example Sync Walkthrough</h3>
       <p>
         The best way to demonstrate how turtleDB syncs is to run through a example. Have
         a click through the slides. We broke it down so that our HTTP request-response cycles
@@ -198,7 +198,7 @@ const Synchronization = () => {
         <div>
           <img src="../images/sync/last_slideshow/22.png" />
         </div>
-      </Carousel> */}
+      </Carousel>
     </div>
   )
 }

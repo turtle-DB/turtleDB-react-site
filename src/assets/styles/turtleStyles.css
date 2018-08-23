@@ -3,7 +3,7 @@
   .turtle-padding {
     max-width: 50rem;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 50px;
     font-size: 20px;
   }
 
@@ -29,17 +29,13 @@
     padding-right: 7%;
   }
 
-  h2 {
-    margin-top: 5rem;
-  }
-
   h2 + p {
     margin-top: 2rem;
   }
 
   h3 {
     font-size: 24px;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     font-weight: 500;
     color: #313131;
   }
@@ -51,7 +47,7 @@
   h4 {
     font-size: 21px;
     font-style: italic;
-    margin-top: 2.5rem;
+    margin-top: 1rem;
     color: #4e4b49;
   }
 
