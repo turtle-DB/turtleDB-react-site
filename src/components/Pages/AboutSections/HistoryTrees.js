@@ -9,6 +9,7 @@ const nestedArray = "const revisions = [\'1-hash1\', [[\'2-hash1\', [[\'3-hash1\
 const readableNestedArray = "const revisions = [\r\n\'1-hash1\', [\r\n  [\'2-hash1\', [\r\n    [\'3-hash1\', [\r\n      [\'4-hash1\', []\r\n      ]\r\n    ]]\r\n  ]], \r\n  [\'2-hash2\', [\r\n    [\'3-hash2\', []\r\n    ]\r\n  ]]\r\n]];"
 const collectAllLeafRevs = "function collectAllLeafRevs(node, leafRevs = []) {\r\n  if (node[2].length === 0) leafRevs.push(node[0]);\r\n\r\n  for (let i = 0; i < node[2].length; i++) {\r\n    this.collectAllLeafRevs(node[2][i], leafRevs);\r\n  }\r\n\r\n  return leafRevs;\r\n}"
 const mergeRevTrees = "function mergeRevTrees(node1, node2) {\r\n  const node1Children = node1[2];\r\n  const node2Children = node2[2];\r\n\r\n  const commonNodes = this.findCommonNodes(node1Children, node2Children);\r\n\r\n  const node2ChildrenDiffs = this.getNode2ChildrenDiffs(node1Children, node2Children);\r\n  node1[2] = [...node1Children, ...node2ChildrenDiffs];\r\n\r\n  for (let i = 0; i < commonNodes.length; i++) {\r\n    let commonNodesPair = commonNodes[i];\r\n    this.mergeRevTrees(commonNodesPair[0], commonNodesPair[1]);\r\n  }\r\n\r\n  return node1;\r\n}\r\n\r\nfunction findCommonNodes(node1Children, node2Children) {\r\n  let commonNodes = [];\r\n  for (let i = 0; i < node1Children.length; i++) {\r\n    let node1Child = node1Children[i];\r\n    for (let j = 0; j < node2Children.length; j++) {\r\n      let node2Child = node2Children[j];\r\n      if (node2Child[0] === node1Child[0]) {\r\n        commonNodes.push([node1Child, node2Child]);\r\n      }\r\n    }\r\n  }\r\n\r\n  return commonNodes;\r\n}"
+const metaDoc = "{\r\n  _winningRev: \'4-hash1\',\r\n  _leafRevs: [\'4-hash1\', \'3-hash2\'],\r\n  revisions = [\'1-hash1\', [[\'2-hash1\', [[\'3-hash1\', [[\'4-hash1\', []]]]]], [\'2-hash2\', [[\'3-hash2\', []]]]]]\r\n}"
 
 const HistoryTrees = () => {
   return (
@@ -40,7 +41,9 @@ const HistoryTrees = () => {
         nodes in one long line:
       </p>
 
-      <img className="w-100" src="../images/trees/single-branch-2.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/trees/single-branch-3.png" />
+      </div>
 
       <p>
         However, some documents might have conflicts. For example, a document could have different updates
@@ -48,7 +51,9 @@ const HistoryTrees = () => {
         the branch for each competing revision stems from the original point of agreement.
       </p>
 
-      <img className="w-100" src="../images/trees/two-branches.png"/>
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/two-branches.png"/>
+      </div>
 
       <p>
         Over time as a document is edited by multiple parties, its tree becomes more elaborate.
@@ -56,14 +61,19 @@ const HistoryTrees = () => {
         In reality, some documents may have hundreds or thousands of edits with more than one fork.
       </p>
 
-      <img className="w-100" src="../images/trees/many-branches.png"/>
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/many-branches.png"/>
+      </div>
+
       <p>
         In addition to tracking document versions, we also want the tree to track deletes.
         In turtleDB, we treat deletes as a special kind of update where a node is added to the tree
         to represent a deleted ‘revision’ of a document.
       </p>
 
-      <img/>
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/deleted-doc.png"/>
+      </div>
 
       <h4>Leaf Nodes</h4>
       <p>
@@ -71,6 +81,10 @@ const HistoryTrees = () => {
         This is simply a semantic distinction. Trees with no conflicts only have one leaf node;
         trees with conflicts have multiple leaf nodes that represent competing versions of a document.
       </p>
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/leaf-nodes.png"/>
+      </div>
+
 
       <h3 id="revision-ids">Revision IDs</h3>
 
@@ -79,7 +93,9 @@ const HistoryTrees = () => {
         this as ‘revision 1’, ‘revision 2’ but in turtleDB, we actually have a process in generating these.
       </p>
 
-      <img />
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/revision-ids.png"/>
+      </div>
 
       <p>
         The first half of the revision ID is a number that is incremented for every revision. On creation,
@@ -116,9 +132,12 @@ const HistoryTrees = () => {
         Doubly linked-lists are an option for representing trees.
       </p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {doublyLinkedLists}
-      </SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {doublyLinkedLists}
+        </SyntaxHighlighter>
+      </div>
+
       <p>
         For turtleDB, they were not a viable option as they relied on memory pointers
         between nodes that would be lost when the tree was stored in the database or
@@ -149,6 +168,10 @@ const HistoryTrees = () => {
         {nestedArray}
       </SyntaxHighlighter>
 
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/nested-arrays.png"/>
+      </div>
+
       <p>
         From the outside, this data structure looks confusing but it is actually easy to work with.
         A full traversal is accomplished in O(N) space and time with a simple recursive function.
@@ -162,11 +185,10 @@ const HistoryTrees = () => {
         The below shows our nested array structure in a more readable format next to a c
         onceptual diagram of its equivalent tree:
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {readableNestedArray}
-      </SyntaxHighlighter>
 
-      <img />
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/tree-diagram-1.png"/>
+      </div>
 
       <h4>Meta Documents</h4>
 
@@ -180,12 +202,19 @@ const HistoryTrees = () => {
         meta document contains a few more properties which exist primarily to help
         efficiently manage conflicts.
       </p>
+
+      <div className="img-container">
+        <img className="w-100" src="../images/trees/meta-document.png"/>
+      </div>
+
       <p>
         The first is a reference to the ‘winning revision’ of a document, and the second is an array of
         ‘leaf revisions’ that exist at the end of branches in the revision tree.
       </p>
 
-      <img />
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+        {metaDoc}
+      </SyntaxHighlighter>
 
       <p>
         This is what an example meta document looks like. So how do we traverse the document history tree?
