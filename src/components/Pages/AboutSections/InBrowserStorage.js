@@ -25,28 +25,28 @@ const InBrowserStorage = () => {
       <p>
         A key value object store with a maximum storage limit of
         only 5 MB. LocalStorage operations are performed synchronously
-         via the global `window` object in the browser. <Citation
+         via the global `window` object in the browser. With its low limit and
+         synchronous behavior, it is only good for storing small amounts of data
+         in small chunks at a time. <Citation
            url='https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage'
            creator='Mozilla Developer Network'
            title='LocalStorage'
-         />With its low limit and
-         synchronous behavior, it is only good for storing small amounts of data
-         in small chunks at a time.
+         />
       </p>
 
       <h4>WebSQL</h4>
       <p>
         WebSQL uses a SQLite variation for local data storage and its original
         goal was to enable web developers to query the database using a syntax
-         very similar to traditional SQL.   <Citation
-              url='https://en.wikipedia.org/wiki/Web_SQL_Database'
-              creator='Wikipedia'
-              title='Web SQL Database'
-            /> However, in 2010, the W3C failed to come
+         very similar to traditional SQL. However, in 2010, the W3C failed to come
          to a consensus on how to continue developing it in a standardized manner,
          so all major browsers dropped support for it before it could become a W3C
          recommendation. It has since been deprecated by all browsers and is no longer
-         being developed.
+         being developed.<Citation
+              url='https://en.wikipedia.org/wiki/Web_SQL_Database'
+              creator='Wikipedia'
+              title='Web SQL Database'
+            />
       </p>
       <p>This leaves us with one option.</p>
       <h3 id='idb'>IndexedDB (IDB)</h3>
