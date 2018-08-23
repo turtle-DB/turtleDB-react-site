@@ -40,7 +40,9 @@ const HistoryTrees = () => {
         nodes in one long line:
       </p>
 
-      <img className="w-100" src="../images/trees/single-branch-2.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/trees/single-branch-2.png" />
+      </div>
 
       <p>
         However, some documents might have conflicts. For example, a document could have different updates
@@ -48,7 +50,9 @@ const HistoryTrees = () => {
         the branch for each competing revision stems from the original point of agreement.
       </p>
 
-      <img className="w-100" src="../images/trees/two-branches.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/trees/two-branches.png" />
+      </div>
 
       <p>
         Over time as a document is edited by multiple parties, its tree becomes more elaborate.
@@ -56,14 +60,17 @@ const HistoryTrees = () => {
         In reality, some documents may have hundreds or thousands of edits with more than one fork.
       </p>
 
-      <img className="w-100" src="../images/trees/many-branches.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/trees/many-branches.png" />
+      </div>
+
       <p>
         In addition to tracking document versions, we also want the tree to track deletes.
         In turtleDB, we treat deletes as a special kind of update where a node is added to the tree
         to represent a deleted ‘revision’ of a document.
       </p>
 
-      <img/>
+      <img />
 
       <h4>Leaf Nodes</h4>
       <p>

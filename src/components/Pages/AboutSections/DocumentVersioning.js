@@ -178,7 +178,7 @@ const DocumentVersioning = () => {
       </p>
 
       <div className="img-container">
-        <img className="img-style" src=".../images/doc_versioning/store-docs.png" />
+        <img className="img-style" src="../images/doc_versioning/store-docs.png" />
       </div>
 
       <p>
@@ -234,7 +234,7 @@ const DocumentVersioning = () => {
         </li>
       </ul>
       <p>
-        Now that performance related issues were on our mind and we knew we had limited space to work with,the next question we asked ourselves was <em>"How could we best keep track of these multiple document revisions in a performant and elegant manner?"</em>
+        Now that performance related issues were on our mind and we knew we had limited space to work with, the next question we asked ourselves was <em>"How could we best keep track of these multiple document revisions in a performant and elegant manner?"</em>
       </p>
     </div>
   )
