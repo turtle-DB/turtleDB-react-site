@@ -41,3 +41,14 @@ h4 {
 :first-of-type pre {
   background-color: #F9F9F9;
 }
+
+.img-container {
+  width: 100%;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.img-style {
+  display: inline-block;
+  max-width: 100%;
+}

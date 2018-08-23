@@ -52,7 +52,9 @@ const Scalability = () => {
         free hard drive space, an origin can at most take up 1GB.
       </p>
 
-      <img className="w-100" src="../images/scalability/1-idb-limits.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/1-idb-limits.png" />
+      </div>
 
       <p>
         However, it is important to note that this is an approximate calculation - Chrome’s approach
@@ -102,7 +104,9 @@ const Scalability = () => {
         Applications where documents receive hundreds of updates will run out of space more quickly.
       </p>
 
-      <img className="w-100" src="../images/scalability/2-create-update-chart.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/2-create-update-chart.png" />
+      </div>
 
       <p>
         But what happens when IndexedDB reaches its  storage limit? Referring Chrome documentation again:
@@ -143,7 +147,9 @@ const Scalability = () => {
         in the store and permanently removes them from the IDB database.
       </p>
 
-      <img className="w-100" src="../images/scalability/3-compaction.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/3-compaction.png" />
+      </div>
 
       <p>
         While we remove store versions, the meta document and its document history tree remain untouched, so sync and merge functionality will be unaffected.
@@ -161,7 +167,9 @@ const Scalability = () => {
         to the total query time. This table shows that working with a lot of data can become a problem in for turtleDB:
       </p>
 
-      <img className="w-100" src="../images/scalability/4-idb-performance.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/4-idb-performance.png" />
+      </div>
 
       <p>
         <em>The times shown in the above table are hardware dependent. As such, IDB’s performance metrics are all approximations. </em>
@@ -192,7 +200,9 @@ const Scalability = () => {
         of the environments that tortoiseDB could be running in.
       </p>
 
-      <img className="w-100" src="../images/scalability/5-DO-droplet.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/5-DO-droplet.png" />
+      </div>
 
       <p>
         We located our droplet on the west coast and sent requests from a turtleDB on the east coast.
@@ -203,8 +213,13 @@ const Scalability = () => {
         times and averaged out, we can see how long each part of the entire sync process takes:
       </p>
 
-      <img className="w-100" src="../images/scalability/6-sync-timeline.png" />
-      <img className="w-100" src="../images/scalability/7-sync-time-table.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/6-sync-timeline.png" />
+      </div>
+
+      <div className="img-container">
+        <img className="img-style" src="../images/scalability/7-sync-time-table.png" />
+      </div>
 
       <p>
         What immediately stood out was the HTTP request-response times accounted for approximately

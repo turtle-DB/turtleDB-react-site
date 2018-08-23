@@ -13,7 +13,7 @@ const getChangedMetaDocsForTortoise = "function getChangedMetaDocsForTortoise() 
 const sendMetaDocs = "function batchSendChangedMetaDocsToTortoise(path) {\r\n  if (this.changedTurtleMetaDocs.length === 0) return;\r\n  \r\n  let currentBatch = this.changedTurtleMetaDocs.splice(0, this.batchLimit);\r\n\r\n  return this.sendBatchOfMetaDocs(path, currentBatch)\r\n    .then(() => this.batchSendChangedMetaDocsToTortoise(path));\r\n}\r\n\r\nfunction sendBatchOfMetaDocs(path, batch) {\r\n  return axios.post(this.targetUrl + path, { metaDocs: batch })\r\n    .then(revIdsFromTortoise => this.revIdsFromTortoise.push(...revIdsFromTortoise.data));\r\n}"
 const getMetaDocsBetweenStoreKeys = "function getMetaDocsBetweenStoreKeys(lastTortoiseKey, highestTurtleKey) {\r\n  return this.idb.command(this.idb._store, \"READ_BETWEEN\", { x: lastTortoiseKey, y: highestTurtleKey })\r\n    .then(docs => this.getUniqueIDs(docs))\r\n    .then(ids => this.getMetaDocsByIDs(ids))\r\n}\r\n\r\nfunction getUniqueIDs(docs) {\r\n  let ids = {};\r\n  for (let i = 0; i < docs.length; i++) {\r\n    const id = docs[i]._id_rev.split(\"::\")[0];\r\n    if (ids[id]) continue;\r\n    ids[id] = true;\r\n  }\r\n  const uniqueIDs = Object.keys(ids);\r\n  return uniqueIDs;\r\n}";
 const getUniqueIDs = "function getUniqueIDs(docs) {\r\n  let ids = {};\r\n  for (let i = 0; i < docs.length; i++) {\r\n    const id = docs[i]._id_rev.split(\"::\")[0];\r\n    if (ids[id]) continue;\r\n    ids[id] = true;\r\n  }\r\n  const uniqueIDs = Object.keys(ids);\r\n  return uniqueIDs;\r\n}"
-const getStoreDocsForTortoise = "function getStoreDocsForTortoise() {\r\n  const promises = this.revIdsFromTortoise.map(_id_rev => \r\n    this.idb.command(\r\n      this.idb._store, \"INDEX_READ\", \r\n      { data: { indexName: \'_id_rev\', key: _id_rev }}\r\n\t));\r\n  \r\n  return Promise.all(promises)\r\n    .then(docs => this.storeDocsForTortoise = docs)\r\n}"
+const getStoreDocsForTortoise = "function getStoreDocsForTortoise() {\r\n  const promises = this.revIdsFromTortoise.map(_id_rev => {\r\n    return this.idb.command(this.idb._store, \"INDEX_READ\", { data: { indexName: \'_id_rev\', key: _id_rev } });\r\n  });\r\n  return Promise.all(promises)\r\n    .then(docs => this.storeDocsForTortoise = docs)\r\n}"
 const updateSyncDoc = "function createNewSyncToTortoiseDoc() {\r\n  let newHistory = { lastKey: this.highestTurtleKey, sessionID: this.sessionID };\r\n  this.newSyncToTortoiseDoc = Object.assign(\r\n    this.syncToTortoiseDoc, { history: [newHistory].concat(this.syncToTortoiseDoc.history) }\r\n  );\r\n}\r\n\r\nfunction updateSyncToTortoiseDoc() {\r\n  return this.idb.command(this.idb._syncToStore, \"UPDATE\", { data: this.newSyncToTortoiseDoc });\r\n}"
 const sendStoreDocs = "function batchSendTurtleDocsToTortoise(path) {\r\n  let currentBatch = this.storeDocsForTortoise.splice(0, this.batchLimit);\r\n\r\n  if (this.storeDocsForTortoise.length === 0) {\r\n    return this.sendBatchOfDocs(path, currentBatch, true)\r\n  } else {\r\n    return this.sendBatchOfDocs(path, currentBatch)\r\n      .then(() => {\r\n        return this.batchSendTurtleDocsToTortoise(path);\r\n      });\r\n  }\r\n}\r\n\r\nfunction sendBatchOfDocs(path, batch, lastBatch = false) {\r\n  let payload = { docs: batch };\r\n\r\n  if (lastBatch) {\r\n    payload.newSyncToTortoiseDoc = this.newSyncToTortoiseDoc;\r\n    payload.lastBatch = lastBatch;\r\n  }\r\n\r\n  return axios.post(this.targetUrl + path, payload);\r\n}"
 const batchLimit = "function setBatchLimit(batchLimit) {\r\n  this.batchLimit = batchLimit;\r\n}";
@@ -31,7 +31,9 @@ const Synchronization = () => {
 
       <p>This diagram illustrates the centralized approach to synchronizing clients and server:</p>
 
-      <img className="w-100" src="../images/sync/1-centralized.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/sync/1-centralized.png" />
+      </div>
 
       <h4>Responsibilities</h4>
 
@@ -69,7 +71,9 @@ const Synchronization = () => {
 
       <p>The client and server then compare their sync histories. These histories contain a ‘last key’ value that references the highest primary key of the client revision store that was covered in the last sync - we can think of this as a checkpoint.</p>
 
-      <img className="w-100" src="../images/sync/2-last-key.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/sync/2-last-key.png" />
+      </div>
 
       <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the document store are auto-incrementing).</p>
 

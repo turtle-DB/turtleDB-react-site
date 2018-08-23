@@ -50,14 +50,14 @@ const Introduction = () => {
                 </h5>
               </div>
               <a href="https://rockdinosaur.github.io">
-                <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen"/>
+                <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen" />
               </a>
               <div className="card-body">
                 <p className="card-text text-center">Toronto</p>
                 <ul className="list-inline">
                   <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
                   <li className="list-inline-item"><SocialIcon url="https://github.com/rockdinosaur" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://rockdinosaur.github.io" network="email"/></li>
+                  <li className="list-inline-item"><SocialIcon url="https://rockdinosaur.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>
@@ -71,14 +71,14 @@ const Introduction = () => {
                 </h5>
               </div>
               <a href="https://maxiappleton.github.io/">
-                <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton"/>
+                <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton" />
               </a>
               <div className="card-body">
                 <p className="card-text text-center">San Francisco</p>
                 <ul className="list-inline">
                   <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
                   <li className="list-inline-item"><SocialIcon url="https://github.com/maxiappleton" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io/" network="email"/></li>
+                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io/" network="email" /></li>
                 </ul>
               </div>
             </div>
@@ -144,7 +144,10 @@ const Introduction = () => {
         Most apps fall under the traditional client-server model.
       </p>
 
-      <img className="w-100" src="../images/intro/client-server.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/intro/client-server.png" />
+      </div>
+
 
       <p>
         All assets and data are held on the server and in order to access them,
@@ -156,7 +159,9 @@ const Introduction = () => {
         connection, and the following would happen:
       </p>
 
-      <img className="w-100" src="../images/intro/dinosaur-game.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/intro/dinosaur-game.png" />
+      </div>
 
       <p>
         While the dinosaur game is fun, we’re willing to bet you’d rather have your page load.
@@ -187,7 +192,9 @@ const Introduction = () => {
         They take on a larger share of the application logic and data storage.
       </p>
 
-      <img className="w-100" src="../images/intro/offline-first.png"  />
+      <div className="img-container">
+        <img className="img-style" src="../images/intro/offline-first.png" />
+      </div>
 
       <p>
         In this model, clients store static assets and application data locally, allowing the application
@@ -213,7 +220,9 @@ const Introduction = () => {
         but certain challenges arise depending on the nature of the app.
       </p>
 
-      <img className="w-100" src="../images/intro/offline-spectrum.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/intro/offline-spectrum.png" />
+      </div>
 
       <p>
         This table outlines the difficulty in converting various types of web applications to be offline-first.
@@ -236,8 +245,8 @@ const Introduction = () => {
 
       <h4 id="design-goals">Design Goals</h4>
       <p>
-         Taking into consideration client-side storage, synchronization and conflict resolution,
-         we wanted to design a solution that would fulfill the following goals:
+        Taking into consideration client-side storage, synchronization and conflict resolution,
+        we wanted to design a solution that would fulfill the following goals:
       </p>
       <ul>
         <li>
@@ -256,7 +265,9 @@ const Introduction = () => {
 
       <h4 id="introducing-turtledb">Introducing turtleDB</h4>
 
-      <img className="w-100" src="../images/intro/turtleDB-architecture.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/intro/turtleDB-architecture.png" />
+      </div>
 
       <p>
         turtleDB is a framework that sits between your web application and browser storage on every client.
