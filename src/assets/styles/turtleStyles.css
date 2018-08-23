@@ -1,4 +1,17 @@
 
+@media (min-width: 52em) {
+  .turtle-padding {
+    max-width: 50rem;
+    margin: 0 auto;
+    margin-top: 50px;
+    font-size: 20px;
+  }
+}
+
+  .section blockquote {
+    padding: 0 25%;
+  }
+
   .section.about p {
     font-size: 22px;
     margin: 2em auto;
