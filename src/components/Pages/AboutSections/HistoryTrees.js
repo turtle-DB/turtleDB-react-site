@@ -47,11 +47,16 @@ const HistoryTrees = () => {
         made to it independently by two different clients. This is represented in the tree as a ‘fork’, where
         the branch for each competing revision stems from the original point of agreement.
       </p>
+
+      <img className="w-100" src="../images/trees/two-branches.png"/>
+
       <p>
         Over time as a document is edited by multiple parties, its tree becomes more elaborate.
         The below diagram attempts to showcase this scenario but we are limited by space.
         In reality, some documents may have hundreds or thousands of edits with more than one fork.
       </p>
+
+      <img className="w-100" src="../images/trees/many-branches.png"/>
       <p>
         In addition to tracking document versions, we also want the tree to track deletes.
         In turtleDB, we treat deletes as a special kind of update where a node is added to the tree
