@@ -152,9 +152,7 @@ const InBrowserStorage = () => {
       </p>
 
       <p>
-        Running queries in parallel is therefore possible, but it is important to
-        ensure they are all completed sequentially. turtleDB accomplishes this using
-         <span className="inline-code">Promise.all</span>:
+        Running queries in parallel is therefore possible, but it is important to ensure they are all completed sequentially. turtleDB accomplishes this using <span className="inline-code">Promise.all</span>:
       </p>
 
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>

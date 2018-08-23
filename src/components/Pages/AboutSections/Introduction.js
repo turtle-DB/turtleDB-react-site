@@ -2,6 +2,9 @@ import React from 'react';
 import Citation from '../../Citation'
 import { SocialIcon } from 'react-social-icons';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
 
 const Introduction = () => {
   return (
@@ -40,20 +43,16 @@ const Introduction = () => {
       </p>
 
       <div className='container mt-5'>
-        <div className="row">
+        <div className="row intro-team">
 
           <div className="col-xs-12 col-md-4">
             <div className="card text-center">
-              <div className="card-header">
-                <h5 className="card-title">
-                  <a href="https://rockdinosaur.github.io">Steven</a>
-                </h5>
-              </div>
-              <a href="https://rockdinosaur.github.io">
+              <a className="photo-link" href="https://rockdinosaur.github.io">
+                <h5 className="card-title">Steven Shen</h5>
                 <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen" />
               </a>
               <div className="card-body">
-                <p className="card-text text-center">Toronto</p>
+                <p className="card-text text-center">Toronto, Canada</p>
                 <ul className="list-inline">
                   <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
                   <li className="list-inline-item"><SocialIcon url="https://github.com/rockdinosaur" /></li>
@@ -65,20 +64,16 @@ const Introduction = () => {
 
           <div className="col-xs-12 col-md-4">
             <div className="card text-center">
-              <div className="card-header">
-                <h5 className="card-title">
-                  <a href="https://maxiappleton.github.io/">Max</a>
-                </h5>
-              </div>
-              <a href="https://maxiappleton.github.io/">
+              <a className="photo-link" href="https://maxiappleton.github.io/">
+                <h5 className="card-title">Max Appleton</h5>
                 <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton" />
               </a>
               <div className="card-body">
-                <p className="card-text text-center">San Francisco</p>
+                <p className="card-text text-center">San Francisco, USA</p>
                 <ul className="list-inline">
                   <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
                   <li className="list-inline-item"><SocialIcon url="https://github.com/maxiappleton" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io/" network="email" /></li>
+                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>
@@ -86,17 +81,16 @@ const Introduction = () => {
 
           <div className="col-xs-12 col-md-4">
             <div className="card text-center">
-              <div className="card-header">
-                <h5 className="card-title">
-                  <a href="https://maxiappleton.github.io/">Andrew</a>
-                </h5>
-              </div>
-              <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
+              <a className="photo-link" href="https://maxiappleton.github.io/">
+                <h5 className="card-title">Andrew Houston-Floyd</h5>
+                <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
+              </a>
               <div className="card-body">
-                <p className="card-text text-center">New York City</p>
+                <p className="card-text text-center">New York City, USA</p>
                 <ul className="list-inline">
                   <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
                   <li className="list-inline-item"><SocialIcon url="https://github.com/houstonfloyd" /></li>
+                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>
