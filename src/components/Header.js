@@ -30,7 +30,7 @@ const Header = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <a href="https://github.com/turtle-DB" className="nav-link">Github</a>
+            <a target="_blank" href="https://github.com/turtle-DB" className="nav-link">Github</a>
           </li>
         </ul>
       </div>

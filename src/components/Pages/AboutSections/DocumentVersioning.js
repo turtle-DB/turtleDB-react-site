@@ -177,8 +177,9 @@ const DocumentVersioning = () => {
         updated versions.
       </p>
 
-      <img className="w-100" src="../images/doc_versioning/store-docs.png"/>
-
+      <div className="img-container">
+        <img className="img-style" src="../images/doc_versioning/store-docs.png" />
+      </div>
 
       <p>
         Imagine two clients have common document. They then go offline, and each makes many changes to that document. All of these revisions are
@@ -189,7 +190,9 @@ const DocumentVersioning = () => {
         When a client comes online and syncs, they receive the combined history of that document which has all the changes made by every client.
       </p>
 
-      <img className="w-100" src="../images/doc_versioning/combine-histories.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/doc_versioning/combine-histories.png" />
+      </div>
 
       <p>
         With this branch, the developer has more options. For example, the developer could write code that:
@@ -231,9 +234,7 @@ const DocumentVersioning = () => {
         </li>
       </ul>
       <p>
-        Now that performance related issues were on our mind and we knew we had limited space to work with,
-        the next question we asked ourselves was <em>"How could we best keep track of these multiple document revisions
-          in a performant and elegant manner?"</em>
+        Now that performance related issues were on our mind and we knew we had limited space to work with, the next question we asked ourselves was <em>"How could we best keep track of these multiple document revisions in a performant and elegant manner?"</em>
       </p>
     </div>
   )

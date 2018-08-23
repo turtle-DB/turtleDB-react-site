@@ -53,7 +53,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/two-branches.png"/>
+        <img className="img-style" src="../images/trees/two-branches.png" />
       </div>
 
       <p>
@@ -63,7 +63,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/many-branches.png"/>
+        <img className="img-style" src="../images/trees/many-branches.png" />
       </div>
 
       <p>
@@ -73,7 +73,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/deleted-doc.png"/>
+        <img className="img-style" src="../images/trees/deleted-doc.png"/>
       </div>
 
       <h4>Leaf Nodes</h4>

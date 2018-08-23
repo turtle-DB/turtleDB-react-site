@@ -28,10 +28,10 @@ const InBrowserStorage = () => {
          via the global `window` object in the browser. With its low limit and
          synchronous behavior, it is only good for storing small amounts of data
          in small chunks at a time. <Citation
-           url='https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage'
-           creator='Mozilla Developer Network'
-           title='LocalStorage'
-         />
+          url='https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage'
+          creator='Mozilla Developer Network'
+          title='LocalStorage'
+        />
       </p>
 
       <h4>WebSQL</h4>
@@ -43,10 +43,10 @@ const InBrowserStorage = () => {
          so all major browsers dropped support for it before it could become a W3C
          recommendation. It has since been deprecated by all browsers and is no longer
          being developed.<Citation
-              url='https://en.wikipedia.org/wiki/Web_SQL_Database'
-              creator='Wikipedia'
-              title='Web SQL Database'
-            />
+          url='https://en.wikipedia.org/wiki/Web_SQL_Database'
+          creator='Wikipedia'
+          title='Web SQL Database'
+        />
       </p>
       <p>This leaves us with one option.</p>
       <h3 id='idb'>IndexedDB (IDB)</h3>
@@ -73,7 +73,9 @@ const InBrowserStorage = () => {
         a request to the store, and then capturing the returned values in a callback function.
       </p>
 
-      <img className="w-100" src="../images/browser_storage/async-queries.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/browser_storage/async-queries.png" />
+      </div>
 
       <p>
         Furthermore, events fire on objects that are only available for the duration of the IDB connection.
@@ -103,7 +105,7 @@ const InBrowserStorage = () => {
       <p>
         Given this admission, the lack of popularity for offline-first applications is unsurprising.
         turtleDB therefore has a promise-based wrapper that <Link to='/API'>
-        condenses native IDB queries down to one line.</Link>
+          condenses native IDB queries down to one line.</Link>
       </p>
 
       <h3 id="turtledb-promise-api">turtleDB's Promise API</h3>
@@ -154,9 +156,7 @@ const InBrowserStorage = () => {
       </p>
 
       <p>
-        Running queries in parallel is therefore possible, but it is important to
-        ensure they are all completed sequentially. turtleDB accomplishes this using
-         <span className="inline-code">Promise.all</span>:
+        Running queries in parallel is therefore possible, but it is important to ensure they are all completed sequentially. turtleDB accomplishes this using <span className="inline-code">Promise.all</span>:
       </p>
 
       <div className="pre-container">
@@ -165,7 +165,9 @@ const InBrowserStorage = () => {
         </SyntaxHighlighter>
       </div>
 
-      <img className="w-100" src="../images/browser_storage/promise-all.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/browser_storage/promise-all.png" />
+      </div>
 
       <p>
         However, some database operations should be kept atomic. If multiple queries
@@ -173,7 +175,9 @@ const InBrowserStorage = () => {
          <span className="inline-code">Promise.all</span> approach, work will be lost:
       </p>
 
-      <img className="w-100" src="../images/browser_storage/promise-all-error.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/browser_storage/promise-all-error.png" />
+      </div>
 
       <p>
         In these cases where sequential execution matters, turtleDB uses a “Promise chain” where
@@ -190,8 +194,9 @@ const InBrowserStorage = () => {
         </SyntaxHighlighter>
       </div>
 
-      <img className="w-100" src="../images/browser_storage/promise-then.png"/>
-
+      <div className="img-container">
+        <img className="img-style" src="../images/browser_storage/promise-then.png" />
+      </div>
 
       <h3 id="turtledb-developer-api">turtleDB Developer API</h3>
 
@@ -221,7 +226,9 @@ const InBrowserStorage = () => {
         developer can interact with IDB without having to write a single line of IDB specific code.
       </p>
 
-      <img className="w-100" src="../images/browser_storage/developer-API.png"/>
+      <div className="img-container">
+        <img className="img-style" src="../images/browser_storage/developer-API.png" />
+      </div>
 
       <p>
         With a working understanding of browser storage, we can examine turtleDB’s

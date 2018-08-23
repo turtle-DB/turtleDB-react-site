@@ -24,7 +24,9 @@ const Conflicts = () => {
       <p>After one client syncs to the server, the server will have revisions that are different than what the second client has.</p>
       <p>More specifically, the revision trees for the document on the client and server would contain different data:</p>
 
-      <img className="w-100" src="../images/conflicts/1-server-client-trees.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/1-server-client-trees.png" />
+      </div>
 
       <h3 id="surfacing-conflicts">Surfacing Conflicts</h3>
 
@@ -33,11 +35,15 @@ const Conflicts = () => {
       <p>The server merges the trees by concurrently traversing down common revisions (nodes) held in each tree. For each node pair common node, it compares the two sets of child revisions by revision ID, and either saves off pairs of common revisions for the next recursive traversals, or merges any new revisions into the server tree.</p>
       <p>When any new revisions are found, the server simply incorporates the client’s revision sub-array as a sibling node, like this:</p>
 
-      <img className="w-100" src="../images/conflicts/2-merged-tree.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/2-merged-tree.png" />
+      </div>
 
       <p>We can visualize this operation as creating a branch in the revision tree:</p>
 
-      <img className="w-100" src="../images/conflicts/3-tree-diagram.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/3-tree-diagram.png" />
+      </div>
 
       <p>The client that last synced gets back the merged tree, which now has multiple valid leaf revisions it could return to the user. This is what we mean when we say a document contains a conflict, and is also where the concept of a winning revision comes in.</p>
 
@@ -45,13 +51,17 @@ const Conflicts = () => {
 
       <p>The client tracks the competing leaf revisions in the meta document property <span className="inline-code">_leafRevs</span>:</p>
 
-      <img className="w-100" src="../images/conflicts/4-leaf-revs.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/4-leaf-revs.png" />
+      </div>
 
       <p>In order to provide a consistent API, turtleDB’s <span className="inline-code">read()</span> method only ever returns one revision to the developer even when there are competing revisions. It does this by setting one revision as the ‘winning’ revision either by default or by developer input.</p>
 
       <p>The winning revision is held in the <span className="inline-code">_winningRev</span> property of the meta document, as seen here:</p>
 
-      <img className="w-100" src="../images/conflicts/5-winning-rev.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/5-winning-rev.png" />
+      </div>
 
       <p>This ensures that read requests can be handled in almost O(1) time using the index on the revision store.</p>
 
@@ -85,7 +95,9 @@ const Conflicts = () => {
 
       <p>This is the relevant section of the <span className="inline-code">read()</span> method:</p>
 
-      <img className="w-100" src="../images/conflicts/6-conflict-versions.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/6-conflict-versions.png" />
+      </div>
 
       <p>The returned document would look like this in practice:</p>
 
@@ -106,10 +118,10 @@ const Conflicts = () => {
           <img src="../images/conflicts/7-1-slideshow1.png" />
         </div>
         <div>
-        <img src="../images/conflicts/8-2-slideshow1.png" />
+          <img src="../images/conflicts/8-2-slideshow1.png" />
         </div>
         <div>
-        <img src="../images/conflicts/9-3-slideshow1.png" />
+          <img src="../images/conflicts/9-3-slideshow1.png" />
         </div>
       </Carousel>
 

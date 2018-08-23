@@ -31,7 +31,9 @@ const Synchronization = () => {
 
       <p>This diagram illustrates the centralized approach to synchronizing clients and server:</p>
 
-      <img className="w-100" src="../images/sync/1-centralized.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/sync/1-centralized.png" />
+      </div>
 
       <h4>Responsibilities</h4>
 
@@ -71,7 +73,9 @@ const Synchronization = () => {
 
       <p>The client and server then compare their sync histories. These histories contain a ‘last key’ value that references the highest primary key of the client revision store that was covered in the last sync - we can think of this as a checkpoint.</p>
 
-      <img className="w-100" src="../images/sync/2-last-key.png" />
+      <div className="img-container">
+        <img className="img-style" src="../images/sync/2-last-key.png" />
+      </div>
 
       <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the document store are auto-incrementing).</p>
 
