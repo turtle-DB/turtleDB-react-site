@@ -1,4 +1,9 @@
 
+  .section.about p {
+    font-size: 22px;
+    margin: 2em auto;
+    line-height: 1.5;
+  }
 
   .turtle-padding {
     max-width: 50rem;
@@ -74,9 +79,29 @@
     max-width: 100%;
   }
 
+  .pre-container {
+    text-align: center;
+  }
+
   pre {
+    display: inline-block !important;
+    margin: 2em auto;
+    text-align: left;
+    overflow: hidden !important;
+    max-width: 100%;
+    padding: 1em !important;
+  }
+
+  pre code:first-of-type {
+    display: none !important;
+    padding-right: 0.5em !important;
+  }
+
+  /* padding: 1.5em 3.5em !important; */
+
+  /* pre {
     max-width: 75%;
     margin: 2em auto;
     padding: 1.5em !important;
     white-space: pre-wrap;
-  }
+  } */

@@ -57,7 +57,9 @@ const Synchronization = () => {
 
       <p>Let's being with the first half of the sync process: <span className="inline-code">syncTo()</span>. As each stage of this process is asynchronous, we control the flow of events with an extended promise chain that looks like this:</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
+      </div>
 
       <h4>Check Server Connection</h4>
 
@@ -73,7 +75,9 @@ const Synchronization = () => {
 
       <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the document store are auto-incrementing).</p>
 
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getChangedMetaDocsForTortoise}</SyntaxHighlighter>
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getChangedMetaDocsForTortoise}</SyntaxHighlighter>
+      </div>
 
       <p>This addresses a potential problem with syncing - that it can be extremely inefficient if not done properly. Imagine if a client had 1000 documents, synced to a server, and created 50 new documents (so now there are 1050). It would be hugely inefficient to send those previous 1000 documents over again on the next sync cycle.</p>
 

@@ -238,9 +238,13 @@ const HistoryTrees = () => {
         Because our trees are stored in a database and lack memory pointers to their leaf nodes, we have to do a full traversal of the tree down to the latest version (leaf node).
         This is the recursive function we developed:
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {collectAllLeafRevs}
-      </SyntaxHighlighter>
+
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
+          {collectAllLeafRevs}
+        </SyntaxHighlighter>
+      </div>
+
 
       <img />
       <p>This process is O(N) time and space.</p>
