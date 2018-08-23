@@ -39,10 +39,9 @@ export const Toc = () => {
         </li>
         <li><a href="#synchronization">Synchronization</a>
           <ul>
-            <li><a href="#sync-to">syncTo()</a></li>
-            <li><a href="#sync-from">syncFrom()</a></li>
+            <li><a href="#sync-to">Sync To</a></li>
             <li><a href="#batching">Batching</a></li>
-            <li><a href="#sync-walkthrough">Sync Walkthrough</a></li>
+            <li><a href="#sync-from">Sync From</a></li>
           </ul>
         </li>
         <li><a href="#conflicts">Conflicts</a>

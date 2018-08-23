@@ -53,6 +53,8 @@ const Synchronization = () => {
 
       <p>For simplicity, we will only outline the steps taken for client to server sync. From the perspective of the client, we call this the ‘sync to’ as it is syncing <em>to</em> the server. The process for server to client is very similar.</p>
 
+      <h4>Sync To</h4>
+
       <p>Let's being with the first half of the sync process: <span className="inline-code">syncTo()</span>. As each stage of this process is asynchronous, we control the flow of events with an extended promise chain that looks like this:</p>
 
       <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
