@@ -30,9 +30,7 @@ const Header = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to='/github'>
-              Github
-            </Link>
+            <a href="https://github.com/turtle-DB" className="nav-link">Github</a>
           </li>
         </ul>
       </div>
