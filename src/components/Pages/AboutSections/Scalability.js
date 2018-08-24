@@ -14,7 +14,7 @@ const Scalability = () => {
         They definitely exist and are something to be aware of.
       </p>
       <p>
-        Storage constraints in turtleDB come from two sources. The first is the total available space that the '
+        Storage constraints in turtleDB come from two sources. The first is the total available space that the
         browser ‘allots’ to IndexedDB. The second is the impact of document versioning in turtleDB;
         extra space is consumed by keeping all revisions.
       </p>
@@ -30,20 +30,14 @@ const Scalability = () => {
         This can happen when a client’s computer is running low on disk space and files have to be
         removed via Least Recently Used (LRU) policy.
       </p>
-      <p>
-        Directly quoting the Chrome documentation for IDB space calculations:
-      </p>
+      <p>Directly quoting the Chrome documentation for IDB space calculations:<Citation
+        url='https://developer.chrome.com/apps/offline_storage'
+        creator='Google'
+        title='Managing HTML5 Offline Storage'
+      /></p>
 
-      <blockquote className="blockquote mb-0">
-        <hr></hr>
-        <p>“Temporary storage is shared among all web apps running in the browser. It is also shared across all offline APIs, such as App Cache, IndexedDB, and File System. However, it does not include web storage APIs like Local Storage and Session Storage, which still has a limit of 5 MB per origin. The shared pool can be up to 1/3 of the of available disk space. Storage already used by apps is included in the calculation of the shared pool; that is to say, the calculation is based on (available storage space + storage being used by apps) * .333 . Each app can have up to 20% of the shared pool.”
-          <Citation
-            url='https://developer.chrome.com/apps/offline_storage'
-            creator='Google'
-            title='Managing HTML5 Offline Storage'
-          />
-        </p>
-        <hr></hr>
+      <blockquote className="blockquote">
+        <p>Temporary storage is shared among all web apps running in the browser. It is also shared across all offline APIs, such as App Cache, IndexedDB, and File System. However, it does not include web storage APIs like Local Storage and Session Storage, which still has a limit of 5 MB per origin. The shared pool can be up to 1/3 of the of available disk space. Storage already used by apps is included in the calculation of the shared pool; that is to say, the calculation is based on (available storage space + storage being used by apps) * .333 . Each app can have up to 20% of the shared pool.</p>
       </blockquote>
 
       <p>
@@ -112,32 +106,20 @@ const Scalability = () => {
         <img className="img-style" src="../images/scalability/2-create-update-chart.png" />
       </div>
 
-      <p>
-        But what happens when IndexedDB reaches its  storage limit? Referring Chrome documentation again:
-      </p>
+      <p>But what happens when IndexedDB reaches its  storage limit? Referring Chrome documentation again:<Citation
+        url='https://developer.chrome.com/apps/offline_storage'
+        creator='Google'
+        title='Managing HTML5 Offline Storage'
+      /></p>
 
-      <blockquote className="blockquote mb-0">
-        <hr></hr>
-        <p>“Once the storage quota for the entire pool is exceeded, the entire data stored for the
-          least recently used host gets deleted. The browser, however, will not expunge the data in
-           LocalStorage and SessionStorage. For data stored in other offline APIs, the browser deletes
-           the data in whole and not in part so that app data doesn't get corrupted in unexpected ways."
-          <Citation
-            url='https://developer.chrome.com/apps/offline_storage'
-            creator='Google'
-            title='Managing HTML5 Offline Storage'
-          />
-        </p>
-        <hr></hr>
+      <blockquote className="blockquote">
+        <p>Once the storage quota for the entire pool is exceeded, the entire data stored for the least recently used host gets deleted. The browser, however, will not expunge the data in LocalStorage and SessionStorage. For data stored in other offline APIs, the browser deletes the data in whole and not in part so that app data doesn't get corrupted in unexpected ways.</p>
       </blockquote>
       <p>
-        In other words, if turtleDB is being actively used, it is unlikely to be cleared under LRU policies.
-        But if it is not, the IDB database could be deleted in its entirety. This is just a reality of the
-        current state of in-browser storage technology. The only solution here for users to vertically scale
-        up their hard drive.
+        In other words, if turtleDB is being actively used, it is unlikely to be cleared under LRU policies. But if it is not, the IDB database could be deleted in its entirety. This is just a reality of the current state of in-browser storage technology. The only solution here for users to vertically scale up their hard drive.
       </p>
       <p>
-        Knowing this limitation, we implemented optional <strong>compaction</strong>, giving developers more control over how
+        Knowing this limitation, we implemented optional compaction, giving developers more control over how
         much document history to keep around.
       </p>
       <h3 id="compaction">Compaction</h3>

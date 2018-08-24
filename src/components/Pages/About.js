@@ -15,7 +15,6 @@ import Synchronization from './AboutSections/Synchronization'
 import Conflicts from './AboutSections/Conflicts'
 import Scalability from './AboutSections/Scalability'
 import FutureWork from './AboutSections/FutureWork'
-import References from './AboutSections/References'
 
 const AboutHome = () => {
   return (
@@ -31,7 +30,7 @@ export const About = () => {
       <div className="row main-container">
         <div className="toc d-none d-md-inline-block col-md-3">
           {/* <StickyBox bottom={false} offset={0}> */}
-            <Toc />
+          <Toc />
           {/* </StickyBox> */}
         </div>
         <div className="col-xs-12 d-md-none padding">
@@ -47,7 +46,6 @@ export const About = () => {
           <Conflicts />
           <Scalability />
           <FutureWork />
-          <References />
         </div>
       </div>
     </div>

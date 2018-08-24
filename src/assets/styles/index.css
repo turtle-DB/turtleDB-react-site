@@ -3,7 +3,6 @@
 	cursor: help;
 	margin: 0 .5rem;
 	font-style: normal;
-	z-index: 1000;
 }
 
 .citation > a {
@@ -16,7 +15,7 @@
 	display: inline-block;
 	text-align: center;
 	vertical-align: baseline;
-	z-index: -1;
+	z-index: 1;
 }
 
 .citation > div {
@@ -31,6 +30,7 @@
 	padding: 1rem;
 	border-radius: .5rem;
 	width: 30rem;
+	z-index: 9999;
 }
 
 .citation > div p, .citation > div div.p {
