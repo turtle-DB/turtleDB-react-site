@@ -63,9 +63,7 @@ export const Toc = () => {
             <li><a href="#sync-efficiency">Sync Efficiency</a></li>
           </ul>
         </li>
-        <li><a href="#future-work">Future Work</a>
-        </li>
-        <li><a href="#references">References</a></li>
+        <li><a href="#future-work">Future Work</a></li>
       </ol>
     </div>
   );

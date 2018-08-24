@@ -17,11 +17,11 @@ const InBrowserStorage = () => {
       <h2 id='in-browser-storage'>In-Browser Storage</h2>
 
       <h3 id="storage-options">Storage Options</h3>
-      <p>If you want to store documents in the browser, there are main 3 options: LocalStorage, WebSQL, and IndexedDB (IDB) <Citation
+      <p>If you want to store documents in the browser, there are main 3 options: LocalStorage, WebSQL, and IndexedDB (IDB). <Citation
         url='https://medium.com/dev-channel/offline-storage-for-progressive-web-apps-70d52695513c'
         creator='Addy Osmani'
         title='Offline Storage for Progressive Web Apps'
-      />.</p>
+      /></p>
       <h4>LocalStorage</h4>
       <p>
         A key value object store with a maximum storage limit of

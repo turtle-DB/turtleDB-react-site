@@ -188,3 +188,12 @@
   color: #6E6D5C;
   font-size: 24px;
 }
+
+.intro-card {
+  padding: 0;
+}
+
+.intro-si {
+  width: 40px;
+  margin: 0 10px;
+}

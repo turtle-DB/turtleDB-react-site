@@ -74,7 +74,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="img-style" src="../images/trees/deleted-doc.png"/>
+        <img className="img-style" src="../images/trees/deleted-doc.png" />
       </div>
 
       <h4>Leaf Nodes</h4>
@@ -84,7 +84,7 @@ const HistoryTrees = () => {
         trees with conflicts have multiple leaf nodes that represent competing versions of a document.
       </p>
       <div className="img-container">
-        <img className="w-100" src="../images/trees/leaf-nodes.png"/>
+        <img className="w-100" src="../images/trees/leaf-nodes.png" />
       </div>
 
 
@@ -96,7 +96,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/revision-ids.png"/>
+        <img className="w-100" src="../images/trees/revision-ids.png" />
       </div>
 
       <p>
@@ -167,7 +167,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/nested-arrays.png"/>
+        <img className="w-100" src="../images/trees/nested-arrays.png" />
       </div>
 
       <p>
@@ -185,7 +185,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/tree-diagram-1.png"/>
+        <img className="w-100" src="../images/trees/tree-diagram-1.png" />
       </div>
 
       <h4>Meta Documents</h4>
@@ -202,7 +202,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/meta-document.png"/>
+        <img className="w-100" src="../images/trees/meta-document.png" />
       </div>
 
       <p>
@@ -246,7 +246,7 @@ const HistoryTrees = () => {
       </div>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/updates-deletes.png"/>
+        <img className="w-100" src="../images/trees/updates-deletes.png" />
       </div>
 
       <p>This process is O(N) time and space.</p>
@@ -264,7 +264,7 @@ const HistoryTrees = () => {
       </p>
 
       <div className="img-container">
-        <img className="w-100" src="../images/trees/merging-two-trees.png"/>
+        <img className="w-100" src="../images/trees/merging-two-trees.png" />
       </div>
 
       <p>
@@ -350,14 +350,14 @@ const HistoryTrees = () => {
 
       <h4>Identifying Leaf Revisions</h4>
       <div className="img-container">
-        <img className="w-100" src="../images/trees/find-leaf-versions.png"/>
+        <img className="w-100" src="../images/trees/find-leaf-versions.png" />
       </div>
 
       <p>
         The purpose of having revision trees is to easily determine conflicting versions of a document.
         A potential downside to the tree structure is that a full traversal is needed to reach these
         conflicting versions. We solved this problem by introducing a separate property on the meta document
-        called “_leafRevs” which contains all the most up-to-date versions of a document.
+        called <span className="inline-code">_leafRevs</span> which contains all the most up-to-date versions of a document.
       </p>
       <p>
         Developers can therefore look up and access those leaf nodes in constant time, or O(1).
@@ -369,14 +369,7 @@ const HistoryTrees = () => {
         </SyntaxHighlighter>
       </div>
 
-    <p>
-      While reads are O(1), the “_leafRevs” array needs to be constantly kept up to date.
-      We added code within our update, delete, and merge functions to update the array
-      <strong>while</strong> the tree was being traversed. This means keeping the
-       tree updated takes O(N) but
-      it piggybacks on other operations and is outweighed by the many O(1) reads.
-    </p>
-
+      <p>While reads are O(1), the <span className="inline-code">_leafRevs</span> array needs to be constantly kept up to date. We added code within our update, delete, and merge functions to update the array while the tree was being traversed. This means keeping the tree updated takes O(N) but it piggybacks on other operations and is outweighed by the many O(1) reads.</p>
     </div>
   )
 }

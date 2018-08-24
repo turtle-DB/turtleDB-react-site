@@ -41,7 +41,7 @@ const Introduction = () => {
       <div className='container mt-5'>
         <div className="row intro-team">
 
-          <div className="col-xs-12 col-md-4">
+          <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
               <a className="photo-link" href="https://rockdinosaur.github.io">
                 <h5 className="card-title">Steven Shen</h5>
@@ -50,15 +50,15 @@ const Introduction = () => {
               <div className="card-body">
                 <p className="card-text text-center">Toronto, Canada</p>
                 <ul className="list-inline">
-                  <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://github.com/rockdinosaur" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://rockdinosaur.github.io" network="email" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/rockdinosaur" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://rockdinosaur.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <div className="col-xs-12 col-md-4">
+          <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
               <a className="photo-link" href="https://maxiappleton.github.io/">
                 <h5 className="card-title">Max Appleton</h5>
@@ -67,15 +67,15 @@ const Introduction = () => {
               <div className="card-body">
                 <p className="card-text text-center">San Francisco, USA</p>
                 <ul className="list-inline">
-                  <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://github.com/maxiappleton" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/maxiappleton" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <div className="col-xs-12 col-md-4">
+          <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
               <a className="photo-link" href="https://maxiappleton.github.io/">
                 <h5 className="card-title">Andrew Houston-Floyd</h5>
@@ -84,9 +84,9 @@ const Introduction = () => {
               <div className="card-body">
                 <p className="card-text text-center">New York City, USA</p>
                 <ul className="list-inline">
-                  <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://github.com/houstonfloyd" /></li>
-                  <li className="list-inline-item"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/houstonfloyd" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>
