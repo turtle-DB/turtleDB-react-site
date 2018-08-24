@@ -253,12 +253,15 @@ export const Api = () => {
               <h3 className='fl m0' id='dropDB'>dropDB</h3>
             </div>
             <p>Drops the entire turtleDB locally. <strong>This is permanent and cannot be reversed.</strong></p>
-            <div className='pre p1 fill-light mt0'>db.dropDB()</div>
+            <div className='pre p1 fill-light mt0'>db.dropDB(_name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
             <div className='py1 quiet mt1 prose-big'>Parameters</div>
             <div className='prose'>
               <div className='space-bottom0'>
                 <div>
-                  <span className='code bold'>None</span>
+                  <span className='code bold'>name</span> <code className='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+                  <ul>
+                    <li>the specific turtleDB database name to be dropped</li>
+                  </ul>
                 </div>
               </div>
             </div>
