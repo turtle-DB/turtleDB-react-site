@@ -43,7 +43,7 @@ const Introduction = () => {
 
           <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
-              <a className="photo-link" href="https://rockdinosaur.github.io">
+              <a className="photo-link" href="https://rockdinosaur.github.io" target="_blank">
                 <h5 className="card-title">Steven Shen</h5>
                 <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen" />
               </a>
@@ -60,7 +60,7 @@ const Introduction = () => {
 
           <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
-              <a className="photo-link" href="https://maxiappleton.github.io/">
+              <a className="photo-link" href="https://maxiappleton.github.io/" target="_blank">
                 <h5 className="card-title">Max Appleton</h5>
                 <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton" />
               </a>
@@ -77,7 +77,7 @@ const Introduction = () => {
 
           <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
-              <a className="photo-link" href="https://maxiappleton.github.io/">
+              <a className="photo-link" href="https://maxiappleton.github.io/" target="_blank">
                 <h5 className="card-title">Andrew Houston-Floyd</h5>
                 <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
               </a>

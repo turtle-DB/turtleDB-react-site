@@ -15,17 +15,17 @@ export const Home = () => {
             <div className="turtle-links">
               <p><span className="font-weight-bold">turtleDB</span> for the front-end:</p>
               <div className="link-buttons d-flex flex-wrap justify-content-center">
-                <a className="btn btn-success btn-lg" href="#" role="button"><i className="fas fa-download"></i></a>
-                <a className="btn btn-danger btn-lg icon-link" href="#"><i className="fab fa-npm fa-2x"></i></a>
-                <a className="btn btn-light btn-lg icon-link" href="#"><i className="fab fa-github fa-2x"></i></a>
+                <a className="btn btn-danger btn-lg icon-link" href="https://www.npmjs.com/package/turtledb" target="_blank"><i className="fab fa-npm fa-2x"></i></a>
+                <a className="btn btn-success btn-lg" href="https://unpkg.com/turtledb@1.0.1/dist/turtleDB.min.js" role="button" target="_blank"><i className="fas fa-download"></i></a>
+                <a className="btn btn-light btn-lg icon-link" href="https://github.com/turtle-DB/turtleDB" target="_blank"><i className="fab fa-github fa-2x"></i></a>
               </div>
             </div>
             <div className="tortoise-links">
               <p><span className="font-weight-bold">tortoiseDB</span> for the back-end:</p>
               <div className="link-buttons d-flex flex-wrap justify-content-center">
-                <a className="btn btn-success btn-lg" href="#" role="button"><i className="fas fa-download"></i></a>
-                <a className="btn btn-danger btn-lg icon-link" href="#"><i className="fab fa-npm fa-2x"></i></a>
-                <a className="btn btn-light btn-lg icon-link" href="#"><i className="fab fa-github fa-2x"></i></a>
+                <a className="btn btn-danger btn-lg icon-link" href="https://www.npmjs.com/package/tortoisedb" target="_blank"><i className="fab fa-npm fa-2x"></i></a>
+                <a className="btn btn-success btn-lg" href="https://unpkg.com/tortoisedb@1.0.0/dist/tortoiseDB.min.js" role="button" target="_blank"><i className="fas fa-download"></i></a>
+                <a className="btn btn-light btn-lg icon-link" href="https://github.com/turtle-DB/tortoiseDB" target="_blank"><i className="fab fa-github fa-2x"></i></a>
               </div>
               <p className="subtext">Currently supported back-end databases: MongoDB</p>
             </div>

@@ -13,10 +13,10 @@ export const Team = () => {
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">
-                <a href="https://rockdinosaur.github.io">Steven Shen</a>
+                <a href="https://rockdinosaur.github.io" target="_blank">Steven Shen</a>
               </h5>
             </div>
-            <a href="https://rockdinosaur.github.io">
+            <a href="https://rockdinosaur.github.io" target="_blank">
               <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen" />
             </a>
             <div className="card-body">
@@ -34,10 +34,10 @@ export const Team = () => {
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">
-                <a href="https://maxiappleton.github.io/">Max Appleton</a>
+                <a href="https://maxiappleton.github.io/" target="_blank">Max Appleton</a>
               </h5>
             </div>
-            <a href="https://maxiappleton.github.io/">
+            <a href="https://maxiappleton.github.io/" target="_blank">
               <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton" />
             </a>
             <div className="card-body">
@@ -55,10 +55,12 @@ export const Team = () => {
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">
-                <a href="https://maxiappleton.github.io/">Andrew Houston-Floyd</a>
+                <a href="https://maxiappleton.github.io/" target="_blank">Andrew Houston-Floyd</a>
               </h5>
             </div>
-            <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
+            <a href="https://maxiappleton.github.io/" target="_blank">
+              <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
+            </a>
             <div className="card-body">
               <p className="card-text">Software Developer (New York City, USA)</p>
               <ul className="list-inline">
