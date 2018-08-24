@@ -2,8 +2,6 @@ import React from 'react';
 import Citation from '../../Citation'
 import { SocialIcon } from 'react-social-icons';
 
-
-
 const Introduction = () => {
   return (
     <div>

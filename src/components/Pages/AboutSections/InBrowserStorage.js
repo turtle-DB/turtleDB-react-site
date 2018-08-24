@@ -17,10 +17,11 @@ const InBrowserStorage = () => {
       <h2 id='in-browser-storage'>In-Browser Storage</h2>
 
       <h3 id="storage-options">Storage Options</h3>
-      <p>
-        If you want to store documents in the browser, there are 3 options:
-        LocalStorage, WebSQL, and IndexedDB (IDB).
-      </p>
+      <p>If you want to store documents in the browser, there are main 3 options: LocalStorage, WebSQL, and IndexedDB (IDB) <Citation
+        url='https://medium.com/dev-channel/offline-storage-for-progressive-web-apps-70d52695513c'
+        creator='Addy Osmani'
+        title='Offline Storage for Progressive Web Apps'
+      />.</p>
       <h4>LocalStorage</h4>
       <p>
         A key value object store with a maximum storage limit of
@@ -89,18 +90,14 @@ const InBrowserStorage = () => {
 
       <p>
         Given this specification, IDB is not the simplest API to work with. According to Mozilla,
-        the primary backer and developer of IDB:
+        the primary backer and developer of IDB:<Citation
+          url='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'
+          creator='Mozilla Developer Network'
+          title='IndexedDB API'
+        />
       </p>
-      <blockquote className="blockquote mb-0">
-        <hr></hr>
-        <p>“The IndexedDB API is powerful, but may seem too complicated for simple cases.”
-          <Citation
-            url='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'
-            creator='Mozilla Developer Network'
-            title='IndexedDB API'
-          />
-        </p>
-        <hr></hr>
+      <blockquote className="blockquote">
+        <p>“The IndexedDB API is powerful, but may seem too complicated for simple cases.”</p>
       </blockquote>
       <p>
         Given this admission, the lack of popularity for offline-first applications is unsurprising.
@@ -179,14 +176,7 @@ const InBrowserStorage = () => {
         <img className="img-style" src="../images/browser_storage/promise-all-error.png" />
       </div>
 
-      <p>
-        In these cases where sequential execution matters, turtleDB uses a “Promise chain” where
-        each operation waits for the previous one to complete, and the entire
-        set of queries only returns once the final Promise is resolved or an error
-        is thrown somewhere along the chain. Because Promise chains must begin with a
-        Promise, we start our Promise-chain with an automatically-resolved
-        <span className="inline-code">Promise.resolve()</span>.:
-      </p>
+      <p>In these cases where sequential execution matters, turtleDB uses a “Promise chain” where each operation waits for the previous one to complete, and the entire set of queries only returns once the final Promise is resolved or an error is thrown somewhere along the chain. Because Promise chains must begin with a Promise, we start our Promise-chain with an automatically-resolved <span className="inline-code">Promise.resolve()</span>.:</p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
@@ -200,18 +190,9 @@ const InBrowserStorage = () => {
 
       <h3 id="turtledb-developer-api">turtleDB Developer API</h3>
 
-      <p>
-        With all of these operations within turtleDB, developers are able to just
-        open their browsers, set up a database and begin interacting with IDB. They
-        no longer need to worry about tasks such as opening and closing connections to
-        IDB, creating a store, setting up `onsuccess` and `onerror` handlers for basic
-        operations, or controlling the flow of asynchronous operations.
-      </p>
+      <p> With all of these operations within turtleDB, developers are able to just open their browsers, set up a database and begin interacting with IDB. They no longer need to worry about tasks such as opening and closing connections to IDB, creating a store, setting up <span className="inline-code">onsuccess</span> and <span className="inline-code">onerror</span> handlers for basic operations, or controlling the flow of asynchronous operations. </p>
 
-      <p>
-        The only required knowledge for developers is that all queries to turtleDB return a Promise.
-        This means if you want to read a document of id `foo`, that code would be written as:
-      </p>
+      <p>The only required knowledge for developers is that all queries to turtleDB return a Promise. This means if you want to read a document of id <span className="inline-code">foo</span>, that code would be written as:</p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
