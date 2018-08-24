@@ -8,8 +8,20 @@
   }
 }
 
-  .section blockquote {
+  .home-about blockquote {
     padding: 0 25%;
+    font-style: normal;
+    text-align: justify;
+    text-align-last: center;
+    font-size: 22px;
+  }
+
+  .home-about blockquote p {
+    margin: 2rem auto;
+  }
+
+  .home-about blockquote p:last-of-type {
+    margin-bottom: 3rem;
   }
 
   .section.about p {
