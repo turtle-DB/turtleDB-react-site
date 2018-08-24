@@ -9,7 +9,6 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
-  // need to add (process.env.NODE_ENV === 'production' &&) in production
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('./service-worker.js', { scope: './' })

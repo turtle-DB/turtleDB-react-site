@@ -1,44 +1,43 @@
-const cacheName = 'turtleDB-site v1';
+const cacheName = 'turtleDBv2';
 
-const cacheAssets = [
-  'index.html',
-  'images/turtle.png',
-]
+// Call Install Event
+self.addEventListener('install', e => {
+  console.log('Service Worker: Installed');
+});
 
-self.addEventListener("install", e => {
-  console.log("ServiceWorker Installed");
-
-  e.waitUntil(
-    caches
-      .open(cacheName)
-      .then(cache => {
-        console.log("Service Worker: Caching static files...");
-        cache.addAll(cacheAssets);
-      })
-      .catch(err => console.log("Failed to cache static files...", err))
-  )
-})
-
-self.addEventListener("activate", e => {
-  console.log("ServiceWorker Activated")
-  // clean up unwanted caches
+// Call Activate Event
+self.addEventListener('activate', e => {
+  console.log('Service Worker: Activated');
+  // Remove unwanted caches
   e.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cache => {
           if (cache !== cacheName) {
-            console.log("Service Worker clearing old caches...");
+            console.log('Service Worker: Clearing Old Cache');
             return caches.delete(cache);
           }
         })
-      )
+      );
     })
-  )
-})
+  );
+});
 
-self.addEventListener("fetch", e => {
-  console.log("ServiceWorker Fetching", e.request.url)
+// Call Fetch Event
+self.addEventListener('fetch', e => {
+  console.log('Service Worker: Fetching');
   e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
-  )
-})
+    fetch(e.request)
+      .then(res => {
+        // Make copy/clone of response
+        const resClone = res.clone();
+        // Open cache
+        caches.open(cacheName).then(cache => {
+          // Add response to cache
+          cache.put(e.request, resClone);
+        });
+        return res;
+      })
+      .catch(err => caches.match(e.request).then(res => res))
+  );
+});

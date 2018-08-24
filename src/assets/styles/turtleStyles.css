@@ -21,7 +21,7 @@
   .turtle-padding {
     max-width: 50rem;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 50px;
     font-size: 20px;
   }
 
@@ -32,7 +32,6 @@
   .about p, .turtle-padding .about ul li {
     line-height: 1.8rem;
     font-size: 20px;
-    color: #4e4b49;
     text-align: justify;
     /* font-family: "PT Serif", Georgia, "Times New Roman", serif;
     font-size: 23px; */
@@ -43,12 +42,8 @@
     font-size: 23px; */
   }
 
-  .about ul li {
-    padding-right: 7%;
-  }
-
   h2 {
-    margin-top: 5rem;
+    margin-top: 2.5rem;
   }
 
   h2 + p {
@@ -57,10 +52,9 @@
 
   h3 {
     font-size: 26px;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     margin-bottom: 2rem;
     font-weight: 500;
-    color: #313131;
   }
 
   h4 {
@@ -68,7 +62,6 @@
     font-style: italic;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-    color: #4e4b49;
   }
 
   .about .w-100 {
@@ -180,6 +173,13 @@
     color: #6e6d5c;
     font-size: 20px;
     font-style: italic;
+  }
+
+  .home-about {
+    padding-top: 3rem;
+    font-size: 1.25rem;
+    font-style: italic;
+    text-align: left;
   }
 
 
