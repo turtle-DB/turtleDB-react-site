@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+import registerServiceWorker from './registerServiceWorker';
+
 import 'bootstrap/dist/css/bootstrap.css'
 import "./assets/styles/index.css"
 import "./assets/styles/bass.css"
@@ -15,3 +17,4 @@ import './assets/styles/api.css'
 import './assets/styles/turtleStyles.css'
 
 ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
