@@ -53,13 +53,13 @@ export const Home = () => {
             <p>
               Curious about how we built this framework? We wrote about the entire process and engineering challenges here:
             </p>
-            <p className="center">
-              <Link className="nav-link" to='/about'>
-                <btn className="btn btn-success btn-lg" href="#">Read More Here</btn>
-              </Link>
-            </p>
           </blockquote>
         </div>
+        <p className="center">
+          <Link className="nav-link" to='/about'>
+            <btn className="btn btn-success btn-lg" href="#">Read More Here</btn>
+          </Link>
+        </p>
       </div>
 
       <div className="section cards">
