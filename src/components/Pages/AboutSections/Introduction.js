@@ -5,24 +5,17 @@ import { SocialIcon } from 'react-social-icons';
 const Introduction = () => {
   return (
     <div>
-      <p>
-        This is the story of how we built turtleDB - a framework for creating offline-first,
-        collaborative web applications. We wanted to empower developers with the ability to
-        create collaborative apps that are fully functional even when offline.
-      </p>
-
-      <p>
-        You can see turtleDB in action with <a>this</a> demo app. You can also find instructions
-        on how to quickly start using turtleDB <a>here</a>.
-      </p>
-
       <h3 id="what-is-turtledb">What is turtleDB?</h3>
       <p>
-        turtleDB is a package that can be used to add offline-first capabilities
-        to web applications that rely on document-style data. It becomes the back-end
-        component for a developer, working with in-browser storage and replacing all
-        server calls. With document versioning, turtleDB provides effective conflict
-        resolution for app developers.
+        turtleDB is a framework for creating offline-first,
+        collaborative web applications. Developers using turtleDB have the ability to
+        create collaborative apps that are fully functional even when offline. We are the first
+        to have implemented bi-directional synchronization and conflict resolution with MongoDB!
+      </p>
+      <p>
+        turtleDB can be installed as a package to web applications that rely on document style data and
+        give them offline-first capabilities. Direct queries to the server are intercepted by turtleDB
+        and are passed to your in-browser storage instead.
       </p>
 
       <p>
@@ -30,96 +23,7 @@ const Introduction = () => {
         and collaboration for multiple clients.
       </p>
 
-      <h2 id="meet-the-team">About Us</h2>
-      <p>
-        turtleDB was made by a team of three developers who wanted to expand
-        and popularize the world of offline-first applications. We also happen
-        to be looking for new work opportunities - please don’t hesitate to
-        reach out if we seem like a good fit for your team!
-      </p>
 
-      <div className='container mt-5'>
-        <div className="row intro-team">
-
-          <div className="intro-card col-xs-12 col-md-4">
-            <div className="card text-center">
-              <a className="photo-link" href="https://rockdinosaur.github.io" target="_blank">
-                <h5 className="card-title">Steven Shen</h5>
-                <img className="card-img-top portrait rounded" src="images/steven.png" alt="Steven Shen" />
-              </a>
-              <div className="card-body">
-                <p className="card-text text-center">Toronto, Canada</p>
-                <ul className="list-inline">
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/steeveshen/" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/rockdinosaur" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://rockdinosaur.github.io" network="email" /></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="intro-card col-xs-12 col-md-4">
-            <div className="card text-center">
-              <a className="photo-link" href="https://maxiappleton.github.io/" target="_blank">
-                <h5 className="card-title">Max Appleton</h5>
-                <img className="card-img-top portrait rounded" src="images/max.png" alt="Max Appleton" />
-              </a>
-              <div className="card-body">
-                <p className="card-text text-center">San Francisco, USA</p>
-                <ul className="list-inline">
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/max-appleton/" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/maxiappleton" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="intro-card col-xs-12 col-md-4">
-            <div className="card text-center">
-              <a className="photo-link" href="https://maxiappleton.github.io/" target="_blank">
-                <h5 className="card-title">Andrew Houston-Floyd</h5>
-                <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
-              </a>
-              <div className="card-body">
-                <p className="card-text text-center">New York City, USA</p>
-                <ul className="list-inline">
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/houstonfloyd" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <h3 id="goals">Our Goals for turtleDB</h3>
-      <p>
-        In sharing our story of building turtleDB, we will discuss the following:
-      </p>
-      <ul>
-        <li>
-          What offline-first web applications are
-        </li>
-        <li>
-          An in-depth exploration of in-browser storage options and document versioning
-        </li>
-        <li>
-          Client-server synchronization, and conflict management
-        </li>
-        <li>
-          Designing and optimizing a framework to handle these features for developers
-        </li>
-        <li>
-          Limitations and considerations for our framework
-        </li>
-      </ul>
-
-      <p>
-        On to the case study.
-      </p>
 
       <h2 id='introduction'>Introduction</h2>
 
@@ -154,16 +58,13 @@ const Introduction = () => {
       </div>
 
       <p>
-        While the dinosaur game is fun, we’re willing to bet you’d rather have your page load.
-      </p>
-      <p>
         Of course, this is not the only downside of the traditional model. Clients rely on the server for
         every interaction, making all of the following scenarios hindrances for a web application:
       </p>
 
       <ul>
         <li>
-          “Lie-fi” - users believe they are online but the connection is unusable
+          “Lie-fi” - When your device indicates you're connected to the internet but the network is so slow it's practically unusable
         </li>
         <li>
           Server bottleneck - an overloaded server forces clients to wait for responses
@@ -260,11 +161,12 @@ const Introduction = () => {
       </div>
 
       <p>
-        turtleDB is a framework that sits between your web application and browser storage on every client.
-        This means read queries that normally go directly to the server run through turtleDB first, and write queries hit
-        the client’s local hard drive before being sent off to the server.
+        turtleDB is a framework that sits between your web application and browser storage.
+        This means read queries that normally go directly to the server run through turtleDB first. On the flip side, write queries
+        are also made to turtleDB and therefore your in-browser storage before being sent off to the server.
         For some applications, turtleDB alone is sufficient to provide local,
-        persistent storage without requiring any interaction with a back-end server.
+        persistent storage without requiring any interaction with a back-end server. This means no additional
+        applications have to be installed in order for turtleDB to work.
       </p>
       <p>
         On the back-end, we introduce tortoiseDB, a server and adapter that

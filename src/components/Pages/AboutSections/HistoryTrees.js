@@ -120,7 +120,7 @@ const HistoryTrees = () => {
         we concluded whatever data structure we chose must satisfy these requirements:
       </p>
       <ol>
-        <li>Be storable in string form; must be sendable over HTTP</li>
+        <li>Be storable in string form; must be able to be transmitted over HTTP</li>
         <li>Store document versions incrementally, from oldest to newest</li>
         <li>Represent conflicts (forks) as intuitively as possible</li>
         <li>Imply parent-child node (version) relationships without requiring extra properties to describe those relationships</li>
@@ -128,32 +128,18 @@ const HistoryTrees = () => {
           somehow need to merge their revision trees for a document, so that document histories can be
           shared in the network, and conflicts surfaced</li>
       </ol>
-
-      <h4>Doubly Linked Lists</h4>
       <p>
-        Doubly linked-lists are an option for representing trees.
-      </p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-          {doublyLinkedLists}
-        </SyntaxHighlighter>
-      </div>
-
-      <p>
-        For turtleDB, they were not a viable option as they relied on memory pointers
+        <strong>Doubly linked-lists</strong> are an option for representing trees. However for turtleDB, they were not a viable option as they relied on memory pointers
         between nodes that would be lost when the tree was stored in the database or
         stringified and sent over the network.
       </p>
-      <h4>Subarrays</h4>
+
       <p>
-        The data structure should be stored in one record so it can be sent over HTTP.
+        <strong>Subarrays</strong> can be stored in one record so it can be sent over HTTP.
         IndexedDB suffers from slower write speeds, and we did not want to add to the write load for every document update.
         This led us to experiment with an array where every sub-array represents a ‘level’ of the tree.
       </p>
-      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>
-        {subArray}
-      </SyntaxHighlighter>
+
       <p>
         The con here is traversing down through the tree and determining ancestry would be confusing.
         For example, ‘null’ would have to be inserted in sub-arrays after a node that had no children,
@@ -177,7 +163,7 @@ const HistoryTrees = () => {
       <p>
         The other advantage of this structure is that accessing and splicing sub-sections (branches) of the
         trees can be done very easily. A node-subarray contains all of its own descendants in a subarray.
-        This property is invaluable for <a href="#">merging</a>.
+        This property is invaluable for <a href="#merging">merging</a>.
       </p>
       <p>
         The below shows our nested array structure in a more readable format next to a c
@@ -251,7 +237,7 @@ const HistoryTrees = () => {
 
       <p>This process is O(N) time and space.</p>
 
-      <h4>Merging Trees</h4>
+      <h4 id="merging">Merging Trees</h4>
       <p>
         Meta documents are shared between a client and server during a sync. When syncing has completed,
         both parties should have an updated meta document with the same merged tree, containing all

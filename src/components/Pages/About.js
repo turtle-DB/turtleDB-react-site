@@ -15,14 +15,7 @@ import Synchronization from './AboutSections/Synchronization'
 import Conflicts from './AboutSections/Conflicts'
 import Scalability from './AboutSections/Scalability'
 import FutureWork from './AboutSections/FutureWork'
-
-const AboutHome = () => {
-  return (
-    <div className="container">
-      <p><em>Please select a chapter from above!</em></p>
-    </div>
-  )
-}
+import Team from './AboutSections/Team'
 
 export const About = () => {
   return (
@@ -46,6 +39,7 @@ export const About = () => {
           <Conflicts />
           <Scalability />
           <FutureWork />
+          <Team />
         </div>
       </div>
     </div>

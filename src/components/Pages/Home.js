@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from './../Footer';
+import { Link } from 'react-router-dom'
 
 export const Home = () => {
   return (
@@ -40,7 +41,7 @@ export const Home = () => {
       <div className="section home-about">
         <div className="d-flex justify-content-center text-center">
           <blockquote>
-            <p>turtleDB is a framework for developers to build offline-first, collaborative web applications.
+            <p>turtleDB is a framework for developers to build offline-first, collaborative web apps.
               It provides a user-friendly API for developers, empowering them with the ability to create apps
               with in-browser storage, effective server synchronization, document versioning, and flexible conflict
               resolution for any document data.
@@ -49,7 +50,14 @@ export const Home = () => {
               Web applications will work seamlessly online or offline, and developers can leave the backend to turtleDB -
               it will handle all data synchronization and conflict resolution between users. Works with MongoDB out of the box!
             </p>
-            <a className="btn btn-success btn-lg" href="#">Get Started</a>
+            <p>
+              Curious about how we built this framework? We wrote about the entire process and engineering challenges here:
+            </p>
+            <p className="center">
+              <Link className="nav-link" to='/about'>
+                <btn className="btn btn-success btn-lg" href="#">Read More Here</btn>
+              </Link>
+            </p>
           </blockquote>
         </div>
       </div>

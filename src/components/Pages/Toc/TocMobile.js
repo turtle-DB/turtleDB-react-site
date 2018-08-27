@@ -14,7 +14,7 @@ export const TocMobile = () => {
         <li><a href="#conflicts">Conflicts</a></li>
         <li><a href="#scalability">Scalability</a></li>
         <li><a href="#future-work">Future Work</a></li>
-        <li><a href="#references">References</a></li>
+        <li><a href="#team">The turtleDB Team</a></li>
       </ol>
     </div>
   );

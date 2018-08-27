@@ -25,7 +25,7 @@ const InBrowserStorage = () => {
       <h4>LocalStorage</h4>
       <p>
         A key value object store with a maximum storage limit of
-        only 5 MB. LocalStorage operations are performed synchronously
+        only 5 MB, LocalStorage operations are performed synchronously
          via the global `window` object in the browser. With its low limit and
          synchronous behavior, it is only good for storing small amounts of data
          in small chunks at a time. <Citation
@@ -57,15 +57,13 @@ const InBrowserStorage = () => {
         solution that would offer more sophisticated features.
       </p>
       <p>
-        Rather than building another SQL-like database, IDB is a JavaScript NoSQL
-        object-oriented database. It allows developers to store structured data such
-        as arrays and objects, as well as data in blobs. It is a key-value based storage
-        system, and enables more sophisticated database features such as transactions,
+        Rather than building another SQL-like database, IDB is an object-oriented database written in JavaScript.
+        It is a key-value storage system and enables more sophisticated database features such
         indexing, and the creation of multiple stores.
       </p>
       <p>
         Developers work with IndexedDB via an asynchronous API that can be accessed in
-        most browser contexts, even WebWorkers and ServiceWorkers.
+        most browser contexts (WebWorkers & ServiceWorkers).
       </p>
       <p>
         However, the IDB API has some issues which contributes to its lack of popularity.
@@ -89,7 +87,7 @@ const InBrowserStorage = () => {
       </p>
 
       <p>
-        Given this specification, IDB is not the simplest API to work with. According to Mozilla,
+        Given this specification, IDB's API is complex and error-prone. According to Mozilla,
         the primary backer and developer of IDB:<Citation
           url='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'
           creator='Mozilla Developer Network'

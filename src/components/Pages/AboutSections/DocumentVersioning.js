@@ -14,8 +14,8 @@ const DocumentVersioning = () => {
       </p>
       <p>
         turtleDB stores multiple copies of every document. Whenever a document is updated,
-        a new revision of the document would be created and added to IndexedDB.
-        In other words, we treated documents as immutable.
+        a new revision of the document is created and added to IndexedDB.
+        In other words, we treat documents as immutable.
       </p>
       <p>
         The reason behind this decision was driven by our goal for turtleDB to provide
@@ -195,7 +195,8 @@ const DocumentVersioning = () => {
       </div>
 
       <p>
-        With this branch, the developer has more options. For example, the developer could write code that:
+        After a merge, a revision must be chosen as a winner to be displayed to all users. This can be accomplished
+        via an algorithm that:
       </p>
       <ul>
         <li>Determines a winner deterministically; longest branch wins </li>
@@ -209,7 +210,7 @@ const DocumentVersioning = () => {
       </p>
       <p>
         To ensure developers could still delete older document versions if they wanted to, we implement a feature called
-        <a href="#"><strong> compaction</strong></a>.
+        <a href="#compaction"> compaction</a>.
       </p>
       <p>
         In turtleDB, all competing work is transparent, provided with context, and without resorting to any time-based solutions

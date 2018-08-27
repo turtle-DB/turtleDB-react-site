@@ -64,6 +64,7 @@ export const Toc = () => {
           </ul>
         </li>
         <li><a href="#future-work">Future Work</a></li>
+        <li><a href="#team">The turtleDB Team</a></li>
       </ol>
     </div>
   );
