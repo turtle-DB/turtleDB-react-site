@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from './../Footer';
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Home = () => {
   return (
@@ -10,23 +11,35 @@ export const Home = () => {
           <h1 className="display-4">
             <img className="card-img-top w-75" src="images/logo_full.png" alt="turtleDB" />
           </h1>
-          <p className="lead">An open source JavaScript promise wrapper for IndexedDB with syncing and conflict resolution.</p>
+          <p className="lead">A JavaScript framework and in-browser database adapter for building offline-first, collaborative web apps.</p>
           <hr className="my-4"></hr>
           <div className="download-links d-flex justify-content-around">
             <div className="turtle-links">
               <p><span className="font-weight-bold">turtleDB</span> for the front-end:</p>
               <div className="link-buttons d-flex flex-wrap justify-content-center">
-                <a className="btn btn-danger btn-lg icon-link" href="https://www.npmjs.com/package/turtledb" target="_blank"><i className="fab fa-npm fa-2x"></i></a>
-                <a className="btn btn-success btn-lg" href="https://unpkg.com/turtledb@1.0.1/dist/turtleDB.min.js" role="button" target="_blank"><i className="fas fa-download"></i></a>
-                <a className="btn btn-light btn-lg icon-link" href="https://github.com/turtle-DB/turtleDB" target="_blank"><i className="fab fa-github fa-2x"></i></a>
+                <a className="btn btn-danger btn-lg icon-link" href="https://www.npmjs.com/package/turtledb" target="_blank">
+                  <FontAwesomeIcon icon={['fab', 'npm']} size="2x" />
+                </a>
+                <a className="btn btn-success btn-lg" href="https://unpkg.com/turtledb@1.0.1/dist/turtleDB.min.js" role="button" target="_blank">
+                  <FontAwesomeIcon icon='download' />
+                </a>
+                <a className="btn btn-light btn-lg icon-link" href="https://github.com/turtle-DB/turtleDB" target="_blank">
+                  <FontAwesomeIcon icon={['fab', 'github']} size="2x" />
+                </a>
               </div>
             </div>
             <div className="tortoise-links">
               <p><span className="font-weight-bold">tortoiseDB</span> for the back-end:</p>
               <div className="link-buttons d-flex flex-wrap justify-content-center">
-                <a className="btn btn-danger btn-lg icon-link" href="https://www.npmjs.com/package/tortoisedb" target="_blank"><i className="fab fa-npm fa-2x"></i></a>
-                <a className="btn btn-success btn-lg" href="https://unpkg.com/tortoisedb@1.0.0/dist/tortoiseDB.min.js" role="button" target="_blank"><i className="fas fa-download"></i></a>
-                <a className="btn btn-light btn-lg icon-link" href="https://github.com/turtle-DB/tortoiseDB" target="_blank"><i className="fab fa-github fa-2x"></i></a>
+                <a className="btn btn-danger btn-lg icon-link" href="https://www.npmjs.com/package/tortoisedb" target="_blank">
+                  <FontAwesomeIcon icon={['fab', 'npm']} size="2x" />
+                </a>
+                <a className="btn btn-success btn-lg" href="https://unpkg.com/tortoisedb@1.0.0/dist/tortoiseDB.min.js" role="button" target="_blank">
+                  <FontAwesomeIcon icon='download' />
+                </a>
+                <a className="btn btn-light btn-lg icon-link" href="https://github.com/turtle-DB/tortoiseDB" target="_blank">
+                  <FontAwesomeIcon icon={['fab', 'github']} size="2x" />
+                </a>
               </div>
               <p className="subtext">Currently supported back-end databases: MongoDB</p>
             </div>
@@ -34,7 +47,7 @@ export const Home = () => {
           <hr className="my-4"></hr>
           <div className="learn-more">
             <p>Learn More</p>
-            <i className="fa fa-chevron-down fa-2x" aria-hidden="true"></i>
+            <FontAwesomeIcon icon="chevron-down" size="2x" />
           </div>
         </div>
       </div>
@@ -50,14 +63,14 @@ export const Home = () => {
               Web applications will work seamlessly online or offline, and developers can leave the backend to turtleDB -
               it will handle all data synchronization and conflict resolution between users. Works with MongoDB out of the box!
             </p>
-            <p>
+            <p id="lastHomePara">
               Curious about how we built this framework? We wrote about the entire process and engineering challenges here:
             </p>
           </blockquote>
         </div>
         <p className="center">
           <Link className="nav-link" to='/about'>
-            <btn className="btn btn-success btn-lg" href="#">Read More Here</btn>
+            <button className="btn btn-success btn-lg" href="#">Read More Here</button>
           </Link>
         </p>
       </div>

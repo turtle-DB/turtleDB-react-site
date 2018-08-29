@@ -1,5 +1,4 @@
 import React from 'react';
-import StickyBox from "react-sticky-box";
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -22,9 +21,7 @@ export const About = () => {
     <div className="about">
       <div className="row main-container">
         <div className="toc d-none d-md-inline-block col-md-3">
-          {/* <StickyBox bottom={false} offset={0}> */}
           <Toc />
-          {/* </StickyBox> */}
         </div>
         <div className="col-xs-12 d-md-none padding">
           <TocMobile />

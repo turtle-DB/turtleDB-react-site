@@ -1,29 +1,35 @@
 {
-  "name": "turtledb",
+  "name": "turtledb-react-site",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://turtle-db.github.io/",
   "dependencies": {
     "bootstrap": "^4.1.3",
     "i": "^0.3.6",
-    "npm": "^6.3.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
+    "react-onclickoutside": "^6.7.1",
     "react-responsive-carousel": "^3.1.41",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
     "react-social-icons": "^3.0.0",
-    "react-sticky-box": "^0.6.4",
-    "react-syntax-highlighter": "^7.0.4"
+    "react-syntax-highlighter": "^7.0.4",
+    "turtledb": "^1.0.2"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.2.0"
+    "@fortawesome/fontawesome-svg-core": "^1.2.4",
+    "@fortawesome/free-brands-svg-icons": "^5.3.1",
+    "@fortawesome/free-regular-svg-icons": "^5.3.1",
+    "@fortawesome/free-solid-svg-icons": "^5.3.1",
+    "@fortawesome/react-fontawesome": "^0.1.2",
+    "react-scripts": "1.1.4",
+    "source-map-explorer": "^1.6.0"
   }
 }

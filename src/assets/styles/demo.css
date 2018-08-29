@@ -1,0 +1,67 @@
+#app {
+  position: relative;
+}
+
+.info-container {
+  border: 3px solid rgba(230, 230, 230, 0.9);
+  margin: 10px 10px 0 10px;
+  background: rgba(230, 230, 230, 0.3);
+}
+
+.info-text {
+  padding: 20px 10%;
+}
+
+.info-text h2 {
+  margin-top: 10px;
+}
+
+.info-text p {
+  /* font-family: monospace; */
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+}
+
+.todo-apps-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  /* padding-top: 50px; */
+}
+
+.app-container {
+  /* max-height: calc(100vh - 120px); */
+  padding-bottom: 50px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.vertical-line {
+  height: 750px;
+  border-left: 3px solid rgba(230, 230, 230, 0.9);
+}
+
+.completed-line {
+  margin: 0;
+}
+
+.info-container-bottom {
+  border: 3px solid rgba(230, 230, 230, 0.9);
+  margin: 0 10px 10px 10px;
+  background: rgba(230, 230, 230, 0.3);
+}
+
+.demo-img-container {
+  width: 100%;
+  margin: 20px 0 0 0;
+  text-align: center;
+}
+
+.demo-img {
+  display: inline-block;
+  max-width: 100%;
+  border-radius: 10px;
+}
