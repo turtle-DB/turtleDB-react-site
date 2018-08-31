@@ -36,7 +36,7 @@ class DemoApp extends React.Component {
     this.db = new TurtleDB(this.props.name);
     // window.turtledb = new TurtleDB('todos');
     // this.db = window.turtledb;
-    this.db.setRemote('http://138.68.229.63:4000');
+    this.db.setRemote('https://tortoisedbdemo.online');
     // this.db.setRemote('http://localhost:4000');
   }
 
