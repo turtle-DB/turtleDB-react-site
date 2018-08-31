@@ -7,23 +7,8 @@ const Introduction = () => {
     <div>
       <h3 id="what-is-turtledb">What is turtleDB?</h3>
       <p>
-        turtleDB is a framework for creating offline-first,
-        collaborative web applications. Developers using turtleDB have the ability to
-        create collaborative apps that are fully functional even when offline. We are the first
-        to have implemented bi-directional synchronization and conflict resolution with MongoDB!
+        turtleDB is a JavaScript framework and in-browser database adapter for building offline-first, collaborative web applications. It uses the in-browser IndexedDB database to allow developers to manage document data client-side, and offers back-end integration with MongoDB (via a second package, tortoiseDB) to enable bi-directional synchronization and multi-client collaboration.
       </p>
-      <p>
-        turtleDB can be installed as a package to web applications that rely on document style data and
-        give them offline-first capabilities. Direct queries to the server are intercepted by turtleDB
-        and are passed to your in-browser storage instead.
-      </p>
-
-      <p>
-        A second package, tortoiseDB, enables server-side storage in MongoDB
-        and collaboration for multiple clients.
-      </p>
-
-
 
       <h2 id='introduction'>Introduction</h2>
 
