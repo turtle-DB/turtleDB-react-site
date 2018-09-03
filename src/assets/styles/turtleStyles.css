@@ -8,6 +8,11 @@
   }
 }
 
+  body {
+    color: #4e4b49;
+    font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  }
+
   .home-about blockquote {
     padding: 0 25%;
     font-style: normal;
@@ -213,4 +218,3 @@
     padding: 1.5em !important;
     white-space: pre-wrap;
   } */
- 

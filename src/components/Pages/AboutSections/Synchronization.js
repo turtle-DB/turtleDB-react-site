@@ -18,6 +18,8 @@ const updateSyncDoc = "function createNewSyncToTortoiseDoc() {\r\n  let newHisto
 const sendStoreDocs = "function batchSendTurtleDocsToTortoise(path) {\r\n  let currentBatch = this.storeDocsForTortoise.splice(0, this.batchLimit);\r\n\r\n  if (this.storeDocsForTortoise.length === 0) {\r\n    return this.sendBatchOfDocs(path, currentBatch, true)\r\n  } else {\r\n    return this.sendBatchOfDocs(path, currentBatch)\r\n      .then(() => {\r\n        return this.batchSendTurtleDocsToTortoise(path);\r\n      });\r\n  }\r\n}\r\n\r\nfunction sendBatchOfDocs(path, batch, lastBatch = false) {\r\n  let payload = { docs: batch };\r\n\r\n  if (lastBatch) {\r\n    payload.newSyncToTortoiseDoc = this.newSyncToTortoiseDoc;\r\n    payload.lastBatch = lastBatch;\r\n  }\r\n\r\n  return axios.post(this.targetUrl + path, payload);\r\n}"
 const batchLimit = "function setBatchLimit(batchLimit) {\r\n  this.batchLimit = batchLimit;\r\n}";
 const syncFrom = "function syncFrom() {\r\n  return this.checkServerConnection(\'\/connect\')\r\n    .then(() => this.getTurtleID())\r\n    .then(() => this.getLastTurtleKey())\r\n    .then(() => this.sendRequestForTortoiseMetaDocs(\'\/_changed_meta_docs\'))\r\n    .then(() => this.findMissingRevIds())\r\n    .then(() => this.sendRequestForTortoiseDocs(\'\/_changed_docs\'))\r\n    .then(() => this.insertUpdatedMetaDocs())\r\n    .then(() => this.insertNewDocsIntoStore())\r\n    .then(() => this.updateSyncFromTortoiseDoc())\r\n    .then(() => this.sendSuccessConfirmation(\'\/_confirm_sync\'))\r\n    .catch((err) => console.log(\'Sync From Error:\', err));\r\n}";
+const lastKey = "else if (action === \'GET_ALL_IDS_GREATER_THAN\') {\r\n          return collection.find({\r\n            _id: {\r\n              $gt: ObjectId(query.min)\r\n            }\r\n          }, { _id: 1 })\r\n          .sort({ _id: 1 })\r\n          .map(function (item) { return item._id; })\r\n          .toArray();\r\n        }"
+const mongoBulk = "  insertUpdatedMetaDocs() {\r\n    return Promise.resolve().then(() => {\r\n      return this.mongoShell.updateManyMetaDocs(this.updatedMetaDocs);\r\n    })\r\n      .then(() => {\r\n        if (this.newTurtleMetaDocs.length > 0) {\r\n          return this.mongoShell.command(this.mongoShell._meta, \"CREATE_MANY\", this.newTurtleMetaDocs);\r\n        }\r\n      })\r\n  }"
 
 const Synchronization = () => {
   return (
@@ -49,118 +51,104 @@ const Synchronization = () => {
 </p>
       <p>HTTP defined the structure of a sync session for changes to be shared, but clients and server still had to know what to share. Imagine if a client had 1000 documents, synced to a server, and created 50 new documents (so now there are 1050). It would be hugely inefficient to send those previous 1000 documents over again on the next sync cycle. It would also be inefficient to have the server recreate the client’s document history tree from scratch. These two questions posed the largest challenges for efficient syncing.</p>
 
-      <h4>Common Approach</h4>
+      <h4>Checkpoints - Last Keys</h4>
 
-      <p>For both sync directions, the client and server go through several steps, sending each other a set of changes that they think the other party has not received. These steps include:</p>
-
-      <ol>
-        <li>Sending relevant meta documents to identify and merge document histories.</li>
-        <li>Sending the  actual revisions (JSON documents) that are new changes.</li>
-        <li>Updating their local sync histories.</li>
-      </ol>
-
-      <p>For both sync directions, turtleDB uses a series of HTTP requests to organize this process into discrete, sequential steps with a set of routes and associated methods.</p>
-
-      <p>For simplicity, we will only outline the steps taken for client to server sync. From the perspective of the client, we call this the ‘sync to’ as it is syncing <em>to</em> the server. The process for server to client is very similar.</p>
-
-      <h3 id="sync-to">Sync To</h3>
-
-      <p>Let's begin with the first half of the sync process: <span className="inline-code">syncTo()</span>. As each stage of this process is asynchronous, we control the flow of events with an extended promise chain that looks like this:</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
-      </div>
-
-      <h4>Check Server Connection</h4>
-
-      <p>The first step is to check whether a connection to the server can be established. If the HTTP GET request does not return a <span className="inline-code">200 OK</span> status code, an error is thrown and the sync process is aborted.</p>
-
-      <h4>Get Range of Updated Documents - Last Key Approach</h4>
-
-      <p>The client and server then compare their sync histories. These histories contain a ‘last key’ value that references the highest primary key of the client revision store that was covered in the last sync - we can think of this as a checkpoint.</p>
+      <p>turtleDB uses checkpoints based on database primary keys to ensure that clients and server only share new changes in a sync session. This approach takes advantage of turtleDB’s document versioning, which treats data as immutable - all data operations, even updates and deletes, create new records. This means that all operations add records in the database stores, and are associated with an incrementing primary key. This is true for the server as well, which only adds records as it receives records from clients.</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/sync/2-last-key.png" />
       </div>
 
-      <p>Using an HTTP request, the client checks that the server agrees on the last checkpoint. If so, the current sync will only include document changes from that checkpoint up to the current highest primary key (since keys in the revision store are auto-incrementing).</p>
+      <p>After a sync session, the highest primary key in the store can be saved as a checkpoint - the “last key”. In the next sync session, turtleDB only has to share database records with primary keys that are higher than the last key - i.e., records that have been added since the last sync session. Last keys get saved in the database as part of a timestamped sync history record. </p>
+
+      <p>This snippet shows the server’s highest primary key being pulled from MongoDB:
+</p>
 
       <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getChangedMetaDocsForTortoise}</SyntaxHighlighter>
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{lastKey}</SyntaxHighlighter>
       </div>
 
-      <p>This addresses a potential problem with syncing - that it can be extremely inefficient if not done properly. Imagine if a client had 1000 documents, synced to a server, and created 50 new documents (so now there are 1050). It would be hugely inefficient to send those previous 1000 documents over again on the next sync cycle.</p>
+      <p>Storing last keys is a flexible way to make syncing more efficient.  Compared to an in-memory queue of pending updates to be shared, last keys are stored in the database and are not lost if the client browser is closed (true?), and have an O(1) space requirement regardless of the number of updates. </p>
 
-      <p>We only care about newly created or updated documents.The last key checkpoint ensures that this sync cycle only concerns itself with documents between 1000 and 1050.</p>
+      <p>The last key approach also works in a multi-client environment. After each sync session, each client tracks the “last key” of the server’s relevant MongoDB collection. Before that client next syncs again, other clients could have synced with the server and added more records. By storing its own checkpoint, the first client ensures that it will receive those other changes.
+</p>
 
-      <h4>Send Meta Documents</h4>
+      <h4>Meta Documents</h4>
 
-      <p>Once we have a key range of revisions, we could just send over those revisions to the server. However, it would be very possible that all of those 50 new revisions belong to one document.</p>
+      <p>With a set of updates to share in a sync defined by last keys, the remaining challenge was to determine what exactly the clients and server should send each other.
+      </p>
 
-      <p>Instead, the client first sends over the meta documents tracking those new revisions to the server. The client does this by taking the full list of revisions between the specified keys, and generating an array of unique document ids.</p>
+      <p>Due to our implementation of meta documents to track document histories (described previously), a key requirement was that at the end of a sync session, the client and server had to have identical meta documents with history trees that included all document revisions. This was how updates (and conflicts) were to be shared across the network.
+</p>
+
+      <p>We first decided that the server should always be responsible for updating document histories. Due to our centralized network (topology?, architecture?), the server would always have previous changes from all other clients - it only needed to incorporate changes from individual clients.
+</p>
+
+      <p>Clients could simply send over the document revisions stored in the last key range, but this would be problematic. Without a meta document, the server would have no way of knowing the relationship between revisions. Therefore, it would not be able to update its history tree.
+</p>
+
+      <p>We therefore have clients send over meta documents in an HTTP POST request, determined by the set of unique document IDs within a last key range. </p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getMetaDocsBetweenStoreKeys}</SyntaxHighlighter>
       </div>
 
-      <p>It then uses those ids to fetch the relevant meta documents from the store and deliver them to the server via an HTTP POST request.</p>
+      <p>The history trees of these meta documents are efficiently “merged” into the server meta document using the algorithm described previously.
+</p>
+
+      <p>In the HTTP response, the server sends back the updated meta documents to the client. It also sends a list of the revision IDs that were only present in the client tree - these are the actual document revisions that the server does not have. </p>
+
+      <p>In a second HTTP POST request, the client sends over the new document revisions. The server inserts these into the MongoDB collection and sends back its highest primary key for the client to save as a new last key checkpoint. At this point, the sync is complete, with client and server holding a shared document history.
+</p>
+
+      <h4>Bulk Operations - HTTP</h4>
+
+      <p>An important optimization of the sync process is limiting the number of HTTP request-response cycles that are required to share all changes between a client and server. </p>
+
+      <p>To synchronize the changes for a document, two steps are required. The meta document is sent first to merge the history tree, and then the missing revisions are sent.  This equates to two HTTP request-response cycles between the client and server. </p>
+
+      <p>Instead, turtleDB performs these two steps in two HTTP cycles - the first sends over all relevant meta documents to be merged; the server merges all of them and sends back a list of missing revisions; a second sends over all the revisions in a second request. Along with two additional HTTP requests to compare last keys and confirm successful syncs, a full sync session requires 4 HTTP request cycles. </p>
+
+      <p>(Optional)These requests return Promises, and are chained together within an instance of a Sync class object. Doing so allows values relevant to the sync session to be saved as properties and accessed outside of just one HTTP cycle’s scope.
+</p>
+
+      <p>This snippet shows the HTTP requests and other methods in a sync session: </p>
+
+
+    <div className="pre-container">
+      <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncTo}</SyntaxHighlighter>
+    </div>
+
+      <h4>Bulk Operations - MongoDB</h4>
+
+      <p>In addition to grouping meta documents and documents into single HTTP requests, we also organized the server-side sync operations to bulk requests to MongoDB as much as possible. </p>
+
+      <p>turtleDB’s sync process requires the server to access its MongoDB collections at several points - retrieving meta documents, inserting them, searching for missing document revisions, and inserting new revisions from the client. A single MongoDB read request takes at least 5ms to execute, so executing individual queries for each meta document or revision could considerably lengthen sync sessions.
+</p>
+
+      <p>Instead, a list of meta documents is requested in one query. For small lists, most query time goes to opening and closing the query connection, so query time did not increase at all for most sync sessions.
+</p>
+
+      <p>This snippet shows the server updating the meta documents in its MongoDB collection. It needs to perform an update query for existing meta documents, and an insert query for new meta documents (i.e., documents recently created on the client). It groups both sets of meta documents into one query each.
+</p>
 
       <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendMetaDocs}</SyntaxHighlighter>
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{mongoBulk}</SyntaxHighlighter>
       </div>
 
-      <p>The server merges the client document trees with its own and responds with a list of revision ids it does not have in its local store.</p>
+      <h4>Conclusion</h4>
 
-      <p>(For storage optimization, turtleDB allows developers to decide whether all missing revisions are exchanged, or only leaf revisions necessary to ongoing collaboration. This setting determines what the server requests from the client after merging document trees).</p>
+      <p>With the implementation of last key checkpoints, meta document tree merging, and consolidating HTTP and MongoDB requests, the majority of turtleDB sync sessions reliably complete within 2-3 seconds. This speed enables turtleDB to support ongoing collaboration while clients are online.
+</p>
 
-      <h4>Send Revisions and Last Key</h4>
+      <p>(Optional) As outlined in our “Scalability” section, the largest remaining obstacle for syncing is the time taken by 3 concurrent HTTP requests. We are currently implementing a revised approach, outlined in the ‘Future Work’ section - “New Meta Documents and Sync Protocol”.
+</p>
 
-      <p>Once the client receives a response from the server, it retrieves the exact revisions the server asks for from its store using the <span className="inline-code">_id_rev</span> index.</p>
 
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{getStoreDocsForTortoise}</SyntaxHighlighter>
-      </div>
-
-      <p>It also generates a new sync history object with the highest key value this sync session encapsulated.</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{updateSyncDoc}</SyntaxHighlighter>
-      </div>
-
-      <p>The collection of requested revision documents and the new sync history object are delivered to the server via an HTTP POST request.</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{sendStoreDocs}</SyntaxHighlighter>
-      </div>
-
-      <p>The server inserts all the meta documents, revision documents, and the new sync history into its database. The client also inserts the sync history and at this point, the client to server sync is completed.</p>
-
-      <h3 id="batching">Batching</h3>
-
-      <p>turtleDB provides developers the ability to set batch sizes for the meta document and revision document collections as they are transported over the network to the server.</p>
-
-      <p>Developers may not have the ability to alter maximum payload limits on their database servers so this is a way to cap the size of payloads travelling between the two points.</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{batchLimit}</SyntaxHighlighter>
-      </div>
-
-      <h3 id="sync-from">Sync From</h3>
-
-      <p>After the client has synced with the server and sent changes, the second half of the sync process initiates where the server sends changes to the client, called <span className="inline-code">syncFrom</span>.</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{syncFrom}</SyntaxHighlighter>
-      </div>
-
-      <p>After this has completed, a full sync has occurred and the two databases will possess an up-to-date view of the state of the data.</p>
-
-      <h3 id="sync-walkthrough">Example Sync Walkthrough</h3>
       <p>
-        The best way to demonstrate how turtleDB syncs is to run through a example. Have
-        a click through the slides. We broke it down so that our HTTP request-response cycles
-        look like a dialogue between the client and server (which it actually is!).
-      </p>
+        For reference, the following slides illustrate three different sync sessions between a client and server (still need to incorporate Chris’ comments):</p>
+        
+
       <Carousel showArrows={true}>
         <div>
           <img src="../images/sync/last_slideshow/1.png" />
