@@ -23,21 +23,31 @@ const Synchronization = () => {
   return (
     <div>
       <h2 id='synchronization'>Synchronization</h2>
-      <p>Synchronization is how turtleDB enables offline-first web applications to be collaborative.</p>
+      <p>By this point, turtleDB had robust client-side storage using native browser technologies, and an efficient approach to tracking document histories. The next step was to design a protocol that would share all database changes across the network. Every client running turtleDB needed to eventually receive all the changes that other clients had made.
+</p>
+      <p>The largest challenge was ensuring the efficiency of this protocol. Clients couldn’t spend too many resources (time? processing?) determining what they needed to share, and what they were missing. They also needed to avoid sharing changes more than once. </p>
+      <p>Finally, this protocol had to ensure that, after a sync, clients would have everything needed to identify and resolve conflicts. We will briefly step through turtleDB’s solutions to these problems.</p>
 
-      <p>turtleDB has a centralized topology - there can be multiple clients, but each client only ever connects to a central server which runs <a href="#">tortoiseDB</a> and uses MongoDB as its data store.</p>
+      <h3> Architecture (Topology?) </h3>
 
-      <p>Periodically, clients send changes in their local database to the server. After the client has sent its changes, the server sends back all changes it has received from other clients. Ultimately, this is how turtleDB maintains consistency with a distributed database architecture.</p>
+      <p>One decision was whether clients would synchronize with other clients, or only synchronize with the server. turtleDB adopted the latter.</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/sync/1-centralized.png" />
       </div>
 
-      <h4>Responsibilities</h4>
+      <p>In this centralized topology, there can be multiple clients, but each client only ever connects to a central server which runs `tortoiseDB` and uses MongoDB as its data store. Periodically, clients send changes to the server, and the server sends back the changes it has received from other clients. This ensures that all clients eventually receive all changes.
+</p>
 
-      <p>Syncing always happens in two steps. Clients send their changes to the server and the server sends back changes from other clients. Clients and server share many common tasks which depend on the direction that changes are being sent.</p>
+      <p>This decision was made for several reasons. Because the server receives all changes, it always has the latest state. It also conducts expensive operations as much as possible, freeing up client resources. </p>
 
-      <p>However, clients and server do have some unique responsibilities in turtleDB. Clients are always responsible for initiating sync and sending requests. Meanwhile, the server is in charge of merging revision trees. This is because in a centralized design, the server should always have the latest state.</p>
+      <h3>Efficient Synchronization</h3>
+
+      <p>With a (network?) in place, clients and server needed a way to exchange local updates. The approach needed to be flexible for two scenarios - ongoing syncs every few seconds when clients were online, and larger syncs when a client came online after a period of time offline. The approach also had to be “bi-directional” - it had to enable sharing a client’s changes with the server, and server changes with the client.
+</p>
+      <p>We used the HTTP protocol to implement syncing. Using a series of HTTP request-response cycles for both sync directions allowed us to organize application logic into a series of GET and POST requests that looked very similar for each direction, and abstract the sync process above the details of working with IndexedDB or MongoDB. Clients running turtleDB make HTTP requests using the `axios` library (https://github.com/axios/axios); the server uses Express (https://expressjs.com/) as a router to handle these requests.
+</p>
+      <p>HTTP defined the structure of a sync session for changes to be shared, but clients and server still had to know what to share. Imagine if a client had 1000 documents, synced to a server, and created 50 new documents (so now there are 1050). It would be hugely inefficient to send those previous 1000 documents over again on the next sync cycle. It would also be inefficient to have the server recreate the client’s document history tree from scratch. These two questions posed the largest challenges for efficient syncing.</p>
 
       <h4>Common Approach</h4>
 
