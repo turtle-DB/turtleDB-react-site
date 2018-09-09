@@ -9,7 +9,7 @@ import Introduction from './AboutSections/Introduction'
 import InBrowserStorage from './AboutSections/InBrowserStorage'
 import DocumentVersioning from './AboutSections/DocumentVersioning'
 import HistoryTrees from './AboutSections/HistoryTrees'
-import TurtleDBArchitecture from './AboutSections/turtleDBArchitecture'
+//import TurtleDBArchitecture from './AboutSections/turtleDBArchitecture'
 import Synchronization from './AboutSections/Synchronization'
 import Conflicts from './AboutSections/Conflicts'
 import Scalability from './AboutSections/Scalability'
@@ -26,12 +26,11 @@ export const About = () => {
         <div className="col-xs-12 d-md-none padding">
           <TocMobile />
         </div>
-        <div className="col-sm-12 col-md-9 padding max-width turtle-padding">
+        <div className="col-sm-12 col-md-9 padding max-width turtle-padding turtle-font">
           <Introduction />
           <InBrowserStorage />
           <DocumentVersioning />
           <HistoryTrees />
-          <TurtleDBArchitecture />
           <Synchronization />
           <Conflicts />
           <Scalability />

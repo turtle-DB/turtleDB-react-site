@@ -10,6 +10,10 @@
 
   body {
     color: #4e4b49;
+    /* font-family: "PT Serif", Georgia, "Times New Roman", serif; */
+  }
+
+  .turtle-font {
     font-family: "PT Serif", Georgia, "Times New Roman", serif;
   }
 
@@ -207,6 +211,10 @@
     display: block;
     padding: 0;
     text-align: center;
+  }
+
+  .andrew {
+    width: 85%;
   }
 
 
