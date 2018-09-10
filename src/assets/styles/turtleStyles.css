@@ -217,6 +217,10 @@
     width: 85%;
   }
 
+  .bold-text {
+    font-weight: bold;
+  }
+
 
   /* padding: 1.5em 3.5em !important; */
 
