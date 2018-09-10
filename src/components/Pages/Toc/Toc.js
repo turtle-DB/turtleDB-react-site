@@ -8,8 +8,8 @@ export const Toc = () => {
         <li><a href="#introduction">Introduction</a>
           <ul>
             <li><a href="#what-is-offline-first">What is Offline-First?</a></li>
-            <li><a href="#offline-first-architecture">Offline-First Architecture</a></li>
-            <li><a href="#introducing-turtledb">Introducing turtleDB</a></li>
+            <li><a href="#offline-first-challenges">Offline-First Challenges</a></li>
+            <li><a href="#design-goals">turtleDB Design</a></li>
           </ul>
         </li>
         <li><a href="#in-browser-storage">In-Browser Storage</a>
@@ -20,7 +20,7 @@ export const Toc = () => {
             <li><a href="#turtledb-developer-api">turtleDB Developer API</a></li>
           </ul>
         </li>
-        <li><a href="#document-versioning">Document Versionining</a>
+        <li><a href="#document-versioning">Document Versioning</a>
           <ul>
             <li><a href="#last-write-wins">Last Write Wins</a></li>
             <li><a href="#keep-conflicting-revisions">Keep Conflicting Revisions</a></li>
@@ -33,25 +33,19 @@ export const Toc = () => {
             <li><a href="#tree-data-structures">Tree Data Structures</a></li>
             <li><a href="#nested-arrays">Nested Arrays</a></li>
             <li><a href="#tree-algorithms">Tree Algorithms</a></li>
-          </ul>
-        </li>
-        <li><a href="#turtleDB-architecture">turtleDB Architecture</a>
-          <ul>
-            <li><a href="#turtledb-stores">turtleDB Stores</a></li>
+            <li><a href="#idb-schema-implementation">IDB Schema Implementation</a></li>
           </ul>
         </li>
         <li><a href="#synchronization">Synchronization</a>
           <ul>
-            <li><a href="#sync-to">Sync To</a></li>
-            <li><a href="#batching">Batching</a></li>
-            <li><a href="#sync-from">Sync From</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#synchronization-challenges">Synchronization Challenges</a></li>
           </ul>
         </li>
         <li><a href="#conflicts">Conflicts</a>
           <ul>
-            <li><a href="#surfacing-conflicts">Surfacing Conflicts</a></li>
-            <li><a href="#winning-revisions">Winning Revisions</a></li>
-            <li><a href="#conflicts-api">Conflicts API</a></li>
+            <li><a href="#generating-conflicts">Generating Conflicts</a></li>
+            <li><a href="#identifying-conflicts">Identifying Conflicts</a></li>
             <li><a href="#resolving-conflicts">Resolving Conflicts</a></li>
           </ul>
         </li>
@@ -64,6 +58,10 @@ export const Toc = () => {
           </ul>
         </li>
         <li><a href="#future-work">Future Work</a></li>
+        <ul>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#new-meta-documents">Next Steps</a></li>
+        </ul>
         <li><a href="#team">The turtleDB Team</a></li>
       </ol>
     </div>

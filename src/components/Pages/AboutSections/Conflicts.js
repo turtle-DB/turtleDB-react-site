@@ -16,88 +16,75 @@ const Conflicts = () => {
   return (
     <div>
       <h2 id='conflicts'>Conflicts</h2>
-      <p>We have already touched on how important our revision tree is in enabling us to manage multiple revisions of a document and store potentially conflicting versions. Now we can take a closer look at how conflicts are both generated and resolved in our framework.</p>
+      <p>With a working sync protocol, all clients receive each other’s changes - both as document versions, and updated history trees created by the server.
+      </p>
 
-      <h3 id="surfacing-conflicts">Surfacing Conflicts</h3>
+      <p>In a previous section, tracking document histories in revision trees was introduced as a way to track conflicting changes by different clients. The remaining challenge was to ensure that turtleDB could identify these conflicts for developers, and allow them to be resolved.
+</p>
 
-      <p>Conflicts created by two clients making different changes to the same document are surfaced in the sync process. At one point, each client had the same common revision, and then made different updates, resulting in revision IDs with different hashes.</p>
-      <p>After one client syncs to the server, the server will have revisions that are different than what the second client has.</p>
-      <p>More specifically, the revision trees for the document on the client and server would contain different data:</p>
+      <h3 id="generating-conflicts">Generating Conflicts</h3>
+
+      <p>Briefly, we can reiterate how conflicts are generated and located in a document history tree. </p>
+
+      <p>Conflicts are created when two clients make different changes to the same document. At one point, each client had the same common revision, and then made different updates, resulting in revision IDs with different hashes.
+</p>
+
+      <p>When a server merges two history trees  (using the tree merging operation we outlined in a previous section), it creates two branches, treating the two revisions as siblings. </p>
 
       <div className="img-container">
         <img className="img-style" src="../images/conflicts/1-server-client-trees.png" />
       </div>
 
-      <p>Conflicts are revealed by the tree merging operation we outlined in the earlier section of turtleDB’s <a href="#history-trees">revision tree structure</a></p>
-      <p>The server has a tree containing the change from one client who synced first, and receives a sync request with an updated tree from the second client.</p>
-      <p>The server merges the trees by concurrently traversing down common revisions (nodes) held in each tree. For each node pair common node, it compares the two sets of child revisions by revision ID, and either saves off pairs of common revisions for the next recursive traversals, or merges any new revisions into the server tree.</p>
-      <p>When any new revisions are found, the server simply incorporates the client’s revision sub-array as a sibling node, like this:</p>
+      <p>After syncing:</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/conflicts/2-merged-tree.png" />
       </div>
 
-      <p>We can visualize this operation as creating a branch in the revision tree:</p>
+      <p>We can also visualize the operation with this diagram:
+</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/conflicts/3-tree-diagram.png" />
       </div>
 
-      <p>The client that last synced gets back the merged tree, which now has multiple valid leaf revisions it could return to the user. This is what we mean when we say a document contains a conflict, and is also where the concept of a winning revision comes in.</p>
+      <h3 id="identifying-conflicts">Identifying Conflicts</h3>
 
-      <h3 id="winning-revisions">Winning Revisions</h3>
+      <p>This operation means that clients can access conflicts in the updated meta documents returned to them in a sync session. The next question is how they can identify those conflicts for the developer.
+      </p>
 
-      <p>The client tracks the competing leaf revisions in the meta document property <span className="inline-code">_leafRevs</span>:</p>
+      <h4>Leaf Revisions Array</h4>
+
+      <p>Conflicts are defined as history trees that have more than one ‘leaf node’, i.e, active revisions. One option would be for clients to check for multiple leaf nodes every time the meta document was accessed, for example in a typical read query. The recursive traversal to do this would obviously become an expensive operation for documents with large histories.
+      </p>
+
+      <p>Instead, an optimization can be added by tracking the revision IDs of leaf nodes in a “_leafRevs” array on the meta document. At the end of a tree merging operation on the server, the server updates this array.
+      </p>
 
       <div className="img-container">
         <img className="img-style" src="../images/conflicts/4-leaf-revs.png" />
       </div>
 
-      <p>In order to provide a consistent API, turtleDB’s <span className="inline-code">read()</span> method only ever returns one revision to the developer even when there are competing revisions. It does this by setting one revision as the ‘winning’ revision either by default or by developer input.</p>
+      <p>The result is that clients can check for conflicts in O(1) time, by looking at the length of the “_leafRevs” array.
+      </p>
 
-      <p>The winning revision is held in the <span className="inline-code">_winningRev</span> property of the meta document, as seen here:</p>
+      <h4>Developer API</h4>
 
-      <div className="img-container">
-        <img className="img-style" src="../images/conflicts/5-winning-rev.png" />
-      </div>
+      <p>This implementation made it much more efficient to indicate conflicts to the developer. </p>
 
-      <p>This ensures that read requests can be handled in almost O(1) time using the index on the revision store.</p>
+      <p>A “_conflicts” boolean is is also present in meta documents, and updated by turtleDB based on the length of the “_leafRevs” array. Developers can easily check for conflicts in returned documents.
+      </p>
 
-      <p>The winning revision is selected from the revision IDs held in the <span className="inline-code">_leafRevs</span> array, which is kept up to date as the tree is updated. This means that winning revisions are also calculated very quickly.</p>
+      <p>The read query of the API also automatically returns all conflicting revisions as well. These are placed within a property, ‘_conflictVersions’, on the returned document. Returning them in this format allows developers to ignore them if they choose.
+      </p>
 
-      <p>turtleDB picks a default winning revision using a deterministic algorithm:</p>
-      <ol>
-        <li>Longest Branch - Each leaf revision ID includes a number, indicating the number of updates on that branch. The revision ID with the highest number (the most updates) becomes the winning revision.</li>
-        <li>Lexicographically - In the case that two or more branches have the same number of revisions, the hashes of those leaf revisions are compared lexicographically.</li>
-      </ol>
-
-      <p>In code form:</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_getWinningRev}</SyntaxHighlighter>
-      </div>
-
-      <p>The longest branch approach is the best default strategy turtleDB can use to support a wide range of applications without knowing their internal logic. It equates to using “proof of work”, i.e. going with the revision that received the most updates.</p>
-
-      <h3 id="conflicts-api">Conflicts API</h3>
-
-      <p>turtleDB surfaces conflicts for developers by modifying values returned by developer API methods. When a document is read that has more than one leaf revision, turtleDB adds a <span className="inline-code">_conflicts</span> property.</p>
-
-      <div className="pre-container">
-        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_conflicts}</SyntaxHighlighter>
-      </div>
-
-      <p>This way, it is easy for the developer to write front-end code that checks for conflicts in returned documents.</p>
-
-      <p>turtleDB goes further by automatically returning all conflicting revisions as well. These are placed within a property, <span className="inline-code">_conflictVersions</span> on the returned document.</p>
-
-      <p>This is the relevant section of the <span className="inline-code">read()</span> method:</p>
+      <p>This is the relevant section of the read() method:</p>
 
       <div className="img-container">
         <img className="img-style" src="../images/conflicts/6-conflict-versions.png" />
       </div>
 
-      <p>The returned document would look like this in practice:</p>
+      <p>The  returned document would look like this in practice:</p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_storeDocument}</SyntaxHighlighter>
@@ -105,11 +92,38 @@ const Conflicts = () => {
 
       <h3 id="resolving-conflicts">Resolving Conflicts</h3>
 
-      <p>Developers may want to choose their own winning revision for a document, rather than accept the revision selected by turtleDB’s deterministic algorithm.</p>
+      <p>The only remaining challenges are in resolving those conflicts. They are briefly outlined here.
+      </p>
 
-      <p>turtleDB could allow the developer to update the <span className="inline-code">_winningRev</span> property, but this would cause a problem during a sync. Given two different winning revisions, the server would have to pick one, and would just have to use the deterministic algorithm again on all leaf nodes.</p>
+      <h4>Default Winners</h4>
 
-      <p>Instead, all competing revisions other than the selected winner need to be marked as deleted. This deletion is propagated across the network after syncing:</p>
+      <p>First, turtleDB needs to be able to arbitrarily ‘pick’ a winner if the developer has not. From a feature perspective, this enables apps to continue functioning by always showing one version of a document. This default winner also needs to be picked efficiently, as it occurs for all document conflicts that had not been reviewed by the developer’s code.
+      </p>
+
+      <p>Leveraging its approach to document history, turtleDB takes the leaf node from the longer branch, as the longer branch indicates more ‘work’. It is able to do this very efficiently: leaf nodes have their revision IDs stored in the “_leafRevs” array, and their branch length is indicated by the version number within the revision ID (i.e., the ‘3’ in revision ID “3-xyz”). For two nodes with the same number, their strings are sorted lexicographically to determine an arbitrary winner.
+      </p>
+
+      <p>This snippet shows the relevant function:</p>
+
+      <div className="pre-container">
+        <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_getWinningRev}</SyntaxHighlighter>
+      </div>
+
+      <p>To prevent this comparison from being run repeatedly, the ID of the winning revision is held in another meta document property, ‘winningRev’. </p>
+
+      <div className="img-container">
+        <img className="img-style" src="../images/conflicts/5-winning-rev.png" />
+      </div>
+
+      <p>This means that all read queries on a client are not affected by whether conflicts have been resolved or not. Update queries only have to briefly update the “_winningRev” property if necessary.</p>
+
+      <h4>Developer API - Picking a Winner</h4>
+
+      <p>Finally, developers need to be able to pick conflict winners, in a way that can be communicated across the network within the existing sync protocol.
+      </p>
+
+      <p>Given the document history trees, the simplest approach is to add a ‘delete’ node on the end of every leaf node not picked as the winner. These deletes can be propagated across the network by syncing.
+      </p>
 
       <Carousel showArrows={true}>
         <div>
@@ -123,7 +137,8 @@ const Conflicts = () => {
         </div>
       </Carousel>
 
-      <p>However, this approach has a risk. If two clients each pick different winners all branches would be marked as deleted and the document could not be worked on any further.</p>
+      <p>However, this approach introduces a risk. If two clients pick two different winners, all leaf nodes are marked as deleted, and the document would not be worked on any longer.
+      </p>
 
       <Carousel showArrows={true}>
         <div>
@@ -140,7 +155,8 @@ const Conflicts = () => {
         </div>
       </Carousel>
 
-      <p>turtleDB adds one more step to the developer API method to select a winner. An empty update is added to the winning revision, forcing it to persist:</p>
+      <p>Therefore, one more step needs to be added to conflict resolution. An empty update is added to the winning revision, which forces it to persist in case there is a “conflicting” delete:
+      </p>
 
       <Carousel showArrows={true}>
         <div>
@@ -157,11 +173,20 @@ const Conflicts = () => {
         </div>
       </Carousel>
 
-      <p>This approach of deleting all of leaf revisions and adding an update to the winning revision, is handled in our API method called <span className="inline-code">setConflictWinner</span>:</p>
+      <p>This approach of deleting all leaf revisions and adding an update to the winning revision is handled in turtleDB’s API method called <span className="inline-code">setConflictWinner</span>:
+      </p>
 
       <div className="pre-container">
         <SyntaxHighlighter language="javascript" style={atelierDuneLight} showLineNumbers>{_setConflictWinner}</SyntaxHighlighter>
       </div>
+
+      <h4>Conclusion</h4>
+
+      <p>With document history trees, conflicts are easily defined and identified. The tree merging operation can maintain a list of document leaf nodes that are stored in meta document properties. This list enable efficient conflict identification, access to conflicting versions, and the selection of default conflict winners.
+      </p>
+
+      <p>Once this list is in place, the developer API methods come together easily. The only other challenge is conflicting deletes of leaf nodes by clients trying to resolve conflicts, which is handled by adding ‘dummy’ updates to selected winners.
+      </p>
     </div>
   )
 }

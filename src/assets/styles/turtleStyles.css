@@ -8,6 +8,15 @@
   }
 }
 
+  body {
+    color: #4e4b49;
+    /* font-family: "PT Serif", Georgia, "Times New Roman", serif; */
+  }
+
+  .turtle-font {
+    font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  }
+
   .home-about blockquote {
     padding: 0 25%;
     font-style: normal;
@@ -204,6 +213,14 @@
     text-align: center;
   }
 
+  .andrew {
+    width: 85%;
+  }
+
+  .bold-text {
+    font-weight: bold;
+  }
+
 
   /* padding: 1.5em 3.5em !important; */
 
@@ -213,4 +230,3 @@
     padding: 1.5em !important;
     white-space: pre-wrap;
   } */
- 

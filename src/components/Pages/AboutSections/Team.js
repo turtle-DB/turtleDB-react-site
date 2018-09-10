@@ -50,16 +50,16 @@ const Team = () => {
 
           <div className="intro-card col-xs-12 col-md-4">
             <div className="card text-center">
-              <a className="photo-link" href="https://maxiappleton.github.io/" target="_blank">
+              <a className="photo-link" href="https://houstonfloyd.github.io/" target="_blank">
                 <h5 className="card-title">Andrew Houston-Floyd</h5>
-                <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
+                <img className="card-img-top portrait andrew" src="images/andrew.png" alt="Andrew Houston-Floyd" />
               </a>
               <div className="card-body">
-                <p className="card-text text-center">New York City, USA</p>
+                <p className="card-text text-center">New York, USA</p>
                 <ul className="list-inline">
                   <li className="list-inline-item intro-si"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
                   <li className="list-inline-item intro-si"><SocialIcon url="https://github.com/houstonfloyd" /></li>
-                  <li className="list-inline-item intro-si"><SocialIcon url="https://maxiappleton.github.io" network="email" /></li>
+                  <li className="list-inline-item intro-si"><SocialIcon url="https://houstonfloyd.github.io" network="email" /></li>
                 </ul>
               </div>
             </div>

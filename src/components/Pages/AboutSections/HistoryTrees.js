@@ -356,6 +356,52 @@ const HistoryTrees = () => {
       </div>
 
       <p>While reads are O(1), the <span className="inline-code">_leafRevs</span> array needs to be constantly kept up to date. We added code within our update, delete, and merge functions to update the array while the tree was being traversed. This means keeping the tree updated takes O(N) but it piggybacks on other operations and is outweighed by the many O(1) reads.</p>
+
+      <h3 id="idb-schema-implementation">IDB Schema Implementation</h3>
+      <p>
+      With a tree structure defined to track document histories, turtleDB has to maintain two primary collections in IndexedDB - one collection to store all versions of a document, and another to track those versions in meta documents.
+      </p>
+      <p>
+      Developer API methods require operations that query and update both these stores. Chaining these asynchronous operations is made easier with the Promise-based adapter for IndexedDB.
+      </p>
+      <p>
+      In the following screenshots, we can briefly display what document versions and meta documents look like with common operations in turtleDB.
+      </p>
+
+      <h4>Store</h4>
+      <p>The store is where all the actual document revisions are kept. Each record is a JSON-like document; key-value pairs representing the data and an added unique identifier called <span className="inline-code">_id_rev</span>. This is a concatenation of the document ID and the revision ID, separated by a <span className="inline-code">::</span>. This ensures a unique ID for every revision. The store also maintains an index on <span className="inline-code">id_rev</span>, making read queries for specific revisions O(1).</p>
+
+      <div className="img-container">
+        <img className="img-style" src="../images/architecture/2-store.png" />
+      </div>
+
+      <p><span className="font-weight-bold">Updating</span> - When a document is updated, a new revision is created and added to the store. All the data is included and its <span className="inline-code">_id_rev</span> is updated as well. A new revision ID is generated along with an incremented version number (the <span className="inline-code">2-..</span> seen here):</p>
+
+      <div className="img-container">
+        <img className="img-style" src="../images/architecture/3-updating.png" />
+      </div>
+
+      <p><span className="font-weight-bold">Deleting</span> - When a document is deleted, no records are actually removed from the store. In fact, turtleDB treats deletes as a special kind of update. The original document will have all its properties stripped and a <span className="inline-code">_deleted: true</span> added to it.</p>
+
+      <div className="img-container">
+        <img className="img-style" src="../images/architecture/4-deleting.png" />
+      </div>
+
+      <p>Any document with a <span className="inline-code">_deleted: true</span> property cannot be updated anymore. Note that as revisions are added to the store, they always increment the primary key of the store (seen in the Key column).</p>
+
+      <h4>metaStore</h4>
+
+      <p>In the last section, we discussed how the actual documents are stored in the store. The metaStore holds all the information associated with each of these documents. Each entry represents a unique document where the Key path for this store is the document ID.</p>
+
+      <p>The store used <span className="inline-code">_id_rev</span> where the <span className="inline-code">_id</span> portion stayed consistent regardless of how many times a document was updated. The store could have 50 documents representing the case where 1 document was updated 49 times. This would be represented by 1 entry in the metaStore.</p>
+
+      <div className="img-container">
+        <img className="img-style" src="../images/architecture/5-metastore.png" />
+      </div>
+
+      <p>This screenshot shows what an expanded document actually looks like. The history tree is contained in a property called <span className="inline-code">_revisions</span>. This means a meta document can reference multiple records in the store. The meta document also has the <span className="inline-code">_winningRev</span> and <span className="inline-code">_leafRevs</span> properties to ensure fast read queries.</p>
+
+
     </div>
   )
 }

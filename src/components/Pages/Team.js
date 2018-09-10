@@ -55,17 +55,18 @@ export const Team = () => {
           <div className="card text-center">
             <div className="card-header">
               <h5 className="card-title">
-                <a href="https://maxiappleton.github.io/" target="_blank">Andrew Houston-Floyd</a>
+                <a href="https://houstonfloyd.github.io/" target="_blank">Andrew Houston-Floyd</a>
               </h5>
             </div>
-            <a href="https://maxiappleton.github.io/" target="_blank">
-              <img className="card-img-top portrait" src="images/andrew.png" alt="Andrew Houston-Floyd" />
+            <a href="https://houstonfloyd.github.io/" target="_blank">
+              <img className="card-img-top portrait andrew" src="images/andrew.png" alt="Andrew Houston-Floyd" />
             </a>
             <div className="card-body">
               <p className="card-text">Software Developer (New York City, USA)</p>
               <ul className="list-inline">
                 <li className="list-inline-item"><SocialIcon url="https://www.linkedin.com/in/andrew-houston-floyd" /></li>
                 <li className="list-inline-item"><SocialIcon url="https://github.com/houstonfloyd" /></li>
+                <li className="list-inline-item"><SocialIcon url="https://houstonfloyd.github.io/" network="email" /></li>
               </ul>
             </div>
           </div>
